@@ -1,0 +1,43 @@
+.modail-wallet {
+  .wrap {
+    @apply w-full max-w-md transform overflow-hidden rounded-[40px] bg-black
+    text-left align-middle shadow-xl transition-all px-6 md:px-14 py-[50px] md:py-[60px]
+    border-2 border-solid border-green00;
+    @apply max-w-[718px];
+    h3 {
+      @apply text-xl md:text-4xl text-white text-center;
+    }
+    .content {
+      input,
+      button {
+        @apply w-full h-10 leading-10 text-base md:text-lg rounded-3xl;
+      }
+      input {
+        @apply bg-white mb-3 mt-8 px-4;
+        &::placeholder {
+          @apply text-center
+        }
+      }
+      button {
+        @apply bg-green-600 md:bg-green00 text-white;
+      }
+    }
+  }
+  .connectWallet {
+    h3 {
+      @apply text-xl pb-2;
+    }
+    li {
+      @apply mt-4 h-14 text-white flex items-center justify-center md:justify-start cursor-pointer px-5;
+      @apply border-[1px] border-solid border-green00 rounded-2xl text-xl;
+      img {
+        @apply w-7 h-auto mr-8;
+      }
+      &:nth-child(2) {
+        img {
+          @apply w-9 mr-7;
+        }
+      }
+    }
+  }
+}

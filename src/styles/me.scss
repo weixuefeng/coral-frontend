@@ -1,0 +1,71 @@
+.me-page {
+  .title {
+    @apply mt-[100px];
+    p {
+      @apply text-redFA text-xl;
+    }
+    h3 {
+      @apply text-5xl mt-2;
+      span {
+        @apply font-bold;
+      }
+    }
+  }
+  .mt-nft {
+    @apply grid grid-cols-4;
+    ul {
+      @apply col-span-3 mt-5;
+    }
+    .nft-item {
+      @apply border-b-[1px] border-solid border-redFF;
+    }
+    li {
+      @apply grid grid-cols-3 py-[30px];
+      >div {
+        @apply col-span-1;
+      }
+      h5 {
+        @apply text-xl mb-6;
+      }
+      p {
+        @apply text-2xl text-black font-bold;
+      }
+    }
+    .power {
+      @apply col-span-1;
+    }
+  }
+  .power {
+    @apply bg-[#F8F5EF] rounded-3xl h-[266px];
+    h3 {
+      @apply text-xl text-center mt-5;
+    }
+    .content {
+      @apply grid grid-cols-2 text-2xl font-bold mt-20;
+      span {
+        @apply col-span-1 text-center;
+      }
+    }
+  }
+  .invite-wrap {
+    @apply flex items-center justify-between mt-20 border-[1px] border-solid border-[#F8F5EF] rounded-full p-5;
+    .invite {
+      @apply flex;
+      h5 {
+        @apply leading-[44px] text-base font-bold mr-5;
+      }
+      p {
+        @apply text-sm text-[#919090];
+      }
+      .share {
+        @apply leading-[44px] bg-[#F8F5EF] rounded-full px-5;
+        p {
+          @apply leading-[44px];
+        }
+      }
+    }
+    .address {
+      @apply flex items-center justify-center text-sm text-[#FEFCF7] bg-black44 rounded-full px-5 py-[10px];
+    }
+  }
+}

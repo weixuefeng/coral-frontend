@@ -1,0 +1,127 @@
+.header {
+  // @apply px-6 md:px-24 h-[77px] md:h-[118px] flex items-center justify-between z-20 relative bg-transparent;
+  @apply h-[77px] md:h-[118px] flex items-center justify-between z-20 relative bg-transparent;
+  .logo {
+    @apply w-[104px] h-auto md:w-[260px] md:h-[72px] relative flex justify-center items-center;
+    img {
+      @apply w-full cursor-pointer;
+    }
+  }
+  .nav {
+    @apply hidden lg:flex;
+    a {
+      @apply text-base text-center mx-6;
+      &:hover {
+        @apply text-redFA;
+      }
+    }
+    .active {
+      @apply text-redFA;
+    }
+  }
+  .twitter-list {
+    @apply flex justify-center items-center;
+    a {
+      @apply w-6 h-6;
+      img {
+        @apply w-full h-full;
+      }
+      .img1 {
+        @apply block;
+      }
+      .img2 {
+        @apply hidden;
+      }
+      &:hover {
+        .img1 {
+          @apply hidden;
+        }
+        .img2 {
+          @apply block;
+        }
+      }
+    }
+    img {
+      @apply w-full h-auto;
+    }
+  }
+  .wallet {
+    @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl bg-redFF;
+    button {
+      @apply w-full h-full text-base text-white text-center;
+    }
+  }
+  .connected {
+    @apply w-[143px] h-[37px] rounded-3xl text-base text-white flex items-center justify-center;
+    @apply border-[1px] border-solid border-green_big;
+  }
+  .mobile-btn {
+    @apply w-8 h-8 cursor-pointer block lg:hidden;
+    img{
+      @apply w-full h-auto;
+    }
+  }
+}
+
+.mobile-sidebar {
+  @apply w-full bg-gradient-to-b from-[#505050] to-[#adadad] px-6;
+  .logo-wrap {
+    @apply flex items-center justify-between py-6;
+  }
+  .logo {
+    @apply w-[104px] h-auto flex items-center justify-center;
+    img {
+      @apply w-[104px] h-auto; 
+    }
+  }
+}
+
+.menu-header {
+  .nav {
+    li {
+      @apply text-center py-4;
+    }
+    a {
+      @apply text-white text-base;
+      &:hover {
+      @apply text-green00
+      }
+    }
+    .active {
+      @apply text-green00;
+    }
+  }
+  .twitter-list {
+    @apply flex justify-center items-center gap-4 mt-10;
+    a {
+      @apply w-6 h-6;
+      img {
+        @apply w-full h-full;
+      }
+      &:hover {
+        .img1 {
+          @apply hidden;
+        }
+        .img2 {
+          @apply block;
+        }
+      }
+    }
+    .img1 {
+      @apply block;
+    }
+    .img2 {
+      @apply hidden;
+    }
+   
+  }
+  .wallet {
+    @apply flex justify-center items-center;
+    button {
+      @apply w-48 h-14 text-base text-white text-center  rounded-3xl;
+    }
+  }
+  .connected {
+    @apply w-48 h-14 mx-auto rounded-3xl text-base text-white flex items-center justify-center;
+  }
+}

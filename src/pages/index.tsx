@@ -1,0 +1,183 @@
+/*
+ * @Author:  
+ * @Date: 2024-03-13 21:36:45
+ * @LastEditors:  
+ * @LastEditTime: 2024-03-14 21:25:49
+ * @FilePath: /coral-frontend/src/pages/index.tsx
+ */
+
+
+import React, { useState, useEffect } from 'react'
+import NormalLayout from 'components/Layout/normalLayout'
+import { PageModel } from 'model/navModel'
+
+export default Nft
+
+function Nft() {
+  let pageModel = new PageModel('Overview', 'Coral', '')
+  return <>{NormalLayout(Main(), pageModel)}</>
+}
+
+function Main() {
+
+  const [cidNftValue, setCidNftValue] = useState("1");
+  const [depinNftValue, setDepinNftValue] = useState("1");
+
+  const handleInputChange = (value, setValue) => {
+    if (!isNaN(value) && parseInt(value) >= 1) {
+      setValue(value);
+    }
+  };
+
+  const handleIncrementValue = (value, setValue) => {
+    const newValue = parseInt(value) + 1;
+    setValue(newValue.toString());
+  };
+
+  const handleDecrementValue = (value, setValue) => {
+    const newValue = parseInt(value) - 1;
+    if (newValue >= 1) {
+      setValue(newValue.toString());
+    }
+  };
+
+  return (
+    <>
+      <div className="main">
+        <div className='cid-nft'>
+          <div className='nft'>
+            <p className='tit'>PRODUCT NFT</p>
+            <h3>Coral&nbsp;<span>CID NFT</span></h3>
+            <p className='mb-8'>Join Coral member pass with Coral CID NFT.<br /> Get special benefits and gain more profits!</p>
+            <p>CID NFT is the most basic user unit, and each CID NFT has the ability to<br /> share the revenue of the Coral platform.</p>
+            <div className='nft-name'>
+              <ul>
+                <li>
+                  <span>NFT Name</span>
+                  <span>CID NFTs</span>
+                </li>
+                <li>
+                  <span>Quantity</span>
+                  <span>10,000</span>
+                </li>
+                <li>
+                  <span>Price per NFT</span>
+                  <span>20 USDT</span>
+                </li>
+                <li className='purchase'>
+                  <div className='price'>Amount</div>
+                  <IncrementDecrementInput
+                    value={cidNftValue}
+                    onInput={(value) => handleInputChange(value, setCidNftValue)}
+                    onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
+                    onDecrement={() => handleDecrementValue(cidNftValue, setCidNftValue)}
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div className='bg-redFA py-[82px] mt-[100px]'>
+        <div className='main officially'>
+          <div className='text'>
+            <p>CID NFTs are the primary assets in Coral's metaverse, functioning as 3D rendering engines powered by collaboration with DGX Cloud under NVIDIA.</p>
+            <p className='mt-10'>They support Coral‘s future metaverse scenes and generate tokens by providing rendering services, alongside AI capabilities, with potential for external computing power output.</p>
+          </div>
+          {/* <ul>
+            <li>
+              <h3>1092</h3>
+              <p>Total holders</p>
+            </li>
+            <li>
+              <h3>1,092,231</h3>
+              <p>Total NFTs</p>
+            </li>
+          </ul> */}
+        </div>
+      </div>
+      <div className='main cid-nft depin-nft'>
+        <div className='nft'>
+          <p className='tit'>Coral DePIN NFT</p>
+          <h3>Coral&nbsp;<span>CID NFT</span></h3>
+          <p>A superior NFT above CID.</p>
+          <p>Enjoy the ability to manage and distribute the CID NFT.</p>
+          <p>Each Depin NFT belongs to a verifiable data node, and the CID NFT managed by Depin NFT can obtain better asset returns.</p>
+          <div className='nft-name'>
+              <ul>
+                <li>
+                  <span>NFT Name</span>
+                  <span>CID NFTs</span>
+                </li>
+                <li>
+                  <span>Quantity</span>
+                  <span>10,000</span>
+                </li>
+                <li>
+                  <span>Price per NFT</span>
+                  <span>20 USDT</span>
+                </li>
+                <li className='purchase'>
+                  <div className='price'>Amount</div>
+                  <IncrementDecrementInput
+                    value={cidNftValue}
+                    onInput={(value) => handleInputChange(value, setCidNftValue)}
+                    onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
+                    onDecrement={() => handleDecrementValue(cidNftValue, setCidNftValue)}
+                  />
+                </li>
+              </ul>
+            </div>
+        </div>
+        <div></div>
+      </div>
+      <div className='bg-black44 pt-5 pb-[82px] mt-[100px]'>
+        <div className='main officially'>
+          <div className='text'>
+            <p>DePIN NFTs enhance CID NFTs with more computing power and ecosystem benefits, such as governance rights and increased token rewards. </p>
+            <p className='mt-10'>Acting as data processing nodes, each DePIN NFT receives allocated CID NFT computing power. Coral supplies iris recognition devices to DePIN NFT holders, enabling biometric verification and motion capture for the metaverse. DePIN NFTs conduct iris recognition, rewarding participants with Coral incentives. </p>
+            <p className='mt-10'>Additionally, DePIN NFTs can autonomously promote and sell CID NFTs, with proceeds primarily benefiting the equipment provider and supporting Coral's ecosystem and maintenance.</p>
+          </div>
+          {/* <ul>
+            <li>
+              <h3>21</h3>
+              <p>Total holders</p>
+            </li>
+            <li>
+              <h3>320</h3>
+              <p>Total NFTs</p>
+            </li>
+          </ul> */}
+        </div>
+      </div>
+    </>
+  )
+}
+
+const IncrementDecrementInput = ({ value, onInput, onIncrement, onDecrement }) => {
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    if (!isNaN(inputValue) && parseInt(inputValue) >= 1) {
+      onInput(inputValue);
+    }
+  };
+  return (
+    <div>
+      <div className='flex items-center justify-between'>
+        <div className='add-minus' onClick={onIncrement}>+</div>
+        <input
+          className='value'
+          type="text"
+          placeholder="1"
+          required
+          value={value}
+          onChange={handleInputChange}
+        />
+        <div className='add-minus' onClick={onDecrement}>-</div>
+      </div>
+      <div className='mint'>Mint</div>
+    </div>
+
+  );
+}

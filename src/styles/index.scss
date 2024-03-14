@@ -1,0 +1,61 @@
+.cid-nft {
+  .nft {
+    @apply w-[645px];
+    .tit {
+      @apply text-redFA text-xl;
+    }
+    h3 {
+      @apply text-5xl mb-10 mt-3;
+      span {
+        @apply font-bold;
+      }
+    }
+    p {
+      @apply text-lg;
+    }
+    .nft-name {
+      @apply p-5 bg-[#F8F5EF] rounded-3xl mt-[30px];
+      li {
+        @apply grid grid-cols-2 justify-center leading-[56px] mb-3;
+        span {
+          @apply text-[28px] col-span-1;
+          &:nth-child(2) {
+            @apply leading-[56px] text-2xl text-black font-bold;
+          }
+        }
+      }
+      .purchase {
+        @apply mb-0;
+      }
+    }
+    .price {
+      @apply text-[28px]; 
+    }
+    .add-minus {
+      @apply w-14 h-14 bg-redFA rounded-lg text-center leading-[56px] text-2xl text-white cursor-pointer;
+    }
+    .value {
+      @apply w-[150px] h-14 leading-[56px] text-center text-black text-2xl bg-[#F8F5EF];
+    }
+    .text {
+      @apply w-[177px] h-14 leading-[56px] bg-redFA rounded-lg text-white text-2xl font-bold text-center ml-[35px];
+    }
+    .mint {
+      @apply leading-[54px] bg-redFF text-white rounded-full text-center mt-[30px] cursor-pointer;
+    }
+  }
+}
+
+.officially {
+  // @apply flex items-center justify-between text-white text-xl;
+  @apply text-white text-xl;
+  p {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-5xl mb-5;
+  }
+  // ul {
+  //   @apply w-[425px] flex justify-between;
+  // }
+}
