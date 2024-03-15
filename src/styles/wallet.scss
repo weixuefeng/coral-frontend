@@ -2,7 +2,7 @@
   .wrap {
     @apply w-full max-w-md transform overflow-hidden rounded-[40px] bg-black
     text-left align-middle shadow-xl transition-all px-6 md:px-14 py-[50px] md:py-[60px]
-    border-2 border-solid border-green00;
+    border-2 border-solid border-[#FFAD93];
     @apply max-w-[718px];
     h3 {
       @apply text-xl md:text-4xl text-white text-center;
@@ -19,7 +19,7 @@
         }
       }
       button {
-        @apply bg-green-600 md:bg-green00 text-white;
+        @apply bg-redFF md:bg-redFF text-white;
       }
     }
   }
@@ -29,7 +29,7 @@
     }
     li {
       @apply mt-4 h-14 text-white flex items-center justify-center md:justify-start cursor-pointer px-5;
-      @apply border-[1px] border-solid border-green00 rounded-2xl text-xl;
+      @apply border-[1px] border-solid border-[#FFAD93] rounded-2xl text-xl;
       img {
         @apply w-7 h-auto mr-8;
       }
