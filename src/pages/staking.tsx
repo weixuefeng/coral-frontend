@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 17:53:31
+ * @LastEditTime: 2024-03-15 18:05:49
  * @FilePath: /coral-frontend/src/pages/staking.tsx
  */
 
@@ -19,13 +19,16 @@ function Nft() {
 
 function Main() {
 
-
   return (
     <div className='main staking-page'>
       <div className='title'>
         <p>PRODUCT NFT</p>
-        <h3>Your <span>Information</span></h3>
+        <h3>Pledge <span> NFT</span></h3>
         <div className='text'>Pledge your Coral NFT to gain more return on your investment.</div>
+      </div>
+      <div className='nft-wrap'>
+        <div></div>
+        <div></div>
       </div>
     </div>
   )

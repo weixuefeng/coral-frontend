@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 15:46:02
+ * @LastEditTime: 2024-03-15 18:09:13
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -10,6 +10,7 @@
 import React, { useState, useEffect } from 'react'
 import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
+import IncrementInput from 'components/IncrementInput'
 
 export default Nft
 
@@ -70,7 +71,7 @@ function Main() {
                 </li>
                 <li className='purchase'>
                   <div className='price'>Amount</div>
-                  <IncrementDecrementInput
+                  <IncrementInput
                     value={cidNftValue}
                     onInput={(value) => handleInputChange(value, setCidNftValue)}
                     onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
@@ -142,11 +143,11 @@ function Main() {
                 </li>
                 <li className='purchase'>
                   <div className='price'>Amount</div>
-                  <IncrementDecrementInput
-                    value={cidNftValue}
-                    onInput={(value) => handleInputChange(value, setCidNftValue)}
-                    onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
-                    onDecrement={() => handleDecrementValue(cidNftValue, setCidNftValue)}
+                  <IncrementInput
+                    value={depinNftValue}
+                    onInput={(value) => handleInputChange(value, setDepinNftValue)}
+                    onIncrement={() => handleIncrementValue(depinNftValue, setDepinNftValue)}
+                    onDecrement={() => handleDecrementValue(depinNftValue, setDepinNftValue)}
                   />
                 </li>
               </ul>
@@ -177,31 +178,4 @@ function Main() {
       </div>
     </>
   )
-}
-
-const IncrementDecrementInput = ({ value, onInput, onIncrement, onDecrement }) => {
-  const handleInputChange = (e) => {
-    const inputValue = e.target.value;
-    if (!isNaN(inputValue) && parseInt(inputValue) >= 1) {
-      onInput(inputValue);
-    }
-  };
-  return (
-    <div>
-      <div className='flex items-center justify-between'>
-        <div className='add-minus' onClick={onIncrement}>+</div>
-        <input
-          className='value'
-          type="text"
-          placeholder="1"
-          required
-          value={value}
-          onChange={handleInputChange}
-        />
-        <div className='add-minus' onClick={onDecrement}>-</div>
-      </div>
-      <div className='mint hidden md:block'>Mint</div>
-    </div>
-
-  );
 }
