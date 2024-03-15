@@ -7,7 +7,7 @@
     }
   }
   .nav {
-    @apply hidden lg:flex;
+    @apply hidden md:flex;
     a {
       @apply text-base text-center mx-6;
       &:hover {
@@ -62,7 +62,7 @@
     @apply border-[1px] border-solid border-green_big;
   }
   .mobile-btn {
-    @apply flex items-center justify-center cursor-pointer lg:hidden;
+    @apply flex items-center justify-center cursor-pointer md:hidden;
     .menu{
       @apply w-8 h-8;
     }
