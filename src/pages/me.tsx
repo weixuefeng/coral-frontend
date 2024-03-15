@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-14 22:48:51
+ * @LastEditTime: 2024-03-15 09:49:39
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -27,9 +27,9 @@ function Main() {
       </div>
       <div className='mt-nft'>
         <ul>
-          <li className='nft-item'>
-            <div>
-              <img src="" alt="" />
+          <li>
+            <div className='nft-name'>
+              <img src="assets/image/cid-nft.png" alt="nft" />
               <span>CID NFTs</span>
             </div>
             <div>
@@ -42,8 +42,8 @@ function Main() {
             </div>
           </li>
           <li>
-            <div>
-              <img src="" alt="" />
+            <div className='nft-name'>
+              <img src="assets/image/depin-nft.png" alt="nft" />
               <span>DePIN NFTs</span>
             </div>
             <div>
@@ -69,6 +69,8 @@ function Main() {
           <h5>Invite Friends to join Coralverse now </h5>
           <div className='share'>
             <p>http://invite.coralapp.io/user98732</p>
+            <img className='share-copy' src="assets/image/copy.png" alt="copy" />
+            <img src="assets/image/share.png" alt="share" />
           </div>
         </div>
         <div className='address'>

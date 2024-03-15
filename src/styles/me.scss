@@ -16,13 +16,19 @@
     ul {
       @apply col-span-3 mt-5;
     }
-    .nft-item {
-      @apply border-b-[1px] border-solid border-redFF;
-    }
     li {
       @apply grid grid-cols-3 py-[30px];
       >div {
         @apply col-span-1;
+      }
+      .nft-name {
+        @apply flex items-center;
+        span {
+          @apply font-bold text-2xl;
+        }
+      }
+      img {
+        @apply w-[62px] h-[93px] mr-4;
       }
       h5 {
         @apply text-xl mb-6;
@@ -36,7 +42,7 @@
     }
   }
   .power {
-    @apply bg-[#F8F5EF] rounded-3xl h-[266px];
+    @apply rounded-3xl h-[266px] border-[#FFAD93] border-solid border-[1px];
     h3 {
       @apply text-xl text-center mt-5;
     }
@@ -58,9 +64,15 @@
         @apply text-sm text-[#919090];
       }
       .share {
-        @apply leading-[44px] bg-[#F8F5EF] rounded-full px-5;
+        @apply flex items-center justify-center leading-[44px] bg-[#F8F5EF] rounded-full px-5;
         p {
           @apply leading-[44px];
+        }
+        img {
+          @apply w-6 h-6 cursor-pointer;
+        }
+        .share-copy {
+          @apply ml-3 mr-2;
         }
       }
     }
