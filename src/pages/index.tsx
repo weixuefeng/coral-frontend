@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 14:23:13
+ * @LastEditTime: 2024-03-15 14:45:11
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -14,7 +14,7 @@ import { PageModel } from 'model/navModel'
 export default Nft
 
 function Nft() {
-  let pageModel = new PageModel('Overview', 'Coral', '')
+  let pageModel = new PageModel('Overview', 'Coral', 'HOME')
   return <>{NormalLayout(Main(), pageModel)}</>
 }
 
@@ -145,13 +145,14 @@ function Main() {
         </div>
       </div>
       <div><img src="assets/image/footer-top.png" alt="" /></div>
-      <div className='bg-black44 pt-5 pb-[82px]'>
+      <div className='bg-black44 pt-5'>
         <div className='main officially'>
           <div className='text'>
             <p>DePIN NFTs enhance CID NFTs with more computing power and ecosystem benefits, such as governance rights and increased token rewards. </p>
             <p className='mt-10'>Acting as data processing nodes, each DePIN NFT receives allocated CID NFT computing power. Coral supplies iris recognition devices to DePIN NFT holders, enabling biometric verification and motion capture for the metaverse. DePIN NFTs conduct iris recognition, rewarding participants with Coral incentives. </p>
             <p className='mt-10'>Additionally, DePIN NFTs can autonomously promote and sell CID NFTs, with proceeds primarily benefiting the equipment provider and supporting Coral's ecosystem and maintenance.</p>
           </div>
+          <div className='home-footer'>© 2024 Coral App.</div>
           {/* <ul>
             <li>
               <h3>21</h3>

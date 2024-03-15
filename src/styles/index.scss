@@ -72,12 +72,15 @@
 
 .officially {
   // @apply flex items-center justify-between text-white text-xl;
-  @apply text-white text-xl text-center;
+  @apply text-[#FEFCF7] text-xl text-center;
   p {
     @apply text-xl;
   }
   h3 {
     @apply text-5xl mb-5;
+  }
+  .home-footer {
+    @apply text-sm pb-5 pt-[50px];
   }
   // ul {
   //   @apply w-[425px] flex justify-between;
