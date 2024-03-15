@@ -67,8 +67,8 @@ export default function Header() {
   }, []);
 
   return (
-    <>
-      <header className='header main'>
+    <div className='border-b-[1px] border-solid border-[#919090] md:border-b-0'>
+      <div className='header main'>
         <div className='logo'>
           <Link href="/" passHref>
             <img src="assets/image/bitDao_logo.png" alt="logo" />
@@ -83,29 +83,32 @@ export default function Header() {
             )
           })}
         </div>
-        {!isConnected && (<>
-          <div className='wallet'>
-            <button onClick={handWalletOpen}>Connect Wallet</button>
-            <div className='me-nav'>
-              <Link href="/me" passHref>
-              <img src="assets/image/icon_me.png" alt="logo" />
-              </Link>
+        <div className='hidden md:block'>
+          {!isConnected && (<>
+            <div className='wallet'>
+              <button onClick={handWalletOpen}>Connect Wallet</button>
+              <div className='me-nav'>
+                <Link href="/me" passHref>
+                  <img src="assets/image/icon_me.png" alt="logo" />
+                </Link>
+              </div>
             </div>
-          </div>
-          <ConnectWallet
-            isWalletOpen={isWalletOpen}
-            handWalletChange={handWalletChange}
-            onInvitationChange={handleInvitationChange}
-          />
-        </>
-        )}
-        {isConnected && <Connected address={address} />}
-        <div className='mobile-btn'
-          onClick={() => setMobileHeaderOpen(true)}
-        >
-          <img src="assets/image/ion_menu.png" alt="header" />
+            <ConnectWallet
+              isWalletOpen={isWalletOpen}
+              handWalletChange={handWalletChange}
+              onInvitationChange={handleInvitationChange}
+            />
+          </>
+          )}
+          {isConnected && <Connected address={address} />}
         </div>
-      </header>
+        <div className='mobile-btn'>
+          <img onClick={() => setMobileHeaderOpen(true)} className='menu' src="assets/image/ion_menu.png" alt="header" />
+          <Link href="/me" passHref>
+            <img className='menu-me' src="assets/image/icon_me.png" alt="logo" />
+          </Link>
+        </div>
+      </div>
       <div className='mobile-dialog'>
         <Transition.Root show={mobileHeaderOpen} as={Fragment}>
           <Dialog
@@ -151,12 +154,19 @@ export default function Header() {
                         <img src="assets/image/bitDao_logo.png" alt="logo" />
                       </Link>
                     </div>
-                    <button
-                      className="flex items-center justify-center bg-black bg-opacity-0 focus:outline-none dark:bg-opacity-0"
-                      onClick={() => setMobileHeaderOpen(false)}
-                    >
-                      <img className='w-[30px] h-[30px]' src="/assets/image/icon_close.png" alt="" />
-                    </button>
+                    <div className='flex items-center justify-center'>
+                      <button
+                        className="flex items-center justify-center bg-black bg-opacity-0 focus:outline-none dark:bg-opacity-0"
+                        onClick={() => setMobileHeaderOpen(false)}
+                      >
+                        <img className='w-[30px] h-[30px]' src="/assets/image/icon_close.png" alt="" />
+                      </button>
+                      <div className='ml-5'>
+                        <Link href="/me" passHref>
+                          <img className='w-[35px] h-[35px]' src="assets/image/icon_me.png" alt="logo" />
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </Transition.Child>
                 <nav>
@@ -173,6 +183,20 @@ export default function Header() {
                             )
                           })}
                         </ul>
+                        <div className='block md:hidden'>
+                          {!isConnected && (<>
+                            <div className='wallet'>
+                              <button onClick={handWalletOpen}>Connect Wallet</button>
+                            </div>
+                            <ConnectWallet
+                              isWalletOpen={isWalletOpen}
+                              handWalletChange={handWalletChange}
+                              onInvitationChange={handleInvitationChange}
+                            />
+                          </>
+                          )}
+                          {isConnected && <Connected address={address} />}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -183,7 +207,7 @@ export default function Header() {
           </Dialog>
         </Transition.Root>
       </div>
-    </>
+    </div>
   )
 }
 

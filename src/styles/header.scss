@@ -1,6 +1,6 @@
 .header {
   // @apply px-6 md:px-24 h-[77px] md:h-[118px] flex items-center justify-between z-20 relative bg-transparent;
-  @apply h-[77px] md:h-[118px] flex items-center justify-between z-20 relative bg-transparent;
+  @apply h-[70px] md:h-[118px] flex items-center justify-between z-20 relative bg-transparent px-6 md:px-0;
   .logo {
     @apply w-[104px] h-auto md:w-[260px] md:h-[72px] relative flex justify-center items-center;
     img {
@@ -63,15 +63,19 @@
     @apply border-[1px] border-solid border-green_big;
   }
   .mobile-btn {
-    @apply w-8 h-8 cursor-pointer block lg:hidden;
-    img{
-      @apply w-full h-auto;
+    @apply flex items-center justify-center cursor-pointer lg:hidden;
+    .menu{
+      @apply w-8 h-8;
+    }
+    .menu-me {
+      @apply w-[30px] h-[30px] ml-5;
     }
   }
 }
 
 .mobile-sidebar {
-  @apply w-full bg-gradient-to-b from-[#505050] to-[#adadad] px-6;
+  // @apply w-full bg-gradient-to-b from-[#505050] to-[#adadad] px-6;
+  @apply w-full bg-white px-6;
   .logo-wrap {
     @apply flex items-center justify-between py-6;
   }
@@ -86,16 +90,16 @@
 .menu-header {
   .nav {
     li {
-      @apply text-center py-4;
+      @apply text-center py-2;
     }
     a {
-      @apply text-white text-base;
+      @apply text-black44 text-base;
       &:hover {
-      @apply text-green00
+      @apply text-redFA;
       }
     }
     .active {
-      @apply text-green00;
+      @apply text-redFA;
     }
   }
   .twitter-list {
@@ -123,12 +127,12 @@
    
   }
   .wallet {
-    @apply flex justify-center items-center;
+    @apply flex justify-center items-center mt-5;
     button {
-      @apply w-48 h-14 text-base text-white text-center  rounded-3xl;
+      @apply w-full h-[46px] text-base text-white text-center rounded-3xl bg-redFF;
     }
   }
   .connected {
-    @apply w-48 h-14 mx-auto rounded-3xl text-base text-white flex items-center justify-center;
+    @apply w-full h-[46px] mx-auto rounded-3xl text-base text-white flex items-center justify-center;
   }
 }
