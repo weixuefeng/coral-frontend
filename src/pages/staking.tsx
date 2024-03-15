@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 19:30:01
+ * @LastEditTime: 2024-03-15 19:51:41
  * @FilePath: /coral-frontend/src/pages/staking.tsx
  */
 
@@ -76,6 +76,7 @@ function Main() {
             onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
             onDecrement={() => handleDecrementValue(cidNftValue, setCidNftValue)}
           />
+          <div className='mint block md:hidden'>Mint</div>
           <p className='own'>You own<span>5</span></p>
         </div>
       </div>
@@ -108,6 +109,7 @@ function Main() {
             onIncrement={() => handleIncrementValue(depinNftValue, setDepinNftValue)}
             onDecrement={() => handleDecrementValue(depinNftValue, setDepinNftValue)}
           />
+          <div className='mint block md:hidden'>Mint</div>
           <p className='own'>You own<span>5</span></p>
         </div>
       </div>

@@ -97,7 +97,7 @@
     transition-all border-none;
     @apply max-w-[545px];
     h3 {
-      @apply text-center text-xl md:text-2xl font-bold;
+      @apply text-center text-[18px] md:text-2xl font-bold;
     }
     .content {
       input,
@@ -105,18 +105,18 @@
         @apply h-10 w-full rounded-3xl text-base leading-10 md:text-lg;
       }
       input {
-        @apply h-[47px] leading-[47px] my-3 md:my-5 px-5 bg-[#F8F5EF] rounded-full;
+        @apply h-[47px] leading-[47px] my-3 md:my-5 px-5 bg-[#F8F5EF] rounded-full text-[18px];
         &::placeholder {
           // text-align: center;
           @apply text-[#D1D1D1] text-[18px];
         }
       }
       button {
-        @apply h-[46px] leading-[46px] text-white bg-redFF;
+        @apply h-[46px] leading-[46px] text-white bg-redFF text-base md:text-[18px];
       }
     }
     .please {
-      @apply text-center text-base md:text-[18px] mt-3 md:mt-5;
+      @apply text-center text-sm md:text-[18px] mt-3 md:mt-5;
     }
   }
   .connectWallet {
