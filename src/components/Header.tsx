@@ -9,12 +9,12 @@ const navList = [
   {
     src: '/',
     nav: 'Overview',
-    page: ''
+    page: 'HOME'
   },
   {
-    src: '/',
+    src: '/staking',
     nav: 'Staking',
-    page: 'Staking'
+    page: 'STAKING'
   }
 ]
 
@@ -36,7 +36,7 @@ const LinkTwitterList = [
   }
 ]
 
-export default function Header() {
+export default function Header({pageName}) {
 
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
   const { isConnected, address, publicKey, network, connect } = useBtc()
@@ -56,15 +56,15 @@ export default function Header() {
     setWalletOpen(newValue)
   }
 
-  const [launchName, setLaunchName] = useState('');
+  // const [launchName, setLaunchName] = useState('');
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const currentPath = window.location.pathname;
-      const launchName = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-      setLaunchName(launchName);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     const currentPath = window.location.pathname;
+  //     const launchName = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+  //     setLaunchName(launchName);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -78,9 +78,9 @@ export default function Header() {
           <div className='nav'>
             {navList.map((item, index) => {
               return (
-                <Link
-                  className={`${launchName == item.page ? 'active' : (launchName == '' ? '' : '')}`}
-                  key={`nav${index}`} href={item.src}>{item.nav}</Link>
+                <Link className={`${pageName == item.page ? 'active' : ''}`} key={`nav${index}`} href={item.src}>
+                  {item.nav}
+                </Link>
               )
             })}
           </div>
@@ -173,9 +173,10 @@ export default function Header() {
                             {navList.map((item, index) => {
                               return (
                                 <li key={index}>
-                                  <Link
-                                    className={`${launchName == item.page ? 'active' : (launchName == '' ? '' : '')}`}
-                                    key={index} href={item.src}>{item.nav}</Link></li>
+                                  <Link key={index} href={item.src}>
+                                    {item.nav}
+                                  </Link>
+                                </li>
                               )
                             })}
                           </ul>

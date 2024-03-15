@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-01-13 22:42:06
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 14:37:15
+ * @LastEditTime: 2024-03-15 17:44:30
  * @FilePath: /coral-frontend/src/components/Layout/normalLayout.tsx
  */
 
@@ -14,8 +14,7 @@ import { PageModel } from 'model/navModel'
 
 export default function NormalLayout(children: React.ReactNode, pageModel: PageModel = null): JSX.Element {
 
-  function FooterWrap() {
-    console.log('=====',pageModel?.name)
+  const FooterWrap = ()=> {
     if (pageModel?.name == "HOME") {
       return (
         <></>
@@ -33,7 +32,7 @@ export default function NormalLayout(children: React.ReactNode, pageModel: PageM
         <meta name="keywords" content="newtonproject" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header pageName={pageModel?.name} />
       {children}
       <div className={pageModel.name}>
         {FooterWrap()}

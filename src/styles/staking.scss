@@ -1,0 +1,17 @@
+.staking-page {
+  .title {
+    @apply mt-12 md:mt-[100px];
+    p {
+      @apply text-redFA text-sm md:text-xl;
+    }
+    h3 {
+      @apply text-2xl md:text-5xl mt-2;
+      span {
+        @apply font-bold;
+      }
+    }
+    .text {
+      @apply text-sm md:text-[18px] mt-[15px] md:mt-[26px];
+    }
+  }
+}
