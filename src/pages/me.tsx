@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 16:58:27
+ * @LastEditTime: 2024-03-15 20:39:05
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -11,9 +11,9 @@ import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import InvitationId from 'components/InvitationId'
 
-export default Nft
+export default Me
 
-function Nft() {
+function Me() {
   let pageModel = new PageModel('Me', 'Coral', '')
   return <>{NormalLayout(Main(), pageModel)}</>
 }

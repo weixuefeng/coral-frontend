@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 18:09:13
+ * @LastEditTime: 2024-03-15 20:39:16
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -12,9 +12,9 @@ import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import IncrementInput from 'components/IncrementInput'
 
-export default Nft
+export default Home
 
-function Nft() {
+function Home() {
   let pageModel = new PageModel('Overview', 'Coral', 'HOME')
   return <>{NormalLayout(Main(), pageModel)}</>
 }

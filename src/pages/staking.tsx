@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 19:51:41
+ * @LastEditTime: 2024-03-15 20:38:50
  * @FilePath: /coral-frontend/src/pages/staking.tsx
  */
 
@@ -11,9 +11,9 @@ import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import IncrementInput from 'components/IncrementInput'
 
-export default Nft
+export default Staking
 
-function Nft() {
+function Staking() {
   let pageModel = new PageModel('Staking', 'Coral', 'STAKING')
   return <>{NormalLayout(Main(), pageModel)}</>
 }
