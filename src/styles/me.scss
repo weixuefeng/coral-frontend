@@ -90,3 +90,50 @@
     }
   }
 }
+
+.invitation {
+  .wrap-box {
+    @apply w-full max-w-md transform overflow-hidden rounded-[40px] bg-white md:px-[50px] px-6 py-6 md:py-10 text-left align-middle shadow-xl
+    transition-all border-none;
+    @apply max-w-[545px];
+    h3 {
+      @apply text-center text-xl md:text-2xl font-bold;
+    }
+    .content {
+      input,
+      button {
+        @apply h-10 w-full rounded-3xl text-base leading-10 md:text-lg;
+      }
+      input {
+        @apply h-[47px] leading-[47px] my-3 md:my-5 px-5 bg-[#F8F5EF] rounded-full;
+        &::placeholder {
+          // text-align: center;
+          @apply text-[#D1D1D1] text-[18px];
+        }
+      }
+      button {
+        @apply h-[46px] leading-[46px] text-white bg-redFF;
+      }
+    }
+    .please {
+      @apply text-center text-base md:text-[18px] mt-3 md:mt-5;
+    }
+  }
+  .connectWallet {
+    h3 {
+      @apply pb-2 text-xl;
+    }
+    li {
+      @apply mt-4 flex h-14 cursor-pointer items-center justify-center px-5 md:justify-start;
+      @apply rounded-2xl text-xl;
+      img {
+        @apply mr-8 h-auto w-7;
+      }
+      &:nth-child(2) {
+        img {
+          @apply mr-7 w-9;
+        }
+      }
+    }
+  }
+}
