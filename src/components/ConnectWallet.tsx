@@ -5,12 +5,6 @@ import http from 'services/http'
 
 let defaultWalletList = [
   {
-    icon: "/assets/image/unisat.png",
-    name: "Unisat Wallet",
-    status: "check",
-    flag: "Unisat",
-  },
-  {
     icon: "/assets/image/okx.png",
     name: "OKX Wallet",
     status: "check",
@@ -21,6 +15,18 @@ let defaultWalletList = [
     name: "Gate Wallet",
     status: "check",
     flag: "Gate",
+  },
+  {
+    icon: "/assets/image/bit.png",
+    name: "Bitget Wallet",
+    status: "check",
+    flag: "Bitget",
+  },
+  {
+    icon: "/assets/image/unisat.png",
+    name: "Unisat Wallet",
+    status: "check",
+    flag: "Unisat",
   },
 ]
 
