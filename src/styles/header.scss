@@ -80,9 +80,9 @@
     @apply flex items-center justify-between py-6;
   }
   .logo {
-    @apply w-[104px] h-auto flex items-center justify-center;
+    @apply w-[149px] h-auto flex items-center justify-center;
     img {
-      @apply w-[104px] h-auto; 
+      @apply w-full h-auto; 
     }
   }
 }
