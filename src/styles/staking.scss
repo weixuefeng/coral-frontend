@@ -11,7 +11,66 @@
       }
     }
     .text {
-      @apply text-sm md:text-[18px] mt-[15px] md:mt-[26px];
+      @apply text-sm md:text-[18px] mt-[15px] md:mt-[26px] pb-3;
+    }
+  }
+  .nft-wrap {
+    @apply flex justify-between items-center mt-[50px];
+    .nft-left {
+      @apply flex items-center;
+      .img {
+        @apply w-[157px] h-[261px] mr-6;
+        img {
+          @apply w-full h-full;
+        }
+      }
+      h4 {
+        @apply text-[32px] font-bold;
+      }
+      ul {
+        @apply flex bg-[#F1F1F1] rounded-3xl p-5 mt-5;
+      }
+      li {
+        @apply text-white rounded-3xl p-[30px];
+        &:first-child {
+          @apply bg-redFA;
+        }
+        &:nth-child(2) {
+          @apply bg-black44 mx-5;
+        }
+        &:last-child {
+          @apply text-redFA bg-white;
+        }
+      }
+      h5 {
+        @apply text-[18px] text-center;
+      }
+      p {
+        @apply flex items-center text-3xl mt-3;
+      }
+      span {
+        @apply text-2xl ml-3;
+      }
+    }
+    .nft-right {
+      .add-minus {
+        @apply w-[30px] h-7 md:w-14 md:h-14 bg-redFA rounded-lg text-center leading-7 md:leading-[56px] text-xs md:text-2xl text-white cursor-pointer font-bold;
+      }
+      .value {
+        @apply w-[78px] md:w-[150px] h-7 leading-7 md:h-14 md:leading-[56px] text-center text-black text-sm md:text-2xl;
+      }
+      .text {
+        @apply w-[177px] h-14 leading-[56px] bg-redFA rounded-lg text-white text-2xl font-bold text-center ml-[35px];
+      }
+      .mint {
+        @apply leading-[30px] md:leading-[54px] bg-redFF text-white rounded-full text-center mt-5 md:mt-[30px] cursor-pointer text-sm md:text-xl;
+      }
+      .own {
+        @apply text-xl mt-4;
+        span {
+          @apply text-2xl font-bold ml-3;
+        }
+      }
     }
   }
 }

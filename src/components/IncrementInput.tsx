@@ -2,12 +2,12 @@
  * @Author:  
  * @Date: 2024-03-15 18:03:48
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 18:04:22
+ * @LastEditTime: 2024-03-15 19:27:39
  * @FilePath: /coral-frontend/src/components/IncrementInput.tsx
  */
 import React, { Fragment, useState } from 'react'
 
-export default function IncrementInput({ value, onInput, onIncrement, onDecrement }) {
+export default function IncrementInput({ value, onInput, onIncrement, onDecrement,text }) {
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     if (!isNaN(inputValue) && parseInt(inputValue) >= 1) {
@@ -28,7 +28,7 @@ export default function IncrementInput({ value, onInput, onIncrement, onDecremen
       />
       <div className='add-minus' onClick={onDecrement}>-</div>
     </div>
-    <div className='mint hidden md:block'>Mint</div>
+    <div className='mint hidden md:block'>{text}</div>
   </div>
   )
 }

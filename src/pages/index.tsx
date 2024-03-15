@@ -72,6 +72,7 @@ function Main() {
                 <li className='purchase'>
                   <div className='price'>Amount</div>
                   <IncrementInput
+                    text={'Mint'}
                     value={cidNftValue}
                     onInput={(value) => handleInputChange(value, setCidNftValue)}
                     onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
@@ -144,6 +145,7 @@ function Main() {
                 <li className='purchase'>
                   <div className='price'>Amount</div>
                   <IncrementInput
+                    text={'Mint'}
                     value={depinNftValue}
                     onInput={(value) => handleInputChange(value, setDepinNftValue)}
                     onIncrement={() => handleIncrementValue(depinNftValue, setDepinNftValue)}
