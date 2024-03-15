@@ -46,9 +46,16 @@
     }
   }
   .wallet {
-    @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl bg-redFF;
+    @apply flex items-center;
     button {
-      @apply w-full h-full text-base text-white text-center;
+      @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl bg-redFF;
+      @apply text-base text-white text-center mr-4;
+    }
+    .me-nav {
+      @apply w-[43px] h-[43px];
+      img {
+        @apply w-full h-full;
+      }
     }
   }
   .connected {

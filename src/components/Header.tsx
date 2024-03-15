@@ -86,7 +86,11 @@ export default function Header() {
         {!isConnected && (<>
           <div className='wallet'>
             <button onClick={handWalletOpen}>Connect Wallet</button>
-            <div><Link href="/me" passHref> me</Link></div>
+            <div className='me-nav'>
+              <Link href="/me" passHref>
+              <img src="assets/image/icon_me.png" alt="logo" />
+              </Link>
+            </div>
           </div>
           <ConnectWallet
             isWalletOpen={isWalletOpen}
@@ -151,7 +155,7 @@ export default function Header() {
                       className="flex items-center justify-center bg-black bg-opacity-0 focus:outline-none dark:bg-opacity-0"
                       onClick={() => setMobileHeaderOpen(false)}
                     >
-                      <img src="/assets/image/icon_close.png" alt="" />
+                      <img className='w-[30px] h-[30px]' src="/assets/image/icon_close.png" alt="" />
                     </button>
                   </div>
                 </Transition.Child>
