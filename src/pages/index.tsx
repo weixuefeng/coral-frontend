@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-14 21:25:49
+ * @LastEditTime: 2024-03-15 13:32:41
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -76,7 +76,10 @@ function Main() {
               </ul>
             </div>
           </div>
-          <div></div>
+          <div>
+            <img src="assets/image/cid_nft_bg.png" alt="nft-bg" />
+            <img src="assets/image/nft1.png" alt="nft" />
+          </div>
         </div>
       </div>
       <div className='bg-redFA py-[82px] mt-[100px]'>

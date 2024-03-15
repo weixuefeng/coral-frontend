@@ -71,7 +71,7 @@ export default function Header() {
       <div className='header main'>
         <div className='logo'>
           <Link href="/" passHref>
-            <img src="assets/image/bitDao_logo.png" alt="logo" />
+            <img src="assets/image/logo.png" alt="logo" />
           </Link>
         </div>
         <div className='nav'>
@@ -151,7 +151,7 @@ export default function Header() {
                   <div className="logo-wrap">
                     <div className='logo'>
                       <Link href="/" passHref>
-                        <img src="assets/image/bitDao_logo.png" alt="logo" />
+                        <img src="assets/image/logo.png" alt="logo" />
                       </Link>
                     </div>
                     <div className='flex items-center justify-center'>
