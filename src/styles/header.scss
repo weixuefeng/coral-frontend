@@ -1,5 +1,4 @@
 .header {
-  // @apply px-6 md:px-24 h-[77px] md:h-[118px] flex items-center justify-between z-20 relative bg-transparent;
   @apply h-[70px] md:h-[118px] flex items-center justify-between z-20 relative bg-transparent px-6 md:px-0;
   .logo {
     @apply w-[149px] h-[42px] md:w-[278px] md:h-[78px] relative flex justify-center items-center;
@@ -16,7 +15,7 @@
       }
     }
     .active {
-      @apply text-redFA;
+      @apply text-redFA font-bold;
     }
   }
   .twitter-list {
@@ -48,8 +47,8 @@
   .wallet {
     @apply flex items-center;
     button {
-      @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl bg-redFF;
-      @apply text-base text-white text-center mr-4;
+      @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl border-[1px] border-solid border-black44;
+      @apply text-base text-center mr-4;
     }
     .me-nav {
       @apply w-[43px] h-[43px];
@@ -74,7 +73,6 @@
 }
 
 .mobile-sidebar {
-  // @apply w-full bg-gradient-to-b from-[#505050] to-[#adadad] px-6;
   @apply w-full bg-white px-6;
   .logo-wrap {
     @apply flex items-center justify-between py-6;
