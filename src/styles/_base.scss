@@ -27,5 +27,5 @@ button {
 }
 
 .main {
-  @apply max-w-[1240px] mx-auto;
+  @apply px-6 xl:px-0 max-w-[1240px] mx-auto;
 }

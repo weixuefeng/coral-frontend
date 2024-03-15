@@ -1,3 +1,4 @@
 .footer {
-  @apply flex w-full items-center justify-center text-center;
+  @apply text-center text-sm pt-6 md:pt-0 mb-6 mt-10 md:mb-10 md:mt-28 mx-6 md:mx-0;
+  @apply border-t-[1px] border-solid border-[#919090] md:border-t-0;
 }

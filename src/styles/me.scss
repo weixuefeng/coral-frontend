@@ -1,40 +1,43 @@
 .me-page {
   .title {
-    @apply mt-[100px];
+    @apply mt-12 md:mt-[100px] text-center md:text-left;
     p {
-      @apply text-redFA text-xl;
+      @apply text-redFA text-sm md:text-xl;
     }
     h3 {
-      @apply text-5xl mt-2;
+      @apply text-2xl md:text-5xl mt-2;
       span {
         @apply font-bold;
       }
     }
   }
   .mt-nft {
-    @apply grid grid-cols-4;
+    @apply md:grid md:grid-cols-4;
     ul {
-      @apply col-span-3 mt-5;
+      @apply md:col-span-3 mt-10 md:mt-5;
     }
     li {
-      @apply grid grid-cols-3 py-[30px];
+      @apply grid grid-cols-3 pb-[38px] md:py-[30px];
       >div {
         @apply col-span-1;
       }
       .nft-name {
         @apply flex items-center;
         span {
-          @apply font-bold text-2xl;
+          @apply font-bold text-2xl hidden md:block;
         }
       }
       img {
-        @apply w-[62px] h-[93px] mr-4;
+        @apply w-[88px] h-[133px] md:w-[62px] md:h-[93px] mr-[22px] md:mr-4;
+      }
+      h3 {
+        @apply text-base font-bold mb-3;
       }
       h5 {
-        @apply text-xl mb-6;
+        @apply text-xs md:text-xl mb-1 md:mb-6 mt-3 md:mt-0;
       }
       p {
-        @apply text-2xl text-black font-bold;
+        @apply text-sm md:text-2xl text-black font-bold;
       }
     }
     .power {
@@ -42,31 +45,31 @@
     }
   }
   .power {
-    @apply rounded-3xl h-[266px] border-[#FFAD93] border-solid border-[1px];
+    @apply rounded-3xl h-[171px] md:h-[266px] border-[#FFAD93] border-solid border-[1px];
     h3 {
-      @apply text-xl text-center mt-5;
+      @apply text-base md:text-xl text-center mt-5;
     }
     .content {
-      @apply grid grid-cols-2 text-2xl font-bold mt-20;
+      @apply grid grid-cols-2 text-2xl font-bold mt-10 md:mt-20;
       span {
         @apply col-span-1 text-center;
       }
     }
   }
   .invite-wrap {
-    @apply flex items-center justify-between mt-20 border-[1px] border-solid border-[#F8F5EF] rounded-full p-5;
+    @apply md:flex md:items-center md:justify-between mt-10 md:mt-20 border-[1px] border-solid border-[#F8F5EF] rounded-3xl md:rounded-full p-5;
     .invite {
-      @apply flex;
+      @apply md:flex;
       h5 {
-        @apply leading-[44px] text-base font-bold mr-5;
+        @apply leading-[44px] text-sm md:text-base font-bold mr-5 text-center md:text-left;
       }
       p {
         @apply text-sm text-[#919090];
       }
       .share {
-        @apply flex items-center justify-center leading-[44px] bg-[#F8F5EF] rounded-full px-5;
+        @apply flex items-center justify-center leading-[44px] bg-[#F8F5EF] rounded-full px-5 mt-2 mb-5 md:my-0;
         p {
-          @apply leading-[44px];
+          @apply leading-[44px] text-xs md:text-sm;
         }
         img {
           @apply w-6 h-6 cursor-pointer;
@@ -77,7 +80,13 @@
       }
     }
     .address {
-      @apply flex items-center justify-center text-sm text-[#FEFCF7] bg-black44 rounded-full px-5 py-[10px];
+      @apply flex items-center justify-center text-[#FEFCF7] bg-black44 rounded-full px-5 py-[10px];
+      .tit {
+        @apply text-[10px] md:text-sm;
+      }
+      .text {
+        @apply text-xs md:text-sm ml-3;
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 09:49:39
+ * @LastEditTime: 2024-03-15 10:43:00
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -33,10 +33,13 @@ function Main() {
               <span>CID NFTs</span>
             </div>
             <div>
+              <h3 className='block md:hidden'>CID NFTs</h3>
               <h5>Available</h5>
               <p>0</p>
+              <h5 className='block md:hidden'>Staked</h5>
+              <p className='block md:hidden'>0</p>
             </div>
-            <div>
+            <div className='hidden md:block'>
               <h5>Staked</h5>
               <p>0</p>
             </div>
@@ -47,10 +50,13 @@ function Main() {
               <span>DePIN NFTs</span>
             </div>
             <div>
+              <h3 className='block md:hidden'>DePIN NFTs</h3>
               <h5>Available</h5>
               <p>0</p>
+              <h5 className='block md:hidden'>Staked</h5>
+              <p className='block md:hidden'>0</p>
             </div>
-            <div>
+            <div className='hidden md:block'>
               <h5>Staked</h5>
               <p>0</p>
             </div>
@@ -74,8 +80,8 @@ function Main() {
           </div>
         </div>
         <div className='address'>
-          <p>Your Web3 Referrer :</p>
-          <p>0xasdfv...98jyUkL</p>
+          <p className='tit'>Your Web3 Referrer :</p>
+          <p className='text'>0xasdfv...98jyUkL</p>
         </div>
       </div>
     </div>
