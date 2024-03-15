@@ -173,7 +173,7 @@ export default function Header({pageName}) {
                             {navList.map((item, index) => {
                               return (
                                 <li key={index}>
-                                  <Link key={index} href={item.src}>
+                                  <Link className={`${pageName == item.page ? 'active' : ''}`} key={index} href={item.src}>
                                     {item.nav}
                                   </Link>
                                 </li>
