@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 13:32:41
+ * @LastEditTime: 2024-03-15 14:23:13
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -76,9 +76,9 @@ function Main() {
               </ul>
             </div>
           </div>
-          <div>
+          <div className='nft-img'>
             <img src="assets/image/cid_nft_bg.png" alt="nft-bg" />
-            <img src="assets/image/nft1.png" alt="nft" />
+            <img className='img' src="assets/image/nft1.png" alt="nft" />
           </div>
         </div>
       </div>
@@ -100,14 +100,23 @@ function Main() {
           </ul> */}
         </div>
       </div>
-      <div className='main cid-nft depin-nft'>
-        <div className='nft'>
-          <p className='tit'>Coral DePIN NFT</p>
-          <h3>Coral&nbsp;<span>CID NFT</span></h3>
-          <p>A superior NFT above CID.</p>
-          <p>Enjoy the ability to manage and distribute the CID NFT.</p>
-          <p>Each Depin NFT belongs to a verifiable data node, and the CID NFT managed by Depin NFT can obtain better asset returns.</p>
-          <div className='nft-name'>
+      <div className='main'>
+        <div className='cid-nft depin-nft'>
+          <div className='nft-img'>
+            <img src="assets/image/depin_nft_bg.png" alt="nft-bg" />
+            <img className='img' src="assets/image/nft2.png" alt="nft" />
+          </div>
+          <div className='nft'>
+            <div className='best'>
+              <img className='img1' src="assets/image/best.png" alt="" />
+              <img className='img2' src="assets/image/best_val.png" alt="" />
+            </div>
+            <p className='tit'>Coral DePIN NFT</p>
+            <h3>Coral&nbsp;<span>CID NFT</span></h3>
+            <p>A superior NFT above CID.</p>
+            <p>Enjoy the ability to manage and distribute the CID NFT.</p>
+            <p>Each Depin NFT belongs to a verifiable data node, and the CID NFT managed by Depin NFT can obtain better asset returns.</p>
+            <div className='nft-name'>
               <ul>
                 <li>
                   <span>NFT Name</span>
@@ -132,10 +141,11 @@ function Main() {
                 </li>
               </ul>
             </div>
+          </div>
         </div>
-        <div></div>
       </div>
-      <div className='bg-black44 pt-5 pb-[82px] mt-[100px]'>
+      <div><img src="assets/image/footer-top.png" alt="" /></div>
+      <div className='bg-black44 pt-5 pb-[82px]'>
         <div className='main officially'>
           <div className='text'>
             <p>DePIN NFTs enhance CID NFTs with more computing power and ecosystem benefits, such as governance rights and increased token rewards. </p>

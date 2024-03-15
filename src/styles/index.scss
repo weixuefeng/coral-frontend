@@ -1,4 +1,5 @@
 .cid-nft {
+  @apply mt-[100px] flex items-center justify-between;
   .nft {
     @apply w-[645px];
     .tit {
@@ -14,7 +15,10 @@
       @apply text-lg;
     }
     .nft-name {
-      @apply p-5 bg-[#F8F5EF] rounded-3xl mt-[30px];
+      @apply flex;
+      ul {
+        @apply w-[645px] p-5 bg-[#F8F5EF] rounded-3xl mt-[30px];
+      }
       li {
         @apply grid grid-cols-2 justify-center leading-[56px] mb-3;
         span {
@@ -44,11 +48,31 @@
       @apply leading-[54px] bg-redFF text-white rounded-full text-center mt-[30px] cursor-pointer;
     }
   }
+  .nft-img {
+    @apply relative w-[527px];
+    .img {
+      @apply w-[353px] h-[530px] absolute top-0 left-1/2 -translate-x-1/2;
+    }
+  }
+}
+.depin-nft {
+  .nft {
+    @apply relative pt-10;
+    .best {
+      @apply w-[134px] h-[134px] absolute top-0 right-0;
+      .img1 {
+        @apply w-full h-full;
+      }
+      .img2 {
+        @apply w-[72px] h-[60px] absolute top-1/2 -translate-y-1/2 left-0 translate-x-1/2;
+      }
+    }
+  }
 }
 
 .officially {
   // @apply flex items-center justify-between text-white text-xl;
-  @apply text-white text-xl;
+  @apply text-white text-xl text-center;
   p {
     @apply text-xl;
   }
