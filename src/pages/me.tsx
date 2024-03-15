@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 20:39:05
+ * @LastEditTime: 2024-03-15 20:40:29
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -14,7 +14,7 @@ import InvitationId from 'components/InvitationId'
 export default Me
 
 function Me() {
-  let pageModel = new PageModel('Me', 'Coral', '')
+  let pageModel = new PageModel('Me', 'Coral', 'ME')
   return <>{NormalLayout(Main(), pageModel)}</>
 }
 
