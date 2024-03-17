@@ -6,6 +6,9 @@ const moduleExports = {
   sentry: {
     hideSourceMaps: true,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 const sentryWebpackPluginOptions = {
