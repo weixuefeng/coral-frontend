@@ -1,4 +1,3 @@
-
 export const enTransaction = {
   // WAVE: 'WAVE',
   FEATURES: 'FEATURES',

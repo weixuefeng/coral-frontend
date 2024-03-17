@@ -17,10 +17,10 @@ function _get(url: string) {
       .then(response => {
         if (response.status === 200) {
           let res = response.data
-          if (res.code == "0") {
+          if (res.code == '0') {
             resolve(res.data)
           } else {
-            console.error(res.msg);
+            console.error(res.msg)
           }
         } else {
           reject(response.statusText)
@@ -33,7 +33,6 @@ function _get(url: string) {
   })
 }
 
-
 function _post(url: string, params: object) {
   return new Promise(function (resolve, reject) {
     client
@@ -44,7 +43,7 @@ function _post(url: string, params: object) {
           if (res.error_code == 1) {
             resolve(res.result)
           } else {
-            console.error(res.error_message);
+            console.error(res.error_message)
           }
         } else {
           reject(response.statusText)
@@ -67,39 +66,37 @@ class Http {
     return httpInstance
   }
 
-  requestLogin(address: string){
+  requestLogin(address: string) {
     var params = {
-      "address": address
+      address: address,
     }
     return _post(`login/`, params)
   }
 
-  requestRoundInfo(){
-    return _post(`round/info/`,{})
+  requestRoundInfo() {
+    return _post(`round/info/`, {})
   }
 
   requestSubmitInviteCode(inviteAddress: string, myAddress: string) {
     var params = {
-      "invite_code": inviteAddress,
-      "address": myAddress
+      invite_code: inviteAddress,
+      address: myAddress,
     }
     return _post(`submit/invite/code/`, params)
   }
 
   requestRecordTransaction(userAddress: string, receiveAddress: string, txid: string, round: number, price: number) {
     var params = {
-      "action": "buy",
-      "round": round,
-      "price": price,
-      "from_address": userAddress,
-      "receive_address": receiveAddress,
-      "btc_value": price,
-      "txid": txid
+      action: 'buy',
+      round: round,
+      price: price,
+      from_address: userAddress,
+      receive_address: receiveAddress,
+      btc_value: price,
+      txid: txid,
     }
     return _post(`user/record/transaction/`, params)
   }
-  
 }
-const http = new Http();
-export default http;
-
+const http = new Http()
+export default http

@@ -33,7 +33,7 @@
       }
     }
     .price {
-      @apply text-xs md:text-[28px]; 
+      @apply text-xs md:text-[28px];
     }
     .add-minus {
       @apply w-[30px] h-7 md:w-14 md:h-14 bg-redFA rounded-lg text-center leading-7 md:leading-[56px] text-xs md:text-2xl text-white cursor-pointer font-bold;
@@ -71,7 +71,7 @@
         @apply w-[72px] h-[60px] absolute top-1/2 -translate-y-1/2 left-0 translate-x-1/2;
       }
     }
-    .nft-name  {
+    .nft-name {
       @apply mt-12 md:mt-0;
     }
   }

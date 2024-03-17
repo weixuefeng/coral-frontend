@@ -1,52 +1,49 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
-import {
-  ConnectWallet as EVMConnectWallet, darkTheme, lightTheme, useAddress,
-} from "@thirdweb-dev/react";
+import { ConnectWallet as EVMConnectWallet, darkTheme, lightTheme, useAddress } from '@thirdweb-dev/react'
 
 const navList = [
   {
     src: '/',
     nav: 'Overview',
-    page: 'HOME'
+    page: 'HOME',
   },
   {
     src: '/staking',
     nav: 'Staking',
-    page: 'STAKING'
-  }
+    page: 'STAKING',
+  },
 ]
 
 export default function Header({ pageName }) {
-
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
-  const [isInvitation, setIsInvitation] = useState(false);
-  const account = useAddress();
-  const [isWalletOpen, setWalletOpen] = useState(false);
+  const [isInvitation, setIsInvitation] = useState(false)
+  const account = useAddress()
+  const [isWalletOpen, setWalletOpen] = useState(false)
 
-  const handleInvitationChange = (newValue) => {
-    setIsInvitation(newValue);
-  };
+  const handleInvitationChange = newValue => {
+    setIsInvitation(newValue)
+  }
 
   const handWalletOpen = () => {
-    setWalletOpen(!isWalletOpen);
-  };
+    setWalletOpen(!isWalletOpen)
+  }
 
-  const handWalletChange = (newValue) => {
+  const handWalletChange = newValue => {
     setWalletOpen(newValue)
   }
 
   return (
     <>
-      <div className='border-b-[1px] border-solid border-[#919090] md:border-b-0'>
-        <div className='header main'>
-          <div className='logo'>
+      <div className="border-b-[1px] border-solid border-[#919090] md:border-b-0">
+        <div className="header main">
+          <div className="logo">
             <Link href="/" passHref>
               <img src="assets/image/logo.png" alt="logo" />
             </Link>
           </div>
-          <div className='nav'>
+          <div className="nav">
             {navList.map((item, index) => {
               return (
                 <Link className={`${pageName == item.page ? 'active' : ''}`} key={`nav${index}`} href={item.src}>
@@ -55,18 +52,18 @@ export default function Header({ pageName }) {
               )
             })}
           </div>
-          <div className='wallet-wrap'>
-            <div className='wallet'>
+          <div className="wallet-wrap">
+            <div className="wallet">
               <EVMConnectWallet
                 theme={lightTheme({
                   colors: {
-                    borderColor: "#ffffff",
-                    connectedButtonBg: "#00000000",
-                    primaryButtonText: "#444444"
+                    borderColor: '#ffffff',
+                    connectedButtonBg: '#00000000',
+                    primaryButtonText: '#444444',
                   },
                 })}
-                btnTitle={"CONNECT"}
-                modalSize={"wide"}
+                btnTitle={'CONNECT'}
+                modalSize={'wide'}
                 switchToActiveChain={true}
               />
             </div>
@@ -88,20 +85,25 @@ export default function Header({ pageName }) {
             </>
             )}
             {account && <Connected address={account} />} */}
-            <div className='me-nav'>
+            <div className="me-nav">
               <Link href="/me" passHref>
                 <img src="assets/image/icon_me.png" alt="logo" />
               </Link>
             </div>
           </div>
-          <div className='mobile-btn'>
-            <img onClick={() => setMobileHeaderOpen(true)} className='menu' src="assets/image/ion_menu.png" alt="header" />
+          <div className="mobile-btn">
+            <img
+              onClick={() => setMobileHeaderOpen(true)}
+              className="menu"
+              src="assets/image/ion_menu.png"
+              alt="header"
+            />
             <Link href="/me" passHref>
-              <img className='menu-me' src="assets/image/icon_me.png" alt="logo" />
+              <img className="menu-me" src="assets/image/icon_me.png" alt="logo" />
             </Link>
           </div>
         </div>
-        <div className='mobile-dialog'>
+        <div className="mobile-dialog">
           <Transition.Root show={mobileHeaderOpen} as={Fragment}>
             <Dialog
               as="div"
@@ -141,21 +143,21 @@ export default function Header({ pageName }) {
                     leaveTo="opacity-0"
                   >
                     <div className="logo-wrap">
-                      <div className='logo'>
+                      <div className="logo">
                         <Link href="/" passHref>
                           <img src="assets/image/logo.png" alt="logo" />
                         </Link>
                       </div>
-                      <div className='flex items-center justify-center'>
+                      <div className="flex items-center justify-center">
                         <button
                           className="flex items-center justify-center bg-black bg-opacity-0 focus:outline-none dark:bg-opacity-0"
                           onClick={() => setMobileHeaderOpen(false)}
                         >
-                          <img className='w-[30px] h-[30px]' src="/assets/image/icon_close.png" alt="" />
+                          <img className="w-[30px] h-[30px]" src="/assets/image/icon_close.png" alt="" />
                         </button>
-                        <div className='ml-5'>
+                        <div className="ml-5">
                           <Link href="/me" passHref>
-                            <img className='w-[35px] h-[35px]' src="assets/image/icon_me.png" alt="logo" />
+                            <img className="w-[35px] h-[35px]" src="assets/image/icon_me.png" alt="logo" />
                           </Link>
                         </div>
                       </div>
@@ -165,28 +167,32 @@ export default function Header({ pageName }) {
                     <div className="space-y-2 px-2">
                       <div className={'menu-header'}>
                         <div onClick={() => setMobileHeaderOpen(false)}>
-                          <ul className='nav'>
+                          <ul className="nav">
                             {navList.map((item, index) => {
                               return (
                                 <li key={index}>
-                                  <Link className={`${pageName == item.page ? 'active' : ''}`} key={index} href={item.src}>
+                                  <Link
+                                    className={`${pageName == item.page ? 'active' : ''}`}
+                                    key={index}
+                                    href={item.src}
+                                  >
                                     {item.nav}
                                   </Link>
                                 </li>
                               )
                             })}
                           </ul>
-                          <div className='wallet-h5'>
+                          <div className="wallet-h5">
                             <EVMConnectWallet
                               theme={lightTheme({
                                 colors: {
-                                  borderColor: "#ffffff",
-                                  connectedButtonBg: "#00000000",
-                                  primaryButtonText: "#444444"
+                                  borderColor: '#ffffff',
+                                  connectedButtonBg: '#00000000',
+                                  primaryButtonText: '#444444',
                                 },
                               })}
-                              btnTitle={"CONNECT"}
-                              modalSize={"wide"}
+                              btnTitle={'CONNECT'}
+                              modalSize={'wide'}
                               switchToActiveChain={true}
                             />
                             {/* {!account && (<>
@@ -221,13 +227,10 @@ export default function Header({ pageName }) {
   )
 }
 
-const Connected = (props) => {
+const Connected = props => {
   const { address } = props
-  return (
-    <div className='connected'>{newAddress(address)}</div>
-  )
+  return <div className="connected">{newAddress(address)}</div>
 }
-
 
 function newAddress(oldAddress) {
   let displayAddress
@@ -236,5 +239,3 @@ function newAddress(oldAddress) {
   }
   return displayAddress
 }
-
-

@@ -15,7 +15,7 @@
       input {
         @apply bg-white mb-3 mt-8 px-4;
         &::placeholder {
-          @apply text-center
+          @apply text-center;
         }
       }
       button {

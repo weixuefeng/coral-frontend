@@ -1,7 +1,7 @@
 /*
- * @Author:  
+ * @Author:
  * @Date: 2024-03-15 16:54:32
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-15 20:02:21
  * @FilePath: /coral-frontend/src/components/InvitationId.tsx
  */
@@ -34,7 +34,7 @@ const InvitationId = props => {
   return (
     <>
       <Transition appear show={isInvitation} as={Fragment}>
-      {/* <Transition appear show={true} as={Fragment}> */}
+        {/* <Transition appear show={true} as={Fragment}> */}
         <Dialog as="div" className="relative z-50" onClose={closeModalBox}>
           <Transition.Child
             as={Fragment}

@@ -1,7 +1,7 @@
 /*
- * @Author:  
+ * @Author:
  * @Date: 2024-01-13 22:42:06
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-13 18:03:50
  * @FilePath: /coral-frontend/src/i18n/locale/zh/index.ts
  */

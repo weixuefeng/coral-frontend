@@ -1,7 +1,7 @@
 /*
- * @Author:  
+ * @Author:
  * @Date: 2024-01-13 22:42:06
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-15 17:44:30
  * @FilePath: /coral-frontend/src/components/Layout/normalLayout.tsx
  */
@@ -13,17 +13,14 @@ import Footer from '../Footer'
 import { PageModel } from 'model/navModel'
 
 export default function NormalLayout(children: React.ReactNode, pageModel: PageModel = null): JSX.Element {
-
-  const FooterWrap = ()=> {
-    if (pageModel?.name == "HOME") {
-      return (
-        <></>
-      )
+  const FooterWrap = () => {
+    if (pageModel?.name == 'HOME') {
+      return <></>
     } else {
       return <Footer />
     }
   }
-  
+
   return (
     <>
       <Head>
@@ -34,9 +31,7 @@ export default function NormalLayout(children: React.ReactNode, pageModel: PageM
       </Head>
       <Header pageName={pageModel?.name} />
       {children}
-      <div className={pageModel.name}>
-        {FooterWrap()}
-      </div>
+      <div className={pageModel.name}>{FooterWrap()}</div>
     </>
   )
 }

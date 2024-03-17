@@ -18,7 +18,7 @@
     }
     li {
       @apply grid grid-cols-3 pb-[38px] md:py-[30px];
-      >div {
+      > div {
         @apply col-span-1;
       }
       .nft-name {

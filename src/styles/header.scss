@@ -73,7 +73,7 @@
   }
   .mobile-btn {
     @apply flex items-center justify-center cursor-pointer md:hidden;
-    .menu{
+    .menu {
       @apply w-8 h-8;
     }
     .menu-me {
@@ -90,7 +90,7 @@
   .logo {
     @apply w-[149px] h-auto flex items-center justify-center;
     img {
-      @apply w-full h-auto; 
+      @apply w-full h-auto;
     }
   }
 }
@@ -103,7 +103,7 @@
     a {
       @apply text-black44 text-base;
       &:hover {
-      @apply text-redFA;
+        @apply text-redFA;
       }
     }
     .active {
@@ -132,7 +132,6 @@
     .img2 {
       @apply hidden;
     }
-   
   }
   .wallet-h5 {
     @apply block md:hidden mt-5;

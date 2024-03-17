@@ -1,4 +1,3 @@
-
 // get token
 export function getToken(key) {
   let getToken: any

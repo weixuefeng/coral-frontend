@@ -1,7 +1,7 @@
 /*
- * @Author:  
+ * @Author:
  * @Date: 2024-03-14 21:36:55
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-15 20:40:29
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
@@ -49,68 +49,70 @@ function Main() {
 
   return (
     <>
-      <div className='main me-page'>
-        <div className='title'>
+      <div className="main me-page">
+        <div className="title">
           <p>PRODUCT NFT</p>
-          <h3>Your <span>Information</span></h3>
+          <h3>
+            Your <span>Information</span>
+          </h3>
         </div>
-        <div className='mt-nft'>
+        <div className="mt-nft">
           <ul>
             <li>
-              <div className='nft-name'>
+              <div className="nft-name">
                 <img src="assets/image/cid-nft.png" alt="nft" />
                 <span>CID NFTs</span>
               </div>
               <div>
-                <h3 className='block md:hidden'>CID NFTs</h3>
+                <h3 className="block md:hidden">CID NFTs</h3>
                 <h5>Available</h5>
                 <p>0</p>
-                <h5 className='block md:hidden'>Staked</h5>
-                <p className='block md:hidden'>0</p>
+                <h5 className="block md:hidden">Staked</h5>
+                <p className="block md:hidden">0</p>
               </div>
-              <div className='hidden md:block'>
+              <div className="hidden md:block">
                 <h5>Staked</h5>
                 <p>0</p>
               </div>
             </li>
             <li>
-              <div className='nft-name'>
+              <div className="nft-name">
                 <img src="assets/image/depin-nft.png" alt="nft" />
                 <span>DePIN NFTs</span>
               </div>
               <div>
-                <h3 className='block md:hidden'>DePIN NFTs</h3>
+                <h3 className="block md:hidden">DePIN NFTs</h3>
                 <h5>Available</h5>
                 <p>0</p>
-                <h5 className='block md:hidden'>Staked</h5>
-                <p className='block md:hidden'>0</p>
+                <h5 className="block md:hidden">Staked</h5>
+                <p className="block md:hidden">0</p>
               </div>
-              <div className='hidden md:block'>
+              <div className="hidden md:block">
                 <h5>Staked</h5>
                 <p>0</p>
               </div>
             </li>
           </ul>
-          <div className='power'>
+          <div className="power">
             <h3>Computing Power</h3>
-            <div className='content'>
+            <div className="content">
               <span>0</span>
               <span>T</span>
             </div>
           </div>
         </div>
-        <div className='invite-wrap'>
-          <div className='invite'>
+        <div className="invite-wrap">
+          <div className="invite">
             <h5>Invite Friends to join Coralverse now </h5>
-            <div className='share'>
+            <div className="share">
               <p>http://invite.coralapp.io/user98732</p>
-              <img className='share-copy' src="assets/image/copy.png" alt="copy" />
+              <img className="share-copy" src="assets/image/copy.png" alt="copy" />
               <img src="assets/image/share.png" alt="share" />
             </div>
           </div>
-          <div className='address'>
-            <p className='tit'>Your Web3 Referrer :</p>
-            <p className='text'>0xasdfv...98jyUkL</p>
+          <div className="address">
+            <p className="tit">Your Web3 Referrer :</p>
+            <p className="text">0xasdfv...98jyUkL</p>
           </div>
         </div>
       </div>
@@ -121,7 +123,5 @@ function Main() {
         title={inviteTitle}
       />
     </>
-
   )
 }
-

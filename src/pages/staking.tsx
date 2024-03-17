@@ -1,7 +1,7 @@
 /*
- * @Author:  
+ * @Author:
  * @Date: 2024-03-14 21:36:55
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-15 20:38:50
  * @FilePath: /coral-frontend/src/pages/staking.tsx
  */
@@ -19,101 +19,122 @@ function Staking() {
 }
 
 function Main() {
-  const [cidNftValue, setCidNftValue] = useState("1");
-  const [depinNftValue, setDepinNftValue] = useState("1");
+  const [cidNftValue, setCidNftValue] = useState('1')
+  const [depinNftValue, setDepinNftValue] = useState('1')
 
   const handleInputChange = (value, setValue) => {
     if (!isNaN(value) && parseInt(value) >= 1) {
-      setValue(value);
+      setValue(value)
     }
-  };
+  }
 
   const handleIncrementValue = (value, setValue) => {
-    const newValue = parseInt(value) + 1;
-    setValue(newValue.toString());
-  };
+    const newValue = parseInt(value) + 1
+    setValue(newValue.toString())
+  }
 
   const handleDecrementValue = (value, setValue) => {
-    const newValue = parseInt(value) - 1;
+    const newValue = parseInt(value) - 1
     if (newValue >= 1) {
-      setValue(newValue.toString());
+      setValue(newValue.toString())
     }
-  };
+  }
 
   return (
-    <div className='main staking-page'>
-      <div className='title'>
+    <div className="main staking-page">
+      <div className="title">
         <p>PRODUCT NFT</p>
-        <h3>Pledge <span> NFT</span></h3>
-        <div className='text'>Pledge your Coral NFT to gain more return on your investment.</div>
+        <h3>
+          Pledge <span> NFT</span>
+        </h3>
+        <div className="text">Pledge your Coral NFT to gain more return on your investment.</div>
       </div>
-      <div className='nft-wrap'>
-        <div className='nft-left'>
-          <div className='img'><img src="assets/image/nft1.png" alt="nft" /></div>
+      <div className="nft-wrap">
+        <div className="nft-left">
+          <div className="img">
+            <img src="assets/image/nft1.png" alt="nft" />
+          </div>
           <div>
             <h4>Coral CID NFTs</h4>
             <ul>
               <li>
                 <h5>Total Computing Power</h5>
-                <p>30,294<span>T</span></p>
+                <p>
+                  30,294<span>T</span>
+                </p>
               </li>
               <li>
                 <h5>Claimed</h5>
-                <p>10,267<span>T</span></p>
+                <p>
+                  10,267<span>T</span>
+                </p>
               </li>
               <li>
                 <h5>APY</h5>
-                <p>109<span>%</span></p>
+                <p>
+                  109<span>%</span>
+                </p>
               </li>
             </ul>
           </div>
         </div>
-        <div className='nft-right'>
+        <div className="nft-right">
           <IncrementInput
             text={'Pledge'}
             value={cidNftValue}
-            onInput={(value) => handleInputChange(value, setCidNftValue)}
+            onInput={value => handleInputChange(value, setCidNftValue)}
             onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
             onDecrement={() => handleDecrementValue(cidNftValue, setCidNftValue)}
           />
-          <div className='mint block md:hidden'>Mint</div>
-          <p className='own'>You own<span>5</span></p>
+          <div className="mint block md:hidden">Mint</div>
+          <p className="own">
+            You own<span>5</span>
+          </p>
         </div>
       </div>
-      <div className='nft-wrap'>
-        <div className='nft-left'>
-          <div className='img'><img src="assets/image/nft2.png" alt="nft" /></div>
+      <div className="nft-wrap">
+        <div className="nft-left">
+          <div className="img">
+            <img src="assets/image/nft2.png" alt="nft" />
+          </div>
           <div>
             <h4>Coral CID NFTs</h4>
             <ul>
               <li>
                 <h5>Total Computing Power</h5>
-                <p>30,294<span>T</span></p>
+                <p>
+                  30,294<span>T</span>
+                </p>
               </li>
               <li>
                 <h5>Claimed</h5>
-                <p>10,267<span>T</span></p>
+                <p>
+                  10,267<span>T</span>
+                </p>
               </li>
               <li>
                 <h5>APY</h5>
-                <p>109<span>%</span></p>
+                <p>
+                  109<span>%</span>
+                </p>
               </li>
             </ul>
           </div>
         </div>
-        <div className='nft-right'>
+        <div className="nft-right">
           <IncrementInput
             text={'Pledge'}
             value={depinNftValue}
-            onInput={(value) => handleInputChange(value, setDepinNftValue)}
+            onInput={value => handleInputChange(value, setDepinNftValue)}
             onIncrement={() => handleIncrementValue(depinNftValue, setDepinNftValue)}
             onDecrement={() => handleDecrementValue(depinNftValue, setDepinNftValue)}
           />
-          <div className='mint block md:hidden'>Mint</div>
-          <p className='own'>You own<span>5</span></p>
+          <div className="mint block md:hidden">Mint</div>
+          <p className="own">
+            You own<span>5</span>
+          </p>
         </div>
       </div>
     </div>
   )
 }
-

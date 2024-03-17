@@ -1,7 +1,7 @@
 /*
- * @Author:  
+ * @Author:
  * @Date: 2022-10-13 11:06:46
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-01-13 21:44:43
  * @FilePath: /nextjs-webiste/src/constants/setting.ts
  */
