@@ -7,7 +7,7 @@
  */
 import React, { Fragment, useState } from 'react'
 
-export default function IncrementInput({ value, onInput, onIncrement, onDecrement,text }) {
+export default function IncrementInput({ value, onInput, onIncrement, onDecrement,text,onMint }) {
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     if (!isNaN(inputValue) && parseInt(inputValue) >= 1) {
@@ -28,7 +28,7 @@ export default function IncrementInput({ value, onInput, onIncrement, onDecremen
       />
       <div className='add-minus' onClick={onDecrement}>-</div>
     </div>
-    <div className='mint hidden md:block'>{text}</div>
+    <div className='mint hidden md:block' onClick={onMint}>{text}</div>
   </div>
   )
 }

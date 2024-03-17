@@ -2,15 +2,18 @@
  * @Author:  
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-15 20:39:16
+ * @LastEditTime: 2024-03-17 19:28:27
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
-
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import IncrementInput from 'components/IncrementInput'
+import {
+  ConnectWallet as EVMConnectWallet, darkTheme, lightTheme, useAddress,
+} from "@thirdweb-dev/react";
+import { useContractRead, useContract } from "@thirdweb-dev/react";
 
 export default Home
 
@@ -42,6 +45,26 @@ function Main() {
     }
   };
 
+  const [totalPrice, setTotalPrice] = useState(null)
+  const account = useAddress()
+  // contract
+  const { data: contract } = useContract("0xB159e9D8D9d11Db77caD98036272fb7a333A3716");
+  const { data, isLoading, error } = useContractRead(
+    contract,
+    "claim",
+    [totalPrice, 1, account, 1,'']
+  );
+
+  const priceRef = useRef(null);
+  const onCidMint = () => {
+    const price = priceRef.current.textContent;
+    const totalPrice = parseInt(price) * parseInt(cidNftValue)
+    setTotalPrice(totalPrice)
+    console.log(totalPrice, account)
+  }
+
+  const onDepinMint = () => { }
+
   return (
     <>
       <div className="main">
@@ -58,16 +81,16 @@ function Main() {
             <div className='nft-name'>
               <ul>
                 <li>
-                  <span>NFT Name</span>
-                  <span>CID NFTs</span>
+                  <p>NFT Name</p>
+                  <p>CID NFTs</p>
                 </li>
                 <li>
-                  <span>Quantity</span>
-                  <span>10,000</span>
+                  <p>Quantity</p>
+                  <p>10,000</p>
                 </li>
                 <li>
-                  <span>Price per NFT</span>
-                  <span>20 USDT</span>
+                  <p>Price per NFT</p>
+                  <p><span ref={priceRef}>1</span> USDT</p>
                 </li>
                 <li className='purchase'>
                   <div className='price'>Amount</div>
@@ -77,10 +100,11 @@ function Main() {
                     onInput={(value) => handleInputChange(value, setCidNftValue)}
                     onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
                     onDecrement={() => handleDecrementValue(cidNftValue, setCidNftValue)}
+                    onMint={onCidMint}
                   />
                 </li>
               </ul>
-              <div className='mint block md:hidden'>Mint</div>
+              <div className='mint block md:hidden' onClick={onCidMint}>Mint</div>
             </div>
           </div>
           <div className='nft-img hidden md:block'>
@@ -95,16 +119,6 @@ function Main() {
             <p>CID NFTs are the primary assets in Coral's metaverse, functioning as 3D rendering engines powered by collaboration with DGX Cloud under NVIDIA.</p>
             <p className='mt-5 md:mt-10'>They support Coral‘s future metaverse scenes and generate tokens by providing rendering services, alongside AI capabilities, with potential for external computing power output.</p>
           </div>
-          {/* <ul>
-            <li>
-              <h3>1092</h3>
-              <p>Total holders</p>
-            </li>
-            <li>
-              <h3>1,092,231</h3>
-              <p>Total NFTs</p>
-            </li>
-          </ul> */}
         </div>
       </div>
       <div className='main'>
@@ -119,7 +133,7 @@ function Main() {
               <img className='img2' src="assets/image/best_val.png" alt="" />
             </div>
             <p className='tit'>Coral DePIN NFT</p>
-            <h3>Coral&nbsp;<span>CID NFT</span></h3>
+            <h3>Coral&nbsp;<span>DePIN NFT</span></h3>
             <p>A superior NFT above CID.</p>
             <p>Enjoy the ability to manage and distribute the CID NFT.</p>
             <p>Each Depin NFT belongs to a verifiable data node, and the CID NFT managed by Depin NFT can obtain better asset returns.</p>
@@ -131,16 +145,16 @@ function Main() {
             <div className='nft-name'>
               <ul>
                 <li>
-                  <span>NFT Name</span>
-                  <span>CID NFTs</span>
+                  <p>NFT Name</p>
+                  <p>DePIN NFT</p>
                 </li>
                 <li>
-                  <span>Quantity</span>
-                  <span>10,000</span>
+                  <p>Quantity</p>
+                  <p>10,000</p>
                 </li>
                 <li>
-                  <span>Price per NFT</span>
-                  <span>20 USDT</span>
+                  <p>Price per NFT</p>
+                  <p><span>1</span> USDT</p>
                 </li>
                 <li className='purchase'>
                   <div className='price'>Amount</div>
@@ -150,9 +164,11 @@ function Main() {
                     onInput={(value) => handleInputChange(value, setDepinNftValue)}
                     onIncrement={() => handleIncrementValue(depinNftValue, setDepinNftValue)}
                     onDecrement={() => handleDecrementValue(depinNftValue, setDepinNftValue)}
+                    onMint={onDepinMint}
                   />
                 </li>
               </ul>
+              <div className='mint block md:hidden' onClick={onDepinMint}>Mint</div>
             </div>
           </div>
         </div>
@@ -166,16 +182,6 @@ function Main() {
             <p className='mt-6 md:mt-10'>Additionally, DePIN NFTs can autonomously promote and sell CID NFTs, with proceeds primarily benefiting the equipment provider and supporting Coral's ecosystem and maintenance.</p>
           </div>
           <div className='home-footer'>© 2024 Coral App.</div>
-          {/* <ul>
-            <li>
-              <h3>21</h3>
-              <p>Total holders</p>
-            </li>
-            <li>
-              <h3>320</h3>
-              <p>Total NFTs</p>
-            </li>
-          </ul> */}
         </div>
       </div>
     </>

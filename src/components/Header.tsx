@@ -56,7 +56,21 @@ export default function Header({ pageName }) {
             })}
           </div>
           <div className='wallet-wrap'>
-            {!account && (<>
+            <div className='wallet'>
+              <EVMConnectWallet
+                theme={lightTheme({
+                  colors: {
+                    borderColor: "#ffffff",
+                    connectedButtonBg: "#00000000",
+                    primaryButtonText: "#444444"
+                  },
+                })}
+                btnTitle={"CONNECT"}
+                modalSize={"wide"}
+                switchToActiveChain={true}
+              />
+            </div>
+            {/* {!account && (<>
               <div className='wallet'>
                 <EVMConnectWallet
                   theme={lightTheme({
@@ -73,7 +87,7 @@ export default function Header({ pageName }) {
               </div>
             </>
             )}
-            {account && <Connected address={account} />}
+            {account && <Connected address={account} />} */}
             <div className='me-nav'>
               <Link href="/me" passHref>
                 <img src="assets/image/icon_me.png" alt="logo" />
@@ -163,7 +177,19 @@ export default function Header({ pageName }) {
                             })}
                           </ul>
                           <div className='wallet-h5'>
-                            {!account && (<>
+                            <EVMConnectWallet
+                              theme={lightTheme({
+                                colors: {
+                                  borderColor: "#ffffff",
+                                  connectedButtonBg: "#00000000",
+                                  primaryButtonText: "#444444"
+                                },
+                              })}
+                              btnTitle={"CONNECT"}
+                              modalSize={"wide"}
+                              switchToActiveChain={true}
+                            />
+                            {/* {!account && (<>
                               <EVMConnectWallet
                                 theme={lightTheme({
                                   colors: {
@@ -178,7 +204,7 @@ export default function Header({ pageName }) {
                               />
                             </>
                             )}
-                            {account && <Connected address={account} />}
+                            {account && <Connected address={account} />} */}
                           </div>
                         </div>
                       </div>
