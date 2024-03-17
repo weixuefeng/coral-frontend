@@ -157,7 +157,7 @@ const ConnectWallet = (props: any) => {
                         return (
                           <li className="uninstalled" key={index}>
                             <img src={item.icon} alt={item.name} />
-                            <span className="text-gray-600">{item.name}0000</span>
+                            <span className="text-gray-600">{item.name}</span>
                           </li>
                         )
                       }
