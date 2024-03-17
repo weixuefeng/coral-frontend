@@ -36,7 +36,7 @@ const LinkTwitterList = [
   }
 ]
 
-export default function Header({pageName}) {
+export default function Header({ pageName }) {
 
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
   const { isConnected, address, publicKey, network, connect } = useBtc()
@@ -84,19 +84,19 @@ export default function Header({pageName}) {
               )
             })}
           </div>
-          <div className='hidden md:block'>
+          <div className='wallet-wrap'>
             {!isConnected && (<>
               <div className='wallet'>
                 <button onClick={handWalletOpen}>Connect Wallet</button>
-                <div className='me-nav'>
-                  <Link href="/me" passHref>
-                    <img src="assets/image/icon_me.png" alt="logo" />
-                  </Link>
-                </div>
               </div>
             </>
             )}
             {isConnected && <Connected address={address} />}
+            <div className='me-nav'>
+              <Link href="/me" passHref>
+                <img src="assets/image/icon_me.png" alt="logo" />
+              </Link>
+            </div>
           </div>
           <div className='mobile-btn'>
             <img onClick={() => setMobileHeaderOpen(true)} className='menu' src="assets/image/ion_menu.png" alt="header" />
