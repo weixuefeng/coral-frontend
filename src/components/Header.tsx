@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
-import { useBtc } from 'connection/btcconnector/context'
-import ConnectWallet from 'components/ConnectWallet'
-
+import {
+  ConnectWallet as EVMConnectWallet, darkTheme, useAddress,
+} from "@thirdweb-dev/react";
 
 const navList = [
   {
@@ -39,9 +39,8 @@ const LinkTwitterList = [
 export default function Header({pageName}) {
 
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
-  const { isConnected, address, publicKey, network, connect } = useBtc()
   const [isInvitation, setIsInvitation] = useState(false);
-
+  const account = useAddress();
   const [isWalletOpen, setWalletOpen] = useState(false);
 
   const handleInvitationChange = (newValue) => {
@@ -85,9 +84,20 @@ export default function Header({pageName}) {
             })}
           </div>
           <div className='hidden md:block'>
-            {!isConnected && (<>
+            {!account && (<>
               <div className='wallet'>
-                <button onClick={handWalletOpen}>Connect Wallet</button>
+                <EVMConnectWallet
+                    theme={darkTheme({
+                      colors: {
+                        borderColor: "#23c775",
+                        connectedButtonBg: "#00000000",
+                        primaryButtonText: "#ffffff"
+                      },
+                    })}
+                    btnTitle={"CONNECT"}
+                    modalSize={"wide"}
+                    switchToActiveChain={true}
+                  />
                 <div className='me-nav'>
                   <Link href="/me" passHref>
                     <img src="assets/image/icon_me.png" alt="logo" />
@@ -96,7 +106,7 @@ export default function Header({pageName}) {
               </div>
             </>
             )}
-            {isConnected && <Connected address={address} />}
+            {account && <Connected address={account} />}
           </div>
           <div className='mobile-btn'>
             <img onClick={() => setMobileHeaderOpen(true)} className='menu' src="assets/image/ion_menu.png" alt="header" />
@@ -181,18 +191,22 @@ export default function Header({pageName}) {
                             })}
                           </ul>
                           <div className='block md:hidden'>
-                            {!isConnected && (<>
-                              <div className='wallet'>
-                                <button onClick={handWalletOpen}>Connect Wallet</button>
-                              </div>
-                              {/* <ConnectWallet
-                                isWalletOpen={isWalletOpen}
-                                handWalletChange={handWalletChange}
-                                onInvitationChange={handleInvitationChange}
-                              /> */}
+                            {!account && (<>
+                              <EVMConnectWallet
+                                theme={darkTheme({
+                                  colors: {
+                                    borderColor: "#23c775",
+                                    connectedButtonBg: "#00000000",
+                                    primaryButtonText: "#ffffff"
+                                  },
+                                })}
+                                btnTitle={"CONNECT"}
+                                modalSize={"wide"}
+                                switchToActiveChain={true}
+                              />
                             </>
                             )}
-                            {isConnected && <Connected address={address} />}
+                            {account && <Connected address={account} />}
                           </div>
                         </div>
                       </div>
@@ -205,11 +219,6 @@ export default function Header({pageName}) {
           </Transition.Root>
         </div>
       </div>
-      <ConnectWallet
-        isWalletOpen={isWalletOpen}
-        handWalletChange={handWalletChange}
-        onInvitationChange={handleInvitationChange}
-      />
     </>
   )
 }

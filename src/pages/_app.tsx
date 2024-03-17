@@ -8,16 +8,39 @@
 import 'styles/style.scss'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
-import { BtcProvider } from 'connection/btcconnector/context'
 import 'i18n'
+
+import {
+  ThirdwebProvider,
+  metamaskWallet,
+  coinbaseWallet,
+  walletConnect,
+  trustWallet,
+  rainbowWallet,
+  okxWallet
+} from "@thirdweb-dev/react";
+
+import { Opbnb } from "@thirdweb-dev/chains";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <BtcProvider>
+    <ThirdwebProvider
+      activeChain={Opbnb}
+      supportedChains={[Opbnb]}
+      clientId="044111f6c408b62159b7aaddf54b7c52"
+      supportedWallets={[
+        metamaskWallet(),
+        coinbaseWallet({ recommended: true }),
+        walletConnect(),
+        okxWallet({ recommended: true }),
+        trustWallet({ recommended: true }),
+        rainbowWallet({ recommended: true })
+      ]}
+    >
       <ThemeProvider defaultTheme="system" attribute="class">
         <Component {...pageProps} />
       </ThemeProvider>
-    </BtcProvider>
+    </ThirdwebProvider>
   )
 }
 export default MyApp
