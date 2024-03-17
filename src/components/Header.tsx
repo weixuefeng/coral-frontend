@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
 import {
-  ConnectWallet as EVMConnectWallet, darkTheme, useAddress,
+  ConnectWallet as EVMConnectWallet, darkTheme, lightTheme, useAddress,
 } from "@thirdweb-dev/react";
 
 const navList = [
@@ -15,24 +15,6 @@ const navList = [
     src: '/staking',
     nav: 'Staking',
     page: 'STAKING'
-  }
-]
-
-const LinkTwitterList = [
-  {
-    href: 'https://twitter.com/_XDIN3_',
-    icon: 'assets/image/mdi_twitter.png',
-    iconH5: 'assets/image/faq_twitter_icon.png',
-  },
-  {
-    href: 'https://discord.gg/mKAmCrvVeD',
-    icon: 'assets/image/mdi_discord.png',
-    iconH5: 'assets/image/faq_discord_icon.png'
-  },
-  {
-    href: 'https://t.me/XDIN3',
-    icon: 'assets/image/mdi_telegram.png',
-    iconH5: 'assets/image/faq_telegram_icon.png'
   }
 ]
 
@@ -54,16 +36,6 @@ export default function Header({ pageName }) {
   const handWalletChange = (newValue) => {
     setWalletOpen(newValue)
   }
-
-  // const [launchName, setLaunchName] = useState('');
-
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const currentPath = window.location.pathname;
-  //     const launchName = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-  //     setLaunchName(launchName);
-  //   }
-  // }, []);
 
   return (
     <>
@@ -87,11 +59,11 @@ export default function Header({ pageName }) {
             {!account && (<>
               <div className='wallet'>
                 <EVMConnectWallet
-                  theme={darkTheme({
+                  theme={lightTheme({
                     colors: {
-                      borderColor: "#23c775",
+                      borderColor: "#ffffff",
                       connectedButtonBg: "#00000000",
-                      primaryButtonText: "#ffffff"
+                      primaryButtonText: "#444444"
                     },
                   })}
                   btnTitle={"CONNECT"}
@@ -193,11 +165,11 @@ export default function Header({ pageName }) {
                           <div className='wallet-h5'>
                             {!account && (<>
                               <EVMConnectWallet
-                                theme={darkTheme({
+                                theme={lightTheme({
                                   colors: {
-                                    borderColor: "#23c775",
+                                    borderColor: "#ffffff",
                                     connectedButtonBg: "#00000000",
-                                    primaryButtonText: "#ffffff"
+                                    primaryButtonText: "#444444"
                                   },
                                 })}
                                 btnTitle={"CONNECT"}
