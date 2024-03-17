@@ -44,22 +44,25 @@
       @apply w-full h-auto;
     }
   }
-  .wallet {
-    @apply flex items-center;
-    button {
-      @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl border-[1px] border-solid border-black44;
-      @apply text-base text-center mr-4;
-    }
+  .wallet-wrap {
+    @apply hidden md:flex md:items-center md:justify-center;
     .me-nav {
-      @apply w-[43px] h-[43px];
+      @apply w-[43px] h-[43px] ml-2;
       img {
         @apply w-full h-full;
       }
     }
   }
+  .wallet {
+    @apply flex items-center;
+    button {
+      @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl border-[1px] border-solid border-black44;
+      @apply text-base text-center;
+    }
+  }
   .connected {
-    @apply w-[143px] h-[37px] rounded-3xl text-base text-white flex items-center justify-center;
-    @apply border-[1px] border-solid border-green_big;
+    @apply w-[143px] h-[37px] rounded-3xl text-base flex items-center justify-center;
+    @apply border-[1px] border-solid border-black44;
   }
   .mobile-btn {
     @apply flex items-center justify-center cursor-pointer md:hidden;
@@ -131,6 +134,7 @@
     }
   }
   .connected {
-    @apply w-full h-[46px] mx-auto rounded-3xl text-base text-white flex items-center justify-center;
+    @apply w-full h-[46px] mx-auto rounded-3xl text-white text-base flex items-center justify-center;
+    @apply bg-redFF mt-5;
   }
 }

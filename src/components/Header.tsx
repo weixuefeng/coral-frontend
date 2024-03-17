@@ -36,7 +36,7 @@ const LinkTwitterList = [
   }
 ]
 
-export default function Header({pageName}) {
+export default function Header({ pageName }) {
 
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
   const [isInvitation, setIsInvitation] = useState(false);

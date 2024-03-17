@@ -52,5 +52,8 @@
         }
       }
     }
+    .uninstalled {
+      @apply border-gray-900 text-gray-800 bg-[#ddd];
+    }
   }
 }

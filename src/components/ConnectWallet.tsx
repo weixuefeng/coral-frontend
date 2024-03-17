@@ -1,144 +1,118 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+
+import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useBtc } from 'connection/btcconnector/context'
-import http from 'services/http'
 
-let defaultWalletList = [
+const OksIcon = "assets/image/okx.png";
+const GateIcon = "assets/image/gate.png";
+const MetaMaskIcon = "assets/image/metamask.png";
+
+const evmWalletList = [
   {
-    icon: "/assets/image/okx.png",
+    icon: OksIcon,
     name: "OKX Wallet",
     status: "check",
     flag: "OKX",
   },
   {
-    icon: "/assets/image/gate.png",
+    icon: GateIcon,
     name: "Gate Wallet",
     status: "check",
     flag: "Gate",
   },
   {
-    icon: "/assets/image/bit.png",
-    name: "Bitget Wallet",
+    icon: MetaMaskIcon,
+    name: "MetaMask",
     status: "check",
-    flag: "Bitget",
+    flag: "Metamask",
   },
-  {
-    icon: "/assets/image/unisat.png",
-    name: "Unisat Wallet",
-    status: "check",
-    flag: "Unisat",
-  },
-]
+];
 
-const ConnectWallet = ({ onInvitationChange, isWalletOpen, handWalletChange }) => {
-  const { isConnected, address, publicKey, network, connect } = useBtc()
+const ConnectWallet = (props: any) => {
 
-  const [unisatInstalled, setUnisatInstalled] = useState(false)
-  const [okxInstalled, setOkxInstalled] = useState(false)
-  const [gateInstalled, setGateInstalled] = useState(false)
-  const [walletList, setWalletList] = useState(defaultWalletList)
-
-  const [isInvitation, setIsInvitation] = useState(false)
+  const { isWalletOpen, handWalletChange, isBTC } = props;
+  const { connect } = useBtc();
+  const [okxInstalled, setOkxInstalled] = useState(false);
+  const [gateInstalled, setGateInstalled] = useState(false);
+  const [metamaskInstalled, setMetamaskInstalled] = useState(false);
 
   const closeModal = () => {
     handWalletChange(false)
   }
 
-  const openModal = () => {
-    handWalletChange(true)
-  }
-
-  const handleWallet = (flag) => {
-    connect(flag)
-    handWalletChange(false)
-  }
+  const handleWallet = async (flag: any) => {
+    try {
+      await connect(flag);
+    } catch (error) {
+    }
+    handWalletChange(false);
+  };
 
   // check okx
   useEffect(() => {
     async function checkOkx() {
-      let okx = (window as any).okxwallet
+      let okx = (window as any).okxwallet;
       for (let i = 1; i < 10 && !okx; i += 1) {
-        await new Promise(resolve => setTimeout(resolve, 100 * i))
-        okx = (window as any).okxwallet
+        await new Promise((resolve) => setTimeout(resolve, 100 * i));
+        okx = (window as any).okxwallet;
       }
       if (okx) {
-        defaultWalletList[1].status = "installed"
-        setWalletList(defaultWalletList),
-          setOkxInstalled(true)
+        evmWalletList[0].status = "installed";
+        // updateWalletListInfo();
+        setOkxInstalled(true);
       } else {
-        setOkxInstalled(false)
-        defaultWalletList[1].status = "uninstalled"
-        setWalletList(defaultWalletList)
-      };
-    }
-    checkOkx().then()
-  }, [okxInstalled])
-
-  // check unisat
-  useEffect(() => {
-    async function checkUnisat() {
-      let unisat = (window as any).unisat
-      for (let i = 1; i < 10 && !unisat; i += 1) {
-        await new Promise(resolve => setTimeout(resolve, 100 * i))
-        unisat = (window as any).unisat
-      }
-      if (unisat) {
-        defaultWalletList[0].status = "installed"
-        setWalletList(defaultWalletList),
-          setUnisatInstalled(true)
-      } else {
-        defaultWalletList[0].status = "uninstalled"
-        setWalletList(defaultWalletList),
-          setUnisatInstalled(false)
+        setOkxInstalled(false);
+        evmWalletList[0].status = "uninstalled";
+        // updateWalletListInfo();
       }
     }
-    checkUnisat().then()
-  }, [unisatInstalled])
+    checkOkx().then();
+  }, [okxInstalled]);
 
   // check gate installed
   useEffect(() => {
     async function checkUnisat() {
-      let unisat = (window as any).unisat
+      let unisat = (window as any).unisat;
       for (let i = 1; i < 10 && !unisat; i += 1) {
-        await new Promise(resolve => setTimeout(resolve, 100 * i))
-        unisat = (window as any).unisat
+        await new Promise((resolve) => setTimeout(resolve, 100 * i));
+        unisat = (window as any).unisat;
       }
       if (unisat) {
-        defaultWalletList[2].status = "installed"
-        setWalletList(defaultWalletList),
-          setGateInstalled(true)
+        evmWalletList[1].status = "installed";
+        // updateWalletListInfo();
+        setGateInstalled(true);
       } else {
-        defaultWalletList[2].status = "uninstalled"
-        setWalletList(defaultWalletList),
-          setGateInstalled(false)
+        evmWalletList[1].status = "uninstalled";
+        // updateWalletListInfo();
+        setGateInstalled(false);
       }
     }
-    checkUnisat().then()
-  }, [gateInstalled])
+    checkUnisat().then();
+  }, [gateInstalled]);
 
+  // check meatamsk
   useEffect(() => {
-    if (address) {
-      console.log("request")
-      http.requestLogin(address).then((res: any) => {
-        if (res?.is_whitelist == false && res?.have_parent == false) {
-          setIsInvitation(true)
-          onInvitationChange(true);
-          console.log('denglu', onInvitationChange(true))
-        }
-        console.log('登录')
-      }).catch((error) => {
-        console.log(error)
-      })
+    async function checkOkx() {
+      let metamask = (window as any).ethereum;
+      for (let i = 1; i < 10 && !metamask; i += 1) {
+        await new Promise((resolve) => setTimeout(resolve, 100 * i));
+        metamask = (window as any).ethereum;
+      }
+      if (metamask) {
+        evmWalletList[2].status = "installed";
+        // updateWalletListInfo();
+        setMetamaskInstalled(true);
+      } else {
+        setMetamaskInstalled(false);
+        evmWalletList[2].status = "uninstalled";
+        // updateWalletListInfo();
+      }
     }
-  }, [address])
+    checkOkx().then();
+  }, [metamaskInstalled]);
 
   return (
     <>
-      {/* <div className='wallet'>
-        <button
-          onClick={openModal}
-        >CONNECT WALLET</button>
-      </div> */}
       <Transition appear show={isWalletOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={closeModal}>
           <Transition.Child
@@ -168,29 +142,26 @@ const ConnectWallet = ({ onInvitationChange, isWalletOpen, handWalletChange }) =
                     Connect Wallet
                   </Dialog.Title>
                   <ul>
-                    {
-                      walletList.map((item, index) => {
-                        if (item.status == "installed") {
-                          return (
-                            <li key={index} onClick={() => {
-                              handleWallet(item.flag)
-                            }}>
-                              <img src={item.icon} alt={item.name} />
-                              <span>{item.name}</span>
-                            </li>
-                          )
-                        } else {
-                          return (
-                            <li className="border-gray-900 text-gray-800 bg-gray-900" key={index} onClick={() => {
-                              // handleWallet(item.flag)
-                            }}>
-                              <img src={item.icon} alt={item.name} />
-                              <span className="text-gray-600">{item.name} </span>
-                            </li>
-                          )
-                        }
-                      })
-                    }
+                    {evmWalletList.map((item, index) => {
+                      console.log(item)
+                      if (item.status == "installed") {
+                        return (
+                          <li key={index} onClick={() => {
+                            handleWallet(item.flag)
+                          }}>
+                            <img src={item.icon} alt={item.name} />
+                            <span>{item.name}</span>
+                          </li>
+                        )
+                      } else {
+                        return (
+                          <li className="uninstalled" key={index}>
+                            <img src={item.icon} alt={item.name} />
+                            <span className="text-gray-600">{item.name}</span>
+                          </li>
+                        )
+                      }
+                    })}
                   </ul>
                 </Dialog.Panel>
               </Transition.Child>
