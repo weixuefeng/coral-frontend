@@ -57,7 +57,7 @@
     @apply flex items-center;
     button {
       @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl border-[1px] border-solid border-black44;
-      @apply text-base text-center;
+      @apply text-base text-center bg-white text-black44;
     }
   }
   .connected {
@@ -126,6 +126,12 @@
       @apply hidden;
     }
    
+  }
+  .wallet-h5 {
+    @apply block md:hidden mt-5;
+    button {
+      @apply w-full h-[46px] text-base text-white text-center rounded-3xl bg-redFF;
+    }
   }
   .wallet {
     @apply flex justify-center items-center mt-5;

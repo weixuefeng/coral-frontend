@@ -6,6 +6,7 @@ import { useBtc } from 'connection/btcconnector/context'
 const OksIcon = "assets/image/okx.png";
 const GateIcon = "assets/image/gate.png";
 const MetaMaskIcon = "assets/image/metamask.png";
+const BitgetIcon = "assets/image/bit.png";
 
 const evmWalletList = [
   {
@@ -25,6 +26,12 @@ const evmWalletList = [
     name: "MetaMask",
     status: "check",
     flag: "Metamask",
+  },
+  {
+    icon: BitgetIcon,
+    name: "Bitget Wallet",
+    status: "check",
+    flag: "Bitget Wallet",
   },
 ];
 

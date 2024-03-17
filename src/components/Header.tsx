@@ -83,30 +83,30 @@ export default function Header({ pageName }) {
               )
             })}
           </div>
-          <div className='hidden md:block'>
+          <div className='wallet-wrap'>
             {!account && (<>
               <div className='wallet'>
                 <EVMConnectWallet
-                    theme={darkTheme({
-                      colors: {
-                        borderColor: "#23c775",
-                        connectedButtonBg: "#00000000",
-                        primaryButtonText: "#ffffff"
-                      },
-                    })}
-                    btnTitle={"CONNECT"}
-                    modalSize={"wide"}
-                    switchToActiveChain={true}
-                  />
-                <div className='me-nav'>
-                  <Link href="/me" passHref>
-                    <img src="assets/image/icon_me.png" alt="logo" />
-                  </Link>
-                </div>
+                  theme={darkTheme({
+                    colors: {
+                      borderColor: "#23c775",
+                      connectedButtonBg: "#00000000",
+                      primaryButtonText: "#ffffff"
+                    },
+                  })}
+                  btnTitle={"CONNECT"}
+                  modalSize={"wide"}
+                  switchToActiveChain={true}
+                />
               </div>
             </>
             )}
             {account && <Connected address={account} />}
+            <div className='me-nav'>
+              <Link href="/me" passHref>
+                <img src="assets/image/icon_me.png" alt="logo" />
+              </Link>
+            </div>
           </div>
           <div className='mobile-btn'>
             <img onClick={() => setMobileHeaderOpen(true)} className='menu' src="assets/image/ion_menu.png" alt="header" />
@@ -190,7 +190,7 @@ export default function Header({ pageName }) {
                               )
                             })}
                           </ul>
-                          <div className='block md:hidden'>
+                          <div className='wallet-h5'>
                             {!account && (<>
                               <EVMConnectWallet
                                 theme={darkTheme({
