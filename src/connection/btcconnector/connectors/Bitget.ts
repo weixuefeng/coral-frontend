@@ -8,14 +8,14 @@ import {
   NetworkChangedHandler,
 } from "./types";
 
-export class GateConnector implements Connector {
+export class BitgetConnector implements Connector {
   name: BtcConnectorName;
   onAccountsChanged?: AccountsChangedHandler;
   onNetworkChanged?: NetworkChangedHandler;
   onDisconnect?: DisconnectHandler;
 
   constructor(options?: ConnectorOptions) {
-    this.name = "Gate";
+    this.name = "Bitget";
     this.onAccountsChanged = options?.onAccountsChanged;
     this.onNetworkChanged = options?.onNetworkChanged;
     this.onDisconnect = options?.onDisconnect;
@@ -23,16 +23,15 @@ export class GateConnector implements Connector {
 
   getProvider() {
     if (typeof window === "undefined") return;
-    if (typeof (window as any).gatewallet.bitcoin === "undefined") {
+    if (typeof (window as any).bitkeep.unisat === "undefined") {
       throw new ConnectorNotFoundError();
     }
-    return (window as any).gatewallet.bitcoin;
+    return (window as any).bitkeep.unisat;
   }
 
   async connect() {
     try {
       const provider = this.getProvider();
-
       if (provider.on) {
         provider.on("accountsChanged", async (accounts: string[]) => {
           if (!!accounts && accounts.length > 0) {
