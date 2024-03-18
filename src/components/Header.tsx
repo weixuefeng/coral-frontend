@@ -10,10 +10,15 @@ const navList = [
     page: 'HOME',
   },
   {
-    src: '/staking',
+    src: '/',
     nav: 'Staking',
     page: 'STAKING',
   },
+  // {
+  //   src: '/staking',
+  //   nav: 'Staking',
+  //   page: 'STAKING',
+  // },
 ]
 
 export default function Header({ pageName }) {
