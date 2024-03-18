@@ -6,16 +6,16 @@
  * @FilePath: /coral-frontend/src/pages/invite.tsx
  */
 
-import Home from './index'
+import { PageModel } from 'model/navModel'
+import { IndexMainPage } from './index'
 import { useRouter } from 'next/router'
+import NormalLayout from 'components/Layout/normalLayout'
 
-const Invite = () => {
+export default InvitePage
+
+function InvitePage() {
+  let pageModel = new PageModel('Invite', 'Coral', 'HOME')
   const router = useRouter()
-  const params = router.asPath.split('?')[1] || []
-
-  return (
-    <Home />
-  )
+  const params = router.asPath.split('?')[1] || undefined
+  return <>{NormalLayout(IndexMainPage(params), pageModel)}</>
 }
-
-export default Invite

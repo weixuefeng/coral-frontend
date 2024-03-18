@@ -1,7 +1,6 @@
 import axios, { Axios } from 'axios'
 import { API_BASE_URL } from '../constants/setting'
 import { data } from 'autoprefixer'
-import { useBtc } from 'connection/btcconnector/context'
 let client = refreshClient()
 
 function refreshClient(): Axios {
@@ -66,36 +65,21 @@ class Http {
     return httpInstance
   }
 
-  requestLogin(address: string) {
+  requestLogin(address: string, parent_address: string | undefined) {
     var params = {
       address: address,
+      parent_address: parent_address
     }
-    return _post(`login/`, params)
+    return _post(`user/login/`, params)
   }
 
-  requestRoundInfo() {
-    return _post(`round/info/`, {})
-  }
 
-  requestSubmitInviteCode(inviteAddress: string, myAddress: string) {
+  requestSubmitInviteCode(address: string, parent_address: string) {
     var params = {
-      invite_code: inviteAddress,
-      address: myAddress,
+      address: address,
+      parent_address: parent_address
     }
-    return _post(`submit/invite/code/`, params)
-  }
-
-  requestRecordTransaction(userAddress: string, receiveAddress: string, txid: string, round: number, price: number) {
-    var params = {
-      action: 'buy',
-      round: round,
-      price: price,
-      from_address: userAddress,
-      receive_address: receiveAddress,
-      btc_value: price,
-      txid: txid,
-    }
-    return _post(`user/record/transaction/`, params)
+    return _post(`user/submit/invite/code/`, params)
   }
 }
 const http = new Http()

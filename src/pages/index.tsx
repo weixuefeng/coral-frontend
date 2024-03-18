@@ -16,12 +16,13 @@ import coralDepinAbi from 'abi/coral-depin-abi'
 import { BaseContract, BigNumber, ethers } from 'ethers'
 import Message from 'components/message'
 import Loading from 'components/Loading'
+import http from 'services/http'
 
 export default Home
 
 function Home() {
   let pageModel = new PageModel('Overview', 'Coral', 'HOME')
-  return <>{NormalLayout(Main(), pageModel)}</>
+  return <>{NormalLayout(IndexMainPage(null), pageModel)}</>
 }
 
 enum ActionType {
@@ -29,7 +30,7 @@ enum ActionType {
   DEPIN,
 }
 
-function Main() {
+export function IndexMainPage(invite_address: string | undefined) {
   // 合约地址配置
   const usdtAddress = '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd'
   const cidAddress = '0x396DE4961D31De6d593B4252D94355c8367Ff727'
@@ -73,6 +74,15 @@ function Main() {
 
   // 初始化 sdk
   useEffect(() => {
+    // login
+    if(signer) {
+      http.requestLogin(address, invite_address).then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log("login error:", err)
+      })
+    }
     if (signer) {
       const sdk = ThirdwebSDK.fromSigner(signer)
       // 初始化 usdt 合约
@@ -112,11 +122,10 @@ function Main() {
           console.log('init depin contract error', e)
         })
     }
-  }, [signer, address])
+  }, [signer])
 
   useEffect(() => {
     if (usdtContract && cidContract && depinContract && usdtBalance) {
-      console.log('start check')
       checkAccountInfo(ActionType.CID, '1')
       checkAccountInfo(ActionType.DEPIN, '1')
     }
@@ -151,7 +160,8 @@ function Main() {
     var totalPrice = BigNumber.from(value).mul(price)
     console.log('totalPrice: ', totalPrice)
     // 检查余额
-    if (totalPrice > usdtBalance) {
+    if (parseInt(totalPrice._hex) - parseInt(usdtBalance._hex) > 0) {
+      console.log("usdtBalance:", usdtBalance.sub(totalPrice));
       setText(usdtNotEnough)
       return
     }
@@ -161,7 +171,7 @@ function Main() {
     // 检查 usdt 是否授权
     var allowance = await usdtContract.erc20.allowance(contractAddress)
     console.log('allowance: ', allowance)
-    if (allowance.value >= totalPrice) {
+    if (parseInt(allowance.value._hex) - parseInt(totalPrice._hex) > 0) {
       setText(mintText)
     } else {
       setText(usdtApprove)
