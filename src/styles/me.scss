@@ -59,7 +59,7 @@
   .invite-wrap {
     @apply md:flex md:items-center md:justify-between mt-10 md:mt-20 border-[1px] border-solid border-[#F8F5EF] rounded-3xl md:rounded-full p-5;
     .invite {
-      @apply md:flex;
+      @apply md:flex md:items-center justify-center;
       h5 {
         @apply leading-[44px] text-sm md:text-base font-bold mr-5 text-center md:text-left;
       }
@@ -67,15 +67,18 @@
         @apply text-sm text-[#919090];
       }
       .share {
-        @apply flex items-center justify-center leading-[44px] bg-[#F8F5EF] rounded-full px-5 mt-2 mb-5 md:my-0;
-        p {
-          @apply leading-[44px] text-xs md:text-sm;
+        @apply relative flex items-center justify-center bg-[#F8F5EF] rounded-full px-5 mt-2 mb-5 md:my-0;
+        .use {
+          @apply w-[349px] py-3 text-xs md:text-sm truncate;
         }
         img {
           @apply w-6 h-6 cursor-pointer;
         }
         .share-copy {
           @apply ml-3 mr-2;
+        }
+        p {
+          @apply absolute -bottom-7 md:-bottom-8 right-0 rounded-2xl bg-redFF text-white text-xs md:text-sm p-2;
         }
       }
     }

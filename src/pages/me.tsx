@@ -1,15 +1,16 @@
 /*
  * @Author:
  * @Date: 2024-03-14 21:36:55
- * @LastEditors:
- * @LastEditTime: 2024-03-15 20:40:29
+ * @LastEditors:  
+ * @LastEditTime: 2024-03-18 11:11:34
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import InvitationId from 'components/InvitationId'
+import { SmartContract, ThirdwebSDK, useAddress, useConnectedWallet } from '@thirdweb-dev/react'
 
 export default Me
 
@@ -45,6 +46,25 @@ function Main() {
     // } else {
     //   //todo: please login
     // }
+  }
+
+  // 钱包 signer
+  const signer = useConnectedWallet()
+  const address = useAddress()
+  
+  const addressRef = useRef(null)
+  const [isCopy, setIsCopy] = useState(false)
+  const copyToAddress = () => {
+    const addressVal = addressRef.current.textContent
+    navigator.clipboard
+      .writeText(addressVal)
+      .then(() => {
+        setIsCopy(true)
+        setTimeout(() => setIsCopy(false), 2000)
+      })
+      .catch(err => {
+        setIsCopy(false)
+      })
   }
 
   return (
@@ -105,9 +125,10 @@ function Main() {
           <div className="invite">
             <h5>Invite Friends to join Coralverse now </h5>
             <div className="share">
-              <p>http://invite.coralapp.io/user98732</p>
-              <img className="share-copy" src="assets/image/copy.png" alt="copy" />
-              <img src="assets/image/share.png" alt="share" />
+              <div className='use' ref={addressRef}>http://invite.coralapp.io/invite?{address}</div>
+              <img onClick={copyToAddress} className="share-copy" src="assets/image/copy.png" alt="copy" />
+              {/* <img src="assets/image/share.png" alt="share" /> */}
+              {isCopy && <p>Copy Success</p>}
             </div>
           </div>
           <div className="address">
