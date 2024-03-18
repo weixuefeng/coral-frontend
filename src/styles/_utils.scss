@@ -3,12 +3,24 @@
   src: url('/fonts/AkzidenzGrotesk-Medium.otf');
 }
 
-@keyframes checkRotate {
+@keyframes loadingRotate {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingPulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

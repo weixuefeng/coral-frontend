@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-18 16:25:59
+ * @LastEditTime: 2024-03-18 19:57:09
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -200,17 +200,14 @@ function Main() {
             setIsLoading(false)
             // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
             var mintTxid = res.receipt.transactionHash
-            console.log('res:', mintTxid)
-            showSuccessMessage('Success!', 'mint txid: ' + mintTxid);
+            showSuccessMessage('Success!', 'Mint txid: ' + mintTxid);
           } catch (e) {
             setIsLoading(false)
             // todo: 弹框提示错误信息，比如用户拒绝等。
             showFailMessage('user rejected transaction')
-            console.log('Res: ', e)
           }
         } else {
           showFailMessage('please init contract')
-          console.log('please init contract')
         }
       } else {
         // 如果授权数量不足，继续授权
@@ -225,7 +222,7 @@ function Main() {
         )
         // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
         var allowTxid = allowRes.receipt.transactionHash
-        setIsLoading(false)
+        // setIsLoading(false)
         showSuccessMessage('Success!', 'Approved txid: ' + allowTxid);
         checkAccountInfo(type, mintAmount);
       }
@@ -233,7 +230,6 @@ function Main() {
       // 弹框提示错误信息
       // 过滤用户错误信息 user rejected transaction， 其余统一处理
       showFailMessage('user rejected transaction')
-      console.log('error:', e)
     }
   }
 

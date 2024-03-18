@@ -2,7 +2,8 @@ body {
   @apply bg-white text-black44;
 }
 
-input {
+input,
+button {
   outline: none;
   &:focus {
     outline: none;

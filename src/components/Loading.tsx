@@ -2,7 +2,7 @@
  * @Author:  
  * @Date: 2024-03-18 15:04:24
  * @LastEditors:  
- * @LastEditTime: 2024-03-18 16:24:52
+ * @LastEditTime: 2024-03-18 19:53:08
  * @FilePath: /coral-frontend/src/components/Loading.tsx
  */
 
@@ -45,11 +45,14 @@ const Message = ({ isLoading, closeLoading }) => {
                 <Dialog.Panel className="wrap">
                   <div className="mt-2">
                     <div className="result">
-                      <h5>Loading...</h5>
+                      <h5 className='loading'>
+                        <img src="assets/image/loading.png" alt=""/>
+                        <span>Loading...</span>
+                      </h5>
                     </div>
                   </div>
                   <div className="content">
-                    <button onClick={closeModal}>Close</button>
+                    {/* <button onClick={closeModal}>Close</button> */}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
