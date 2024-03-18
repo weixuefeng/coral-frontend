@@ -156,12 +156,9 @@ export function IndexMainPage(invite_address: string | undefined) {
     var price = type == ActionType.CID ? cidPrice : depinPrice
     var contractAddress = type == ActionType.CID ? cidAddress : depinAddress
     var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
-    console.log('type:', type)
     var totalPrice = BigNumber.from(value).mul(price)
-    console.log('totalPrice: ', totalPrice)
     // 检查余额
     if (parseInt(totalPrice._hex) - parseInt(usdtBalance._hex) > 0) {
-      console.log("usdtBalance:", usdtBalance.sub(totalPrice));
       setText(usdtNotEnough)
       return
     }
@@ -170,7 +167,6 @@ export function IndexMainPage(invite_address: string | undefined) {
     }
     // 检查 usdt 是否授权
     var allowance = await usdtContract.erc20.allowance(contractAddress)
-    console.log('allowance: ', allowance)
     if (parseInt(allowance.value._hex) - parseInt(totalPrice._hex) > 0) {
       setText(mintText)
     } else {

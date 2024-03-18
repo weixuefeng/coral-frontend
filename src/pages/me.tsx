@@ -10,7 +10,8 @@ import React, { useState, useEffect,useRef } from 'react'
 import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import InvitationId from 'components/InvitationId'
-import { SmartContract, ThirdwebSDK, useAddress, useConnectedWallet } from '@thirdweb-dev/react'
+import { useAddress, useConnectedWallet } from '@thirdweb-dev/react'
+import http from 'services/http'
 
 export default Me
 
@@ -20,12 +21,20 @@ function Me() {
 }
 
 function Main() {
+  var currentDomain = ''
+  if (typeof window !== 'undefined') {
+    currentDomain = window.location.hostname;
+ }
   const [isInvitation, setIsInvitation] = useState(false)
   const [inviteTitle, setInviteTitle] = useState('')
+  const [power, setPower] = useState(0)
+
+
   const handleInvitationChange = newValue => {
     setIsInvitation(newValue)
   }
   const submitInviteCode = (inviteCode: string) => {
+    console.log("invite:", inviteCode)
     // setInviteTitle('')
     // if (address && inviteCode) {
     //   http
@@ -56,7 +65,8 @@ function Main() {
   const [isCopy, setIsCopy] = useState(false)
   const copyToAddress = () => {
     const addressVal = addressRef.current.textContent
-    navigator.clipboard
+    if(navigator) {
+      navigator.clipboard
       .writeText(addressVal)
       .then(() => {
         setIsCopy(true)
@@ -65,7 +75,26 @@ function Main() {
       .catch(err => {
         setIsCopy(false)
       })
+    }
   }
+
+  useEffect(() => {
+    if(signer) {
+      http.requestPowerInfo(address)
+      .then(res => {
+        setPower(res['power'])
+      })
+      .catch(err => {
+        console.log("err:", err)
+      })
+      http.requestLogin(address, null)
+      .then(res => {
+         setIsInvitation(!res['have_parent'])
+      }).catch(err=> {
+        console.log("err:", err)
+      })
+    }
+  }, [signer])
 
   return (
     <>
@@ -116,7 +145,7 @@ function Main() {
           <div className="power">
             <h3>Computing Power</h3>
             <div className="content">
-              <span>0</span>
+              <span>{power}</span>
               <span>T</span>
             </div>
           </div>
@@ -125,7 +154,7 @@ function Main() {
           <div className="invite">
             <h5>Invite Friends to join Coralverse now </h5>
             <div className="share">
-              <div className='use' ref={addressRef}>http://invite.coralapp.io/invite?{address}</div>
+              <div className='use' ref={addressRef}>https://{currentDomain}/invite?{address}</div>
               <img onClick={copyToAddress} className="share-copy" src="assets/image/copy.png" alt="copy" />
               {/* <img src="assets/image/share.png" alt="share" /> */}
               {isCopy && <p>Copy Success</p>}
@@ -133,7 +162,7 @@ function Main() {
           </div>
           <div className="address">
             <p className="tit">Your Web3 Referrer :</p>
-            <p className="text">0xasdfv...98jyUkL</p>
+            <p className="text">{address}</p>
           </div>
         </div>
       </div>

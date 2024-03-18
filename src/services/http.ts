@@ -81,6 +81,14 @@ class Http {
     }
     return _post(`user/submit/invite/code/`, params)
   }
+
+  requestPowerInfo(address: string) {
+    var params = {
+      address: address,
+    }
+    return _post(`user/get/power/`, params)
+  }
+
 }
 const http = new Http()
 export default http
