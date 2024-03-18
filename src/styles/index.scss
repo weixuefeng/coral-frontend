@@ -51,10 +51,10 @@
   .nft-img {
     @apply relative w-[245px] md:w-[527px] mx-auto md:mx-0;
     .img {
-      @apply w-[164px] md:w-[353px] md:h-[530px] absolute top-0 left-1/2 -translate-x-1/2;
+      @apply w-[164px] md:w-[353px] absolute top-0 left-1/2 -translate-x-1/2;
     }
     .img3 {
-      @apply w-[72px] h-[72px]  absolute top-0 right-0;
+      @apply w-[72px] h-[72px]  absolute top-0 right-1 md:right-0;
     }
   }
 }
@@ -77,7 +77,7 @@
   }
   .nft-img {
     .img {
-      @apply w-[146px] md:w-[298px] top-[25px] md:top-0;
+      @apply w-[146px] md:w-[353px] top-[25px] md:top-0;
     }
     .img3 {
       @apply -top-4 md:top-0;
