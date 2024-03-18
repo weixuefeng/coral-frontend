@@ -1,0 +1,49 @@
+.message-wrap {
+  @apply fixed inset-0 overflow-y-auto;
+  .message {
+    @apply flex min-h-full items-center justify-center p-4 text-center;
+    @apply w-[500px] mx-auto;
+  }
+  .wrap {
+    @apply w-full max-w-md transform overflow-hidden rounded-[40px] border-2
+    border-solid border-yellow-500 bg-white px-6 py-[50px] text-left align-middle shadow-xl
+    transition-all md:border-0 md:px-14 md:py-[60px];
+    @apply max-w-[718px];
+    h3 {
+      @apply text-center text-xl text-white md:text-4xl;
+      font-family: 'akzidenz-bold';
+    }
+    .content {
+      input,
+      button {
+        @apply h-10 w-full rounded-3xl text-base leading-10 md:text-lg;
+      }
+      input {
+        @apply mb-3 mt-8 bg-white px-4;
+        &::placeholder {
+          @apply text-center;
+        }
+      }
+      button {
+        @apply bg-black text-white md:bg-redFA;
+      }
+    }
+  }
+  .connectWallet {
+    h3 {
+      @apply pb-2 text-xl;
+    }
+    li {
+      @apply mt-4 flex h-14 cursor-pointer items-center justify-center px-5 text-white md:justify-start;
+      @apply rounded-2xl border-[1px] border-solid border-yellow-500 text-xl;
+      img {
+        @apply mr-8 h-auto w-7;
+      }
+      &:nth-child(2) {
+        img {
+          @apply mr-7 w-9;
+        }
+      }
+    }
+  }
+}

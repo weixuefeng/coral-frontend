@@ -56,14 +56,15 @@
   .wallet {
     @apply flex items-center;
     button {
-      @apply w-[122px] h-[33px] md:w-[143px] md:h-[37px] rounded-3xl border-[1px] border-solid border-black44;
+      @apply w-[122px] h-[33px] md:w-[150px] md:h-[37px] rounded-3xl border-[1px] border-solid border-black44;
       @apply text-base text-center bg-white text-black44;
+      min-width: 156px !important;
       img {
         width: 24px !important;
         height: 24px !important;
       }
       div {
-        gap: 2px !important;
+        gap: 0px !important;
       }
     }
   }

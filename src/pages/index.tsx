@@ -1,8 +1,8 @@
 /*
  * @Author:
  * @Date: 2024-03-13 21:36:45
- * @LastEditors:
- * @LastEditTime: 2024-03-17 19:28:27
+ * @LastEditors:  
+ * @LastEditTime: 2024-03-18 13:33:25
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -14,6 +14,7 @@ import { SmartContract, ThirdwebSDK, useAddress, useConnectedWallet } from '@thi
 import coralCidAbi from 'abi/coral-cid-abi'
 import coralDepinAbi from 'abi/coral-depin-abi'
 import { BaseContract, BigNumber, ethers } from 'ethers'
+import Message from 'components/message'
 
 export default Home
 
@@ -68,6 +69,11 @@ function Main() {
 
   // usdt 余额
   const [usdtBalance, setUsdtBalance] = useState<BigNumber>()
+
+  // 提示
+  const [title, setTitle] = useState('')
+  const [isMessage, setIsMessage] = useState(false)
+  const [imgMessage, setImgMessage] = useState('')
 
   // 初始化 sdk
   useEffect(() => {
@@ -197,11 +203,20 @@ function Main() {
             // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
             var mintTxid = res.receipt.transactionHash
             console.log('res:', mintTxid)
+            setImgMessage('assets/image/success.png')
+            setTitle('Success')
+            setIsMessage(true)
           } catch (e) {
             // todo: 弹框提示错误信息，比如用户拒绝等。
+            setImgMessage('assets/image/failed.png')
+            setTitle('user rejected transaction')
+            setIsMessage(true)
             console.log('Res: ', e)
           }
         } else {
+          setImgMessage('assets/image/failed.png')
+          setTitle('please init contract')
+          setIsMessage(true)
           console.log('please init contract')
         }
       } else {
@@ -222,9 +237,13 @@ function Main() {
     } catch (e) {
       // 弹框提示错误信息
       // 过滤用户错误信息 user rejected transaction， 其余统一处理
+      setImgMessage('assets/image/failed.png')
+      setTitle('user rejected transaction')
+      setIsMessage(true)
       console.log('error:', e)
     }
   }
+
 
   return (
     <>
@@ -369,12 +388,12 @@ function Main() {
           <div className="text">
             <p>
               DePIN NFTs enhance CID NFTs with more computing power and ecosystem benefits, such as governance rights
-              and increased token rewards. 
+              and increased token rewards.
             </p>
             <p className="mt-6 md:mt-10">
               Acting as data processing nodes, each DePIN NFT receives allocated CID NFT computing power. Coral supplies
               iris recognition devices to DePIN NFT holders, enabling biometric verification and motion capture for the
-              metaverse. DePIN NFTs conduct iris recognition, rewarding participants with Coral incentives. 
+              metaverse. DePIN NFTs conduct iris recognition, rewarding participants with Coral incentives.
             </p>
             <p className="mt-6 md:mt-10">
               Additionally, DePIN NFTs can autonomously promote and sell CID NFTs, with proceeds primarily benefiting
@@ -384,6 +403,14 @@ function Main() {
           <div className="home-footer">© 2024 Coral App.</div>
         </div>
       </div>
+      <Message
+        title={title}
+        isMessage={isMessage}
+        imgMessage={imgMessage}
+        closePop={() => {
+          setIsMessage(false)
+        }}
+      />
     </>
   )
 }
