@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-18 13:33:25
+ * @LastEditTime: 2024-03-18 14:51:17
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -69,11 +69,6 @@ function Main() {
 
   // usdt 余额
   const [usdtBalance, setUsdtBalance] = useState<BigNumber>()
-
-  // 提示
-  const [title, setTitle] = useState('')
-  const [isMessage, setIsMessage] = useState(false)
-  const [imgMessage, setImgMessage] = useState('')
 
   // 初始化 sdk
   useEffect(() => {
@@ -203,20 +198,14 @@ function Main() {
             // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
             var mintTxid = res.receipt.transactionHash
             console.log('res:', mintTxid)
-            setImgMessage('assets/image/success.png')
-            setTitle('Success')
-            setIsMessage(true)
+            showSuccessMessage('Success')
           } catch (e) {
             // todo: 弹框提示错误信息，比如用户拒绝等。
-            setImgMessage('assets/image/failed.png')
-            setTitle('user rejected transaction')
-            setIsMessage(true)
+            showFailMessage('user rejected transaction')
             console.log('Res: ', e)
           }
         } else {
-          setImgMessage('assets/image/failed.png')
-          setTitle('please init contract')
-          setIsMessage(true)
+          showFailMessage('please init contract')
           console.log('please init contract')
         }
       } else {
@@ -237,13 +226,25 @@ function Main() {
     } catch (e) {
       // 弹框提示错误信息
       // 过滤用户错误信息 user rejected transaction， 其余统一处理
-      setImgMessage('assets/image/failed.png')
-      setTitle('user rejected transaction')
-      setIsMessage(true)
+      showFailMessage('Please try again')
       console.log('error:', e)
     }
   }
 
+  // 弹出框提示
+  const [title, setTitle] = useState('')
+  const [imgMessage, setImgMessage] = useState('')
+  const [isMessage, setIsMessage] = useState(false)
+  const showFailMessage = (msg) => {
+    setTitle(msg)
+    setIsMessage(true)
+    setImgMessage('assets/image/failed.png')
+  }
+  const showSuccessMessage = (msg) => {
+    setTitle(msg)
+    setIsMessage(true)
+    setImgMessage('assets/image/success.png')
+  }
 
   return (
     <>

@@ -1,13 +1,9 @@
 
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 const Message = ({ title, isMessage, imgMessage, closePop }) => {
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     closePop()
-  //   }, 2000)
-  // }, [])
+
   const closeModal = () => {
     closePop()
   }
