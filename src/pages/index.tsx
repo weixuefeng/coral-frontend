@@ -226,8 +226,8 @@ function Main() {
         // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
         var allowTxid = allowRes.receipt.transactionHash
         setIsLoading(false)
-        showSuccessMessage('Success!', 'mint txid: ' + allowTxid);
-        console.log('allowRes: ', allowTxid)
+        showSuccessMessage('Success!', 'Approved txid: ' + allowTxid);
+        checkAccountInfo(type, mintAmount);
       }
     } catch (e) {
       // 弹框提示错误信息
