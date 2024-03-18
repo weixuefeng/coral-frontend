@@ -2,12 +2,11 @@
   @apply fixed inset-0 overflow-y-auto;
   .message {
     @apply flex min-h-full items-center justify-center p-4 text-center;
-    @apply w-[500px] mx-auto;
+    @apply mx-auto;
   }
   .wrap {
-    @apply w-full max-w-md transform overflow-hidden rounded-[40px] border-2
-    border-solid border-yellow-500 bg-white px-6 py-[50px] text-left align-middle shadow-xl
-    transition-all md:border-0 md:px-14 md:py-[60px];
+    @apply w-full max-w-md transform overflow-hidden rounded-[40px] bg-white px-6 py-10 text-left align-middle shadow-xl
+    transition-all md:border-0 md:px-14 md:py-[50px];
     @apply max-w-[718px];
     h3 {
       @apply text-center text-xl text-white md:text-4xl;
@@ -25,7 +24,16 @@
         }
       }
       button {
-        @apply bg-black text-white md:bg-redFA;
+        @apply text-white bg-redFA;
+      }
+    }
+    .result {
+      @apply mb-4 text-center text-black44 md:mb-5;
+      h5 {
+        @apply text-base  md:text-xl;
+      }
+      p {
+        @apply text-xs mt-2 break-all;
       }
     }
   }

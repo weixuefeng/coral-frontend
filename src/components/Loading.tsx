@@ -1,16 +1,23 @@
+/*
+ * @Author:  
+ * @Date: 2024-03-18 15:04:24
+ * @LastEditors:  
+ * @LastEditTime: 2024-03-18 16:24:52
+ * @FilePath: /coral-frontend/src/components/Loading.tsx
+ */
 
 import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-const Message = ({ title, txid, isMessage, imgMessage, closePop }) => {
+const Message = ({ isLoading, closeLoading }) => {
 
   const closeModal = () => {
-    closePop()
+    closeLoading()
   }
 
   return (
     <>
-      <Transition appear show={isMessage} as={Fragment}>
+      <Transition appear show={isLoading} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -36,13 +43,9 @@ const Message = ({ title, txid, isMessage, imgMessage, closePop }) => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="wrap">
-                  <div className="mx-auto mb-5 h-[100px] w-[100px] md:mb-7">
-                    <img className="h-full w-full" src={imgMessage} alt="icon" />
-                  </div>
                   <div className="mt-2">
                     <div className="result">
-                      <h5>{title}</h5>
-                      <p>{txid}</p>
+                      <h5>Loading...</h5>
                     </div>
                   </div>
                   <div className="content">

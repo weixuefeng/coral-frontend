@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2024-03-13 21:36:45
  * @LastEditors:  
- * @LastEditTime: 2024-03-18 14:51:17
+ * @LastEditTime: 2024-03-18 16:25:59
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
 
@@ -15,6 +15,7 @@ import coralCidAbi from 'abi/coral-cid-abi'
 import coralDepinAbi from 'abi/coral-depin-abi'
 import { BaseContract, BigNumber, ethers } from 'ethers'
 import Message from 'components/message'
+import Loading from 'components/Loading'
 
 export default Home
 
@@ -198,7 +199,7 @@ function Main() {
             // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
             var mintTxid = res.receipt.transactionHash
             console.log('res:', mintTxid)
-            showSuccessMessage('Success')
+            showSuccessMessage('Success!', 'mint txid: ' + mintTxid);
           } catch (e) {
             // todo: 弹框提示错误信息，比如用户拒绝等。
             showFailMessage('user rejected transaction')
@@ -219,32 +220,42 @@ function Main() {
           ethers.utils.parseUnits(ethers.utils.formatUnits(maxValue, 18), 18).toString()
         )
         // 最好可以加个 loading...
+        setIsLoading(true)
+        console.log('loading')
         // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
         var allowTxid = allowRes.receipt.transactionHash
+        showSuccessMessage('Success!', 'mint txid: ' + allowTxid);
         console.log('allowRes: ', allowTxid)
       }
+      setIsLoading(false)
     } catch (e) {
       // 弹框提示错误信息
       // 过滤用户错误信息 user rejected transaction， 其余统一处理
-      showFailMessage('Please try again')
+      showFailMessage('user rejected transaction')
       console.log('error:', e)
     }
   }
 
   // 弹出框提示
   const [title, setTitle] = useState('')
+  const [txid, setTxid] = useState('')
   const [imgMessage, setImgMessage] = useState('')
   const [isMessage, setIsMessage] = useState(false)
   const showFailMessage = (msg) => {
     setTitle(msg)
+    setTxid('')
     setIsMessage(true)
     setImgMessage('assets/image/failed.png')
   }
-  const showSuccessMessage = (msg) => {
-    setTitle(msg)
+  const showSuccessMessage = (msg, txid) => {
+    setTitle(msg);
+    setTxid(txid)
     setIsMessage(true)
     setImgMessage('assets/image/success.png')
   }
+
+  // loading
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <>
@@ -406,10 +417,17 @@ function Main() {
       </div>
       <Message
         title={title}
+        txid={txid}
         isMessage={isMessage}
         imgMessage={imgMessage}
         closePop={() => {
           setIsMessage(false)
+        }}
+      />
+      <Loading
+        isLoading={isLoading}
+        closeLoading={() => {
+          setIsLoading(false)
         }}
       />
     </>
