@@ -189,6 +189,7 @@ function Main() {
       if (allowance.value >= totalPrice) {
         if (contract) {
           try {
+            setIsLoading(true)
             var res = await contract.call(
               'claim',
               [address, parseInt(mintAmount), usdtAddress, price, [[], mintNftLimit, price, usdtAddress], []],
@@ -196,11 +197,13 @@ function Main() {
                 value: ethers.utils.parseUnits('0', 18),
               }
             )
+            setIsLoading(false)
             // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
             var mintTxid = res.receipt.transactionHash
             console.log('res:', mintTxid)
             showSuccessMessage('Success!', 'mint txid: ' + mintTxid);
           } catch (e) {
+            setIsLoading(false)
             // todo: 弹框提示错误信息，比如用户拒绝等。
             showFailMessage('user rejected transaction')
             console.log('Res: ', e)
@@ -215,19 +218,17 @@ function Main() {
         if (totalPrice < approveAmount) {
           maxValue = approveAmount
         }
+        setIsLoading(true)
         var allowRes = await usdtContract.erc20.setAllowance(
           contractAddress,
           ethers.utils.parseUnits(ethers.utils.formatUnits(maxValue, 18), 18).toString()
         )
-        // 最好可以加个 loading...
-        setIsLoading(true)
-        console.log('loading')
         // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
         var allowTxid = allowRes.receipt.transactionHash
+        setIsLoading(false)
         showSuccessMessage('Success!', 'mint txid: ' + allowTxid);
         console.log('allowRes: ', allowTxid)
       }
-      setIsLoading(false)
     } catch (e) {
       // 弹框提示错误信息
       // 过滤用户错误信息 user rejected transaction， 其余统一处理
