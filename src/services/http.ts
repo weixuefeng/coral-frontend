@@ -42,7 +42,7 @@ function _post(url: string, params: object) {
           if (res.error_code == 1) {
             resolve(res.result)
           } else {
-            console.error(res.error_message)
+            reject(res.error_message)
           }
         } else {
           reject(response.statusText)

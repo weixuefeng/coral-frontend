@@ -12,8 +12,17 @@ import { PageModel } from 'model/navModel'
 import InvitationId from 'components/InvitationId'
 import { useAddress, useConnectedWallet } from '@thirdweb-dev/react'
 import http from 'services/http'
+import Message from 'components/message'
 
 export default Me
+
+interface PowerInfo {
+  power: number
+  cid_available: number,
+  depin_available: number,
+  cid_stake: number,
+  depin_stake: number
+}
 
 function Me() {
   let pageModel = new PageModel('Me', 'Coral', 'ME')
@@ -27,34 +36,49 @@ function Main() {
  }
   const [isInvitation, setIsInvitation] = useState(false)
   const [inviteTitle, setInviteTitle] = useState('')
-  const [power, setPower] = useState(0)
+  const [power, setPower] = useState<PowerInfo>({
+    "power": 0,
+    "cid_available": 0,
+    "depin_available": 0,
+    "cid_stake": 0,
+    "depin_stake": 0
+})
+
+  // loading
+  const [title, setTitle] = useState('')
+  const [txid, setTxid] = useState('')
+  const [imgMessage, setImgMessage] = useState('')
+  const [isMessage, setIsMessage] = useState(false)
+
+  const showFailMessage = (msg) => {
+    setTitle(msg)
+    setTxid('')
+    setIsMessage(true)
+    setImgMessage('assets/image/failed.png')
+  }
+  const showSuccessMessage = (msg, txid) => {
+    setTitle(msg);
+    setTxid(txid)
+    setIsMessage(true)
+    setImgMessage('assets/image/success.png')
+  }
 
 
   const handleInvitationChange = newValue => {
     setIsInvitation(newValue)
   }
   const submitInviteCode = (inviteCode: string) => {
-    console.log("invite:", inviteCode)
-    // setInviteTitle('')
-    // if (address && inviteCode) {
-    //   http
-    //     .requestSubmitInviteCode(inviteCode, address)
-    //     .then((res: any) => {
-    //       if (res.status == undefined) {
-    //         setInviteTitle(res)
-    //       } else {
-    //         setInviteCodeTitle('Submit Success!')
-    //         setInviteCodeImg('/assets/image/success.png')
-    //         setIsInvite(true)
-    //       }
-    //     })
-    //     .catch(err => {
-    //       setInviteCodeTitle(`Submit Failed! because: ${err}`)
-    //       setInviteCodeImg('/assets/image/failed.png')
-    //     })
-    // } else {
-    //   //todo: please login
-    // }
+    if (address && inviteCode) {
+      http
+        .requestSubmitInviteCode(address, inviteCode)
+        .then((res: any) => {
+            setIsInvitation(false)
+            showSuccessMessage("Submit success.", '')
+        })
+        .catch(err => {
+          showFailMessage(err)
+        })
+    } 
   }
 
   // 钱包 signer
@@ -82,7 +106,7 @@ function Main() {
     if(signer) {
       http.requestPowerInfo(address)
       .then(res => {
-        setPower(res['power'])
+        setPower(res as PowerInfo)
       })
       .catch(err => {
         console.log("err:", err)
@@ -90,7 +114,6 @@ function Main() {
       http.requestLogin(address, null)
       .then(res => {
          setIsInvitation(!res['have_parent'])
-         console.log('======',res['have_parent'])
       }).catch(err=> {
         console.log("err:", err)
       })
@@ -116,13 +139,13 @@ function Main() {
               <div>
                 <h3 className="block md:hidden">CID NFTs</h3>
                 <h5>Available</h5>
-                <p>0</p>
+                <p>{power.cid_available}</p>
                 <h5 className="block md:hidden">Staked</h5>
-                <p className="block md:hidden">0</p>
+                <p className="block md:hidden">{power.cid_stake}</p>
               </div>
               <div className="hidden md:block">
                 <h5>Staked</h5>
-                <p>0</p>
+                <p>{power.cid_stake}</p>
               </div>
             </li>
             <li>
@@ -133,20 +156,20 @@ function Main() {
               <div>
                 <h3 className="block md:hidden">DePIN NFTs</h3>
                 <h5>Available</h5>
-                <p>0</p>
+                <p>{power.depin_available}</p>
                 <h5 className="block md:hidden">Staked</h5>
-                <p className="block md:hidden">0</p>
+                <p className="block md:hidden">{power.depin_stake}</p>
               </div>
               <div className="hidden md:block">
                 <h5>Staked</h5>
-                <p>0</p>
+                <p>{power.depin_stake}</p>
               </div>
             </li>
           </ul>
           <div className="power">
             <h3>Computing Power</h3>
             <div className="content">
-              <span>{power}</span>
+              <span>{power.power}</span>
               <span>T</span>
             </div>
           </div>
@@ -172,6 +195,15 @@ function Main() {
         handleInvitationChange={handleInvitationChange}
         submitInviteCode={submitInviteCode}
         title={inviteTitle}
+      />
+      <Message
+        title={title}
+        txid={txid}
+        isMessage={isMessage}
+        imgMessage={imgMessage}
+        closePop={() => {
+          setIsMessage(false)
+        }}
       />
     </>
   )
