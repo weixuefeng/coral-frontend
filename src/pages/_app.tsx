@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThirdwebProvider
       activeChain={BinanceTestnet}
       supportedChains={[BinanceTestnet]}
-      clientId="044111f6c408b62159b7aaddf54b7c52"
+      clientId="d89bd7e02c56119887c603be6eaf6df0"
       supportedWallets={[
         metamaskWallet(),
         coinbaseWallet({ recommended: true }),

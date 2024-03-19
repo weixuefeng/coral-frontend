@@ -51,8 +51,8 @@ export function IndexMainPage(invite_address: string | undefined) {
   const approveAmount = ethers.utils.parseUnits(approveDisplayAmount, 18)
 
   // 购买数量配置
-  const [cidNftValue, setCidNftValue] = useState('1')
-  const [depinNftValue, setDepinNftValue] = useState('1')
+  const [cidNftValue, setCidNftValue] = useState('0')
+  const [depinNftValue, setDepinNftValue] = useState('0')
 
   // 钱包 signer
   const signer = useConnectedWallet()
@@ -74,6 +74,10 @@ export function IndexMainPage(invite_address: string | undefined) {
 
   // usdt 余额
   const [usdtBalance, setUsdtBalance] = useState<BigNumber>()
+
+  // user limit
+  const [userCidLimit, setUserCidLimit] = useState(parseInt(CONTRACT_CID_LIMIT))
+  const [userDepinLimit, setUserDepinLimit] = useState(parseInt(CONTRACT_DEPIN_LIMIT))
 
   // 初始化 sdk
   useEffect(() => {
@@ -109,8 +113,15 @@ export function IndexMainPage(invite_address: string | undefined) {
       // 初始化 cid 合约
       sdk
         .getContractFromAbi(cidAddress, coralCidAbi)
-        .then(res => {
-          setCidContract(res)
+        .then(contract => {
+          setCidContract(contract)
+          contract.call('balanceOf', [address])
+          .then( balance => {
+              setUserCidLimit(parseInt(CONTRACT_CID_LIMIT) - parseInt((balance as any)._hex))
+          })
+          .catch(err => {
+            console.log("get balance error:", err)
+          })
         })
         .catch(e => {
           console.log('init cid contract error', e)
@@ -118,8 +129,15 @@ export function IndexMainPage(invite_address: string | undefined) {
       // 初始化 depin 合约
       sdk
         .getContractFromAbi(depinAddress, coralDepinAbi)
-        .then(res => {
-          setDepinContract(res)
+        .then(contract => {
+          setDepinContract(contract)
+          contract.call('balanceOf', [address])
+          .then( balance => {
+              setUserDepinLimit(parseInt(CONTRACT_DEPIN_LIMIT) - parseInt((balance as any)._hex))
+          })
+          .catch(err => {
+            console.log("get balance error:", err)
+          })
         })
         .catch(e => {
           console.log('init depin contract error', e)
@@ -127,23 +145,16 @@ export function IndexMainPage(invite_address: string | undefined) {
     }
   }, [signer])
 
-  useEffect(() => {
-    if (usdtContract && cidContract && depinContract && usdtBalance) {
-      checkAccountInfo(ActionType.CID, '1')
-      checkAccountInfo(ActionType.DEPIN, '1')
-    }
-  }, [usdtContract, cidContract, depinContract, usdtBalance])
-
   const handleInputChange = (value, setValue, type: ActionType) => {
-    var mintNftLimit = type == ActionType.CID ? perAddressCidLimit : perAddressDepinLimit
-    if (!isNaN(value) && parseInt(value) >= 1 && parseInt(value) <= mintNftLimit) {
+    var mintNftLimit = type == ActionType.CID ? userCidLimit : userDepinLimit
+    if (!isNaN(value) && parseInt(value) >= 0 && parseInt(value) <= mintNftLimit) {
       setValue(value)
       checkAccountInfo(type, value.toString())
     }
   }
 
   const handleIncrementValue = (value, setValue, type: ActionType) => {
-    var mintNftLimit = type == ActionType.CID ? perAddressCidLimit : perAddressDepinLimit
+    var mintNftLimit = type == ActionType.CID ? userCidLimit : userDepinLimit
     const newValue = parseInt(value) + 1
     if(newValue <= mintNftLimit) {
       setValue(newValue.toString())
@@ -153,7 +164,7 @@ export function IndexMainPage(invite_address: string | undefined) {
 
   const handleDecrementValue = (value, setValue, type: ActionType) => {
     const newValue = parseInt(value) - 1
-    if (newValue >= 1) {
+    if (newValue >= 0) {
       setValue(newValue.toString())
       checkAccountInfo(type, newValue.toString())
     }
@@ -161,6 +172,9 @@ export function IndexMainPage(invite_address: string | undefined) {
 
   const checkAccountInfo = async (type: ActionType, value: string) => {
     if(!usdtBalance) {
+      return
+    }
+    if(value == "0") {
       return
     }
     var price = type == ActionType.CID ? cidPrice : depinPrice
@@ -191,11 +205,17 @@ export function IndexMainPage(invite_address: string | undefined) {
     var mintNftLimit = type == ActionType.CID ? perAddressCidLimit : perAddressDepinLimit
     var contract = type == ActionType.CID ? cidContract : depinContract
 
+    if(mintAmount == "0") {
+      return
+    }
     // 计算总价格
     var totalPrice = BigNumber.from(mintAmount).mul(price)
     // 检查余额
     if (totalPrice > usdtBalance) {
       setCidMintText(usdtNotEnough)
+      return
+    }
+    if(!usdtContract) {
       return
     }
     try {
@@ -204,24 +224,18 @@ export function IndexMainPage(invite_address: string | undefined) {
       // 如果授权数量大于等于需要的 usdt 数量，直接 mint
       if (allowance.value >= totalPrice) {
         if (contract) {
-          try {
-            setIsLoading(true)
-            var res = await contract.call(
-              'claim',
-              [address, parseInt(mintAmount), usdtAddress, price, [[], mintNftLimit, price, usdtAddress], []],
-              {
-                value: ethers.utils.parseUnits('0', 18),
-              }
-            )
-            setIsLoading(false)
-            // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
-            var mintTxid = res.receipt.transactionHash
-            showSuccessMessage('Success!', 'Mint txid: ' + mintTxid);
-          } catch (e) {
-            setIsLoading(false)
-            // todo: 弹框提示错误信息，比如用户拒绝等。
-            showFailMessage('user rejected transaction')
-          }
+          setIsLoading(true)
+          var res = await contract.call(
+            'claim',
+            [address, parseInt(mintAmount), usdtAddress, price, [[], mintNftLimit, price, usdtAddress], []],
+            {
+              value: ethers.utils.parseUnits('0', 18),
+            }
+          )
+          // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
+          var mintTxid = res.receipt.transactionHash
+          setIsLoading(false)
+          showSuccessMessage('Success!', 'Mint txid: ' + mintTxid);
         } else {
           showFailMessage('please init contract')
         }
@@ -238,13 +252,14 @@ export function IndexMainPage(invite_address: string | undefined) {
         )
         // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
         var allowTxid = allowRes.receipt.transactionHash
-        // setIsLoading(false)
+        setIsLoading(false)
         showSuccessMessage('Success!', 'Approved txid: ' + allowTxid);
         checkAccountInfo(type, mintAmount);
       }
     } catch (e) {
       // 弹框提示错误信息
-      // 过滤用户错误信息 user rejected transaction， 其余统一处理
+      console.log(e)
+      setIsLoading(false)
       showFailMessage('user rejected transaction')
     }
   }
