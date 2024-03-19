@@ -1,8 +1,8 @@
 /*
  * @Author:
  * @Date: 2024-03-15 16:54:32
- * @LastEditors:
- * @LastEditTime: 2024-03-15 20:02:21
+ * @LastEditors:  
+ * @LastEditTime: 2024-03-19 10:56:43
  * @FilePath: /coral-frontend/src/components/InvitationId.tsx
  */
 
@@ -73,7 +73,7 @@ const InvitationId = props => {
                       required
                     />
                     <p className="mb-2 text-xs text-redFF">{title}</p>
-                    <button onClick={closeModal}>Connect to Activate</button>
+                    <button onClick={closeModal}>Submit</button>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

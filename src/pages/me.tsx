@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-19 09:34:08
+ * @LastEditTime: 2024-03-19 11:02:02
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -90,6 +90,7 @@ function Main() {
       http.requestLogin(address, null)
       .then(res => {
          setIsInvitation(!res['have_parent'])
+         console.log('======',res['have_parent'])
       }).catch(err=> {
         console.log("err:", err)
       })
