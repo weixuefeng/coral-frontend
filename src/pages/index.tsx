@@ -17,6 +17,7 @@ import { BaseContract, BigNumber, ethers } from 'ethers'
 import Message from 'components/message'
 import Loading from 'components/Loading'
 import http from 'services/http'
+import { CONTRACT_CID, CONTRACT_CID_LIMIT, CONTRACT_CID_PRICE, CONTRACT_DEPIN, CONTRACT_DEPIN_LIMIT, CONTRACT_DEPIN_PRICE, CONTRACT_USDT } from 'constants/setting'
 
 export default Home
 
@@ -32,20 +33,22 @@ enum ActionType {
 
 export function IndexMainPage(invite_address: string | undefined) {
   // 合约地址配置
-  const usdtAddress = '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd'
-  const cidAddress = '0x396DE4961D31De6d593B4252D94355c8367Ff727'
-  const depinAddress = '0x6F4866Bccb37E5E0EB2789063681e61385a8F6C7'
+  const usdtAddress = CONTRACT_USDT
+  const cidAddress = CONTRACT_CID
+  const depinAddress = CONTRACT_DEPIN
 
   // 合约参数配置
-  const perAddressCidLimit = 10
-  const perAddressDepinLimit = 10
+  const perAddressCidLimit = parseInt(CONTRACT_CID_LIMIT)
+  const perAddressDepinLimit = parseInt(CONTRACT_DEPIN_LIMIT)
 
   // cid 价格配置
-  const cidDisplayPrice = '0.1'
-  const depinDisplayPrice = '0.1'
-  const cidPrice = ethers.utils.parseUnits('0.1', 18)
-  const depinPrice = ethers.utils.parseUnits('0.1', 18)
-  const approveAmount = ethers.utils.parseUnits('0.3', 18)
+  const cidDisplayPrice = CONTRACT_CID_PRICE
+  const depinDisplayPrice = CONTRACT_DEPIN_PRICE
+  const approveDisplayAmount = "10000000000"
+
+  const cidPrice = ethers.utils.parseUnits(cidDisplayPrice, 18)
+  const depinPrice = ethers.utils.parseUnits(depinDisplayPrice, 18)
+  const approveAmount = ethers.utils.parseUnits(approveDisplayAmount, 18)
 
   // 购买数量配置
   const [cidNftValue, setCidNftValue] = useState('1')
@@ -132,16 +135,20 @@ export function IndexMainPage(invite_address: string | undefined) {
   }, [usdtContract, cidContract, depinContract, usdtBalance])
 
   const handleInputChange = (value, setValue, type: ActionType) => {
-    if (!isNaN(value) && parseInt(value) >= 1) {
+    var mintNftLimit = type == ActionType.CID ? perAddressCidLimit : perAddressDepinLimit
+    if (!isNaN(value) && parseInt(value) >= 1 && parseInt(value) <= mintNftLimit) {
       setValue(value)
       checkAccountInfo(type, value.toString())
     }
   }
 
   const handleIncrementValue = (value, setValue, type: ActionType) => {
+    var mintNftLimit = type == ActionType.CID ? perAddressCidLimit : perAddressDepinLimit
     const newValue = parseInt(value) + 1
-    setValue(newValue.toString())
-    checkAccountInfo(type, newValue.toString())
+    if(newValue <= mintNftLimit) {
+      setValue(newValue.toString())
+      checkAccountInfo(type, newValue.toString())
+    }
   }
 
   const handleDecrementValue = (value, setValue, type: ActionType) => {
@@ -153,6 +160,9 @@ export function IndexMainPage(invite_address: string | undefined) {
   }
 
   const checkAccountInfo = async (type: ActionType, value: string) => {
+    if(!usdtBalance) {
+      return
+    }
     var price = type == ActionType.CID ? cidPrice : depinPrice
     var contractAddress = type == ActionType.CID ? cidAddress : depinAddress
     var setText = type == ActionType.CID ? setCidMintText : setDepinMintText

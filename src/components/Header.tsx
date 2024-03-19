@@ -9,11 +9,11 @@ const navList = [
     nav: 'Overview',
     page: 'HOME',
   },
-  {
-    src: '/',
-    nav: 'Staking',
-    page: 'STAKING',
-  },
+  // {
+  //   src: '/',
+  //   nav: 'Staking',
+  //   page: 'STAKING',
+  // },
   // {
   //   src: '/staking',
   //   nav: 'Staking',
