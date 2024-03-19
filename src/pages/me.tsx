@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-18 11:11:34
+ * @LastEditTime: 2024-03-19 09:34:08
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -162,7 +162,7 @@ function Main() {
           </div>
           <div className="address">
             <p className="tit">Your Web3 Referrer :</p>
-            <p className="text">{address}</p>
+            <p className="text">{newAddress(address)}</p>
           </div>
         </div>
       </div>
@@ -174,4 +174,12 @@ function Main() {
       />
     </>
   )
+}
+
+function newAddress(oldAddress) {
+  let displayAddress
+  if (oldAddress) {
+    displayAddress = oldAddress.substr(0, 6) + '...' + oldAddress.substr(-4)
+  }
+  return displayAddress
 }
