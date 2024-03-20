@@ -167,6 +167,7 @@ function Main() {
             </li>
           </ul>
           <div className="power">
+            <img src="assets/image/bgbeige.png" alt="" />
             <h3>Computing Power</h3>
             <div className="content">
               <span>{power.power}</span>
