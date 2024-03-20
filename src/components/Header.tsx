@@ -6,8 +6,8 @@ import { ConnectWallet as EVMConnectWallet, darkTheme, lightTheme, useAddress } 
 const navList = [
   {
     src: '/',
-    nav: 'Overview',
-    page: 'HOME',
+    nav: 'Mint',
+    page: 'Mint',
   },
   // {
   //   src: '/',
