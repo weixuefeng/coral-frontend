@@ -61,6 +61,7 @@ export function IndexMainPage(invite_address: string | undefined) {
   // 文案常量
   const usdtNotEnough = 'Insufficient USDT balance'
   const usdtApprove = 'Approve USDT For Mint'
+  const accessReach = "You Reach the Limit"
   const mintText = 'Mint'
 
   // mint 文案配置
@@ -155,10 +156,13 @@ export function IndexMainPage(invite_address: string | undefined) {
 
   const handleIncrementValue = (value, setValue, type: ActionType) => {
     var mintNftLimit = type == ActionType.CID ? userCidLimit : userDepinLimit
+    var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
     const newValue = parseInt(value) + 1
     if(newValue <= mintNftLimit) {
       setValue(newValue.toString())
       checkAccountInfo(type, newValue.toString())
+    } else {
+      setText(accessReach)
     }
   }
 
