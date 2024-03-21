@@ -229,7 +229,7 @@ export function IndexMainPage(invite_address: string | undefined) {
       // 检查 usdt 是否授权
       var allowance = await usdtContract.erc20.allowance(contractAddress)
       // 如果授权数量大于等于需要的 usdt 数量，直接 mint
-      if (allowance.value >= totalPrice) {
+      if (parseInt(allowance.value._hex) >= parseInt(totalPrice._hex)) {
         if (contract) {
           setIsLoading(true)
           var res = await contract.call(
