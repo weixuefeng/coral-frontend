@@ -162,7 +162,7 @@ export function IndexMainPage(invite_address: string | undefined) {
       setValue(newValue.toString())
       checkAccountInfo(type, newValue.toString())
     } else {
-      setText(accessReach)
+      showSuccessMessage("You reach the limit", "")
     }
   }
 
@@ -186,6 +186,9 @@ export function IndexMainPage(invite_address: string | undefined) {
     var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
     var totalPrice = BigNumber.from(value).mul(price)
     // 检查余额
+    console.log("total price: ", parseInt(totalPrice._hex))
+    console.log("ussdt price: ", parseInt(usdtBalance._hex))
+
     if (parseInt(totalPrice._hex) - parseInt(usdtBalance._hex) > 0) {
       setText(usdtNotEnough)
       return
@@ -215,7 +218,7 @@ export function IndexMainPage(invite_address: string | undefined) {
     // 计算总价格
     var totalPrice = BigNumber.from(mintAmount).mul(price)
     // 检查余额
-    if (totalPrice > usdtBalance) {
+    if (parseInt(totalPrice._hex) - parseInt(usdtBalance._hex) > 0) {
       setCidMintText(usdtNotEnough)
       return
     }
