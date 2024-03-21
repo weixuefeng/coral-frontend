@@ -25,8 +25,8 @@ import { BinanceTestnet, Binance } from '@thirdweb-dev/chains'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider
-      activeChain={BinanceTestnet}
-      supportedChains={[BinanceTestnet]}
+      activeChain={ Binance }
+      supportedChains={[Binance]}
       clientId="d89bd7e02c56119887c603be6eaf6df0"
       supportedWallets={[
         metamaskWallet(),
