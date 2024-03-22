@@ -34,6 +34,7 @@ function Main() {
   var currentDomain = INVITE_PREFIX
   const [isInvitation, setIsInvitation] = useState(false)
   const [inviteTitle, setInviteTitle] = useState('')
+  const [inviteCode, setInviteCode] = useState('')
   const [power, setPower] = useState<PowerInfo>({
     "power": 0,
     "cid_available": 0,
@@ -112,6 +113,7 @@ function Main() {
       http.requestLogin(address, null)
       .then(res => {
          setIsInvitation(!res['have_parent'])
+         setInviteCode(res['parent_address'])
       }).catch(err=> {
         console.log("err:", err)
       })
@@ -185,7 +187,7 @@ function Main() {
           </div>
           <div className="address">
             <p className="tit">Your Web3 Referrer :</p>
-            <p className="text">{newAddress(address)}</p>
+            <p className="text">{inviteCode}</p>
           </div>
         </div>
       </div>
