@@ -190,7 +190,7 @@ export function IndexMainPage(invite_address: string | undefined) {
       return
     }
     // 计算总价格
-    var totalPrice = ethers.parseUnits(mintAmount, 1) * price
+    var totalPrice = BigInt(mintAmount) * price
     // 检查余额
     if (parseInt(totalPrice.toString()) - parseInt(usdtBalance.toString()) > 0) {
       setCidMintText(usdtNotEnough)
@@ -227,16 +227,22 @@ export function IndexMainPage(invite_address: string | undefined) {
         if (totalPrice < approveAmount) {
           maxValue = approveAmount
         }
+        console.log("max:", maxValue)
         setIsLoading(true)
-        var allowRes = await usdtContract.approve(
-          contractAddress,
-          ethers.parseUnits(ethers.formatUnits(maxValue, 18), 18).toString()
-        )
-        // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
-        var allowTxid = allowRes['hash']
-        setIsLoading(false)
-        showSuccessMessage('Success!', 'Approved txid: ' + allowTxid)
-        checkAccountInfo(type, mintAmount)
+        try {
+          var allowRes = await usdtContract.approve(
+            contractAddress,
+            ethers.parseUnits(ethers.formatUnits(maxValue, 18), 18).toString()
+          )
+          // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
+          var allowTxid = allowRes['hash']
+          setIsLoading(false)
+          showSuccessMessage('Success!', 'Approved txid: ' + allowTxid)
+          checkAccountInfo(type, mintAmount)
+        } catch(e) {
+          console.log(e)
+        }
+        
       }
     } catch (e) {
       // 弹框提示错误信息
