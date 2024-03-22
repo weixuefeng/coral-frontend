@@ -187,7 +187,7 @@ function Main() {
           </div>
           <div className="address">
             <p className="tit">Your Web3 Referrer :</p>
-            <p className="text">{inviteCode}</p>
+            <p className="text">{newAddress(inviteCode)}</p>
           </div>
         </div>
       </div>
