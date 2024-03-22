@@ -86,8 +86,7 @@ function Main() {
   
   const addressRef = useRef(null)
   const [isCopy, setIsCopy] = useState(false)
-  const copyToAddress = () => {
-    const addressVal = addressRef.current.textContent;
+  const copyToAddress = (addressVal: string) => {
     const textArea = document.createElement('textarea');
     textArea.value = addressVal;
     document.body.appendChild(textArea);
@@ -184,7 +183,7 @@ function Main() {
             <h5>Invite Friends to join Coralverse now </h5>
             <div className="share">
               <div className='use' ref={addressRef}>{currentDomain}/invite?{address}</div>
-              <img onClick={copyToAddress} className="share-copy" src="assets/image/copy.png" alt="copy" />
+              <img onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)} className="share-copy" src="assets/image/copy.png" alt="copy" />
               {/* <img src="assets/image/share.png" alt="share" /> */}
               {isCopy && <p>Copy Success</p>}
             </div>
