@@ -186,8 +186,8 @@ export function IndexMainPage(invite_address: string | undefined) {
     var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
     var totalPrice = BigNumber.from(value).mul(price)
     // 检查余额
-    console.log("total price: ", parseInt(totalPrice._hex))
-    console.log("ussdt price: ", parseInt(usdtBalance._hex))
+    // console.log("total price: ", parseInt(totalPrice._hex))
+    // console.log("ussdt price: ", parseInt(usdtBalance._hex))
 
     if (parseInt(totalPrice._hex) - parseInt(usdtBalance._hex) > 0) {
       setText(usdtNotEnough)
@@ -321,7 +321,7 @@ export function IndexMainPage(invite_address: string | undefined) {
                 </li>
                 <li>
                   <p>Quantity</p>
-                  <p>10,000</p>
+                  <p>20,000</p>
                 </li>
                 <li>
                   <p>Price per NFT</p>
@@ -400,7 +400,7 @@ export function IndexMainPage(invite_address: string | undefined) {
                 </li>
                 <li>
                   <p>Quantity</p>
-                  <p>10,000</p>
+                  <p>1,000</p>
                 </li>
                 <li>
                   <p>Price per NFT</p>
