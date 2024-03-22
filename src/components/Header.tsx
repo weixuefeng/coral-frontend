@@ -4,6 +4,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import { hooks, metaMask } from '../connectors/metamask'
 import { CHAIN_ID } from 'constants/setting'
 import { getAddChainParameters } from 'connectors/chains'
+import Message from './message'
+import DisconnectModel from './disconnect'
 
 const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks
 
@@ -36,8 +38,9 @@ export default function Header({ pageName }) {
   const isActive = useIsActive()
   const provider = useProvider()
 
+  const [showDisConnect, setIsShowDisconnect] = useState(false)
   const [isWalletOpen, setWalletOpen] = useState(false)
-
+  console.log(metaMask)
   const connect = () => {
     metaMask
       .activate(desiredChainId)
@@ -47,7 +50,6 @@ export default function Header({ pageName }) {
       })
   }
 
-  console.log('Setxx:', CHAIN_ID)
   const [desiredChainId, setDesiredChainId] = useState<number>(CHAIN_ID)
 
   const switchChain = useCallback(
@@ -121,7 +123,7 @@ export default function Header({ pageName }) {
                 ) : (
                   <>
                     {activeChainId == desiredChainId ? (
-                      newAddress(accounts[0])
+                      <p onClick={() => setIsShowDisconnect(true)}>{newAddress(accounts[0])}</p>
                     ) : (
                       <p
                         onClick={() => {
@@ -245,7 +247,7 @@ export default function Header({ pageName }) {
                               ) : (
                                 <>
                                   {activeChainId == desiredChainId ? (
-                                    newAddress(accounts[0])
+                                    <p onClick={() => setIsShowDisconnect(true)}>{newAddress(accounts[0])}</p>
                                   ) : (
                                     <p
                                       onClick={() => {
@@ -269,6 +271,14 @@ export default function Header({ pageName }) {
             </Dialog>
           </Transition.Root>
         </div>
+        <DisconnectModel
+          isShow={showDisConnect}
+          setShow={setIsShowDisconnect}
+          disconnect={() => {
+            setIsShowDisconnect(false)
+            metaMask.resetState()
+          }}
+        />
       </div>
     </>
   )
