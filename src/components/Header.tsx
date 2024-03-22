@@ -1,7 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
-import { ConnectWallet as EVMConnectWallet, darkTheme, lightTheme, useAddress } from '@thirdweb-dev/react'
+import { useWeb3Context } from 'web3-react'
+import { hooks, metaMask } from '../connectors/metamask'
+
+const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks
+
 
 const navList = [
   {
@@ -24,8 +28,23 @@ const navList = [
 export default function Header({ pageName }) {
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
   const [isInvitation, setIsInvitation] = useState(false)
-  const account = useAddress()
+
+  const chainId = useChainId()
+  const accounts = useAccounts()
+  const isActivating = useIsActivating()
+  const isActive = useIsActive()
+  const provider = useProvider()
+  
   const [isWalletOpen, setWalletOpen] = useState(false)
+
+  const connect = () => {
+    metaMask
+        .activate()
+        .then(() => console.log("ok"))
+        .catch(e => {
+          console.log(e)
+        })
+  }
 
   const handleInvitationChange = newValue => {
     setIsInvitation(newValue)
@@ -38,6 +57,12 @@ export default function Header({ pageName }) {
   const handWalletChange = newValue => {
     setWalletOpen(newValue)
   }
+
+  useEffect(() => {
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
+  }, [])
 
   return (
     <>
@@ -59,37 +84,12 @@ export default function Header({ pageName }) {
           </div>
           <div className="wallet-wrap">
             <div className="wallet">
-              <EVMConnectWallet
-                theme={lightTheme({
-                  colors: {
-                    borderColor: '#ffffff',
-                    connectedButtonBg: '#00000000',
-                    primaryButtonText: '#444444',
-                  },
-                })}
-                btnTitle={'CONNECT'}
-                modalSize={'wide'}
-                switchToActiveChain={true}
-              />
-            </div>
-            {/* {!account && (<>
               <div className='wallet'>
-                <EVMConnectWallet
-                  theme={lightTheme({
-                    colors: {
-                      borderColor: "#ffffff",
-                      connectedButtonBg: "#00000000",
-                      primaryButtonText: "#444444"
-                    },
-                  })}
-                  btnTitle={"CONNECT"}
-                  modalSize={"wide"}
-                  switchToActiveChain={true}
-                />
+                 {accounts == null ? <div onClick={() => {
+                  connect()
+                 }}>Connect</div> : <>{newAddress(accounts[0] )}</>}
               </div>
-            </>
-            )}
-            {account && <Connected address={account} />} */}
+            </div>
             <div className="me-nav">
               <Link href="/me" passHref>
                 <img src="assets/image/icon_me.png" alt="logo" />
@@ -188,35 +188,11 @@ export default function Header({ pageName }) {
                             })}
                           </ul>
                           <div className="wallet-h5">
-                            <EVMConnectWallet
-                              theme={lightTheme({
-                                colors: {
-                                  borderColor: '#ffffff',
-                                  connectedButtonBg: '#00000000',
-                                  primaryButtonText: '#444444',
-                                },
-                              })}
-                              btnTitle={'CONNECT'}
-                              modalSize={'wide'}
-                              switchToActiveChain={true}
-                            />
-                            {/* {!account && (<>
-                              <EVMConnectWallet
-                                theme={lightTheme({
-                                  colors: {
-                                    borderColor: "#ffffff",
-                                    connectedButtonBg: "#00000000",
-                                    primaryButtonText: "#444444"
-                                  },
-                                })}
-                                btnTitle={"CONNECT"}
-                                modalSize={"wide"}
-                                switchToActiveChain={true}
-                              />
-                            </>
-                            )}
-                            {account && <Connected address={account} />} */}
-                          </div>
+                          <div className='wallet'>
+                 {accounts == null ? <div onClick={() => {
+                  connect()
+                 }}>Connect</div> : <>{newAddress(accounts[0] )}</>}
+              </div>                          </div>
                         </div>
                       </div>
                     </div>

@@ -19,11 +19,16 @@
     "@tailwindcss/typography": "^0.5.2",
     "@thirdweb-dev/react": "^4.4.20",
     "@thirdweb-dev/sdk": "^4.0.47",
+    "@web3-react/core": "^8.2.3",
+    "@web3-react/metamask": "^8.2.4",
+    "@web3-react/network": "^8.2.3",
+    "@web3-react/url": "^8.2.3",
+    "add": "^2.0.6",
     "autoprefixer": "^10.4.4",
     "axios": "^1.6.5",
     "echarts": "^5.4.3",
     "echarts-for-react": "^3.0.2",
-    "ethers": "^5",
+    "ethers": "^6.11.1",
     "i18next": "^21.8.0",
     "js-base64": "^3.7.5",
     "next": "^14.0.4",
@@ -38,7 +43,7 @@
     "react-use": "^17.4.2",
     "sass": "^1.69.7",
     "tailwindcss": "^3.4.1",
-    "yarn": "^1.22.21"
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

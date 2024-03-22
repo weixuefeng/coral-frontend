@@ -9,39 +9,24 @@ import 'styles/style.scss'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import 'i18n'
+import type { MetaMask } from '@web3-react/metamask'
+import { useWeb3React, Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
 
-import {
-  ThirdwebProvider,
-  metamaskWallet,
-  coinbaseWallet,
-  walletConnect,
-  trustWallet,
-  rainbowWallet,
-  okxWallet,
-} from '@thirdweb-dev/react'
+import { hooks as metaMaskHooks, metaMask } from '../connectors/metamask'
 
-import { BinanceTestnet, Binance } from '@thirdweb-dev/chains'
+const connectors: [MetaMask , Web3ReactHooks][] = [
+  [metaMask, metaMaskHooks],
+]
+
 import { IS_RELEASE } from 'constants/setting'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThirdwebProvider
-      activeChain={IS_RELEASE ? Binance : BinanceTestnet}
-      supportedChains={[IS_RELEASE ? Binance : BinanceTestnet]}
-      clientId="d89bd7e02c56119887c603be6eaf6df0"
-      supportedWallets={[
-        metamaskWallet(),
-        coinbaseWallet({ recommended: true }),
-        walletConnect(),
-        okxWallet({ recommended: true }),
-        trustWallet({ recommended: true }),
-        rainbowWallet({ recommended: true }),
-      ]}
-    >
+    <Web3ReactProvider connectors={connectors}>
       <ThemeProvider defaultTheme="system" attribute="class">
         <Component {...pageProps} />
       </ThemeProvider>
-    </ThirdwebProvider>
+    </Web3ReactProvider>
   )
 }
 export default MyApp

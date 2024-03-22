@@ -5,7 +5,6 @@
  * @LastEditTime: 2024-03-18 19:57:09
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
-
 import React, { useState, useEffect } from 'react'
 import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
@@ -13,7 +12,8 @@ import IncrementInput from 'components/IncrementInput'
 import { SmartContract, ThirdwebSDK, useAddress, useConnectedWallet } from '@thirdweb-dev/react'
 import coralCidAbi from 'abi/coral-cid-abi'
 import coralDepinAbi from 'abi/coral-depin-abi'
-import { BaseContract, BigNumber, ethers } from 'ethers'
+import usedAbi from 'abi/usdt-abi'
+import { BaseContract, BigNumberish as BigNumber, JsonRpcSigner, ethers } from 'ethers'
 import Message from 'components/message'
 import Loading from 'components/Loading'
 import http from 'services/http'
@@ -26,6 +26,14 @@ import {
   CONTRACT_DEPIN_PRICE,
   CONTRACT_USDT,
 } from 'constants/setting'
+import { Contract } from '@ethersproject/contracts'
+
+import { useWeb3Context } from 'web3-react'
+import { hooks, metaMask } from '../connectors/metamask'
+import { sign } from 'crypto'
+import usdtAbi from 'abi/usdt-abi'
+
+const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks
 
 export default Home
 
@@ -40,6 +48,13 @@ enum ActionType {
 }
 
 export function IndexMainPage(invite_address: string | undefined) {
+
+  const account = useAccounts();
+  const provider = useProvider();
+
+  const [signer,setSigner] = useState<JsonRpcSigner>()
+
+
   // 合约地址配置
   const usdtAddress = CONTRACT_USDT
   const cidAddress = CONTRACT_CID
@@ -53,18 +68,14 @@ export function IndexMainPage(invite_address: string | undefined) {
   const cidDisplayPrice = CONTRACT_CID_PRICE
   const depinDisplayPrice = CONTRACT_DEPIN_PRICE
   const approveDisplayAmount = '10000000000'
-
-  const cidPrice = ethers.utils.parseUnits(cidDisplayPrice, 18)
-  const depinPrice = ethers.utils.parseUnits(depinDisplayPrice, 18)
-  const approveAmount = ethers.utils.parseUnits(approveDisplayAmount, 18)
+  
+  const cidPrice = ethers.parseUnits(cidDisplayPrice, 18)
+  const depinPrice = ethers.parseUnits(depinDisplayPrice, 18)
+  const approveAmount = ethers.parseUnits(approveDisplayAmount, 18)
 
   // 购买数量配置
   const [cidNftValue, setCidNftValue] = useState('0')
   const [depinNftValue, setDepinNftValue] = useState('0')
-
-  // 钱包 signer
-  const signer = useConnectedWallet()
-  const address = useAddress()
 
   // 文案常量
   const usdtNotEnough = 'Insufficient USDT balance'
@@ -77,9 +88,9 @@ export function IndexMainPage(invite_address: string | undefined) {
   const [depinMintText, setDepinMintText] = useState(mintText)
 
   // 合约配置
-  const [cidContract, setCidContract] = useState<SmartContract<BaseContract>>()
-  const [usdtContract, setUsdtContract] = useState<SmartContract<BaseContract>>()
-  const [depinContract, setDepinContract] = useState<SmartContract<BaseContract>>()
+  const [cidContract, setCidContract] = useState<Contract>()
+  const [usdtContract, setUsdtContract] = useState<Contract>()
+  const [depinContract, setDepinContract] = useState<Contract>()
 
   // usdt 余额
   const [usdtBalance, setUsdtBalance] = useState<BigNumber>()
@@ -88,75 +99,44 @@ export function IndexMainPage(invite_address: string | undefined) {
   const [userCidLimit, setUserCidLimit] = useState(parseInt(CONTRACT_CID_LIMIT))
   const [userDepinLimit, setUserDepinLimit] = useState(parseInt(CONTRACT_DEPIN_LIMIT))
 
+
   // 初始化 sdk
-  useEffect(() => {
+  useEffect(() =>  {
+
     // login
-    if (signer) {
+   
+    if (account) {
+      var address = account[0]; 
+      console.log("Account", address);
+      const signer = provider?.getSigner(account[0]); 
+      console.log(signer);
       http
-        .requestLogin(address, invite_address)
+        .requestLogin(account[0], invite_address)
         .then(res => {
           console.log(res)
         })
         .catch(err => {
           console.log('login error:', err)
         })
+
+      const cidContract = new Contract(cidAddress, coralCidAbi, provider);
+      const depinContract = new Contract(depinAddress, coralDepinAbi, provider);
+      const usdtContract = new Contract(usdtAddress, usdtAbi, provider)
+      setCidContract(cidContract)
+      setDepinContract(depinContract)
+      setUsdtContract(usdtContract)
+      usdtContract.balanceOf(address).then(balance => {
+        console.log("usdtbalance:", balance)
+        setUsdtBalance(balance)
+      })
+      cidContract.balanceOf(account[0]).then(balance => {
+        setUserCidLimit(parseInt(CONTRACT_CID_LIMIT) - parseInt((balance as any)._hex))
+      })
+      depinContract.balanceOf(account[0]).then(balance => {
+        setUserDepinLimit(parseInt(CONTRACT_DEPIN_LIMIT) - parseInt((balance as any)._hex))
+      })
     }
-    if (signer) {
-      const sdk = ThirdwebSDK.fromSigner(signer)
-      // 初始化 usdt 合约
-      sdk
-        .getContract(usdtAddress)
-        .then(res => {
-          setUsdtContract(res)
-          // 初始化成功之后获取 usdt 余额
-          res.erc20
-            .balanceOf(address)
-            .then(balance => {
-              setUsdtBalance(balance.value)
-            })
-            .catch(e => {
-              console.log('get usdt balance error:', e)
-            })
-        })
-        .catch(e => {
-          console.log('init usdt contract error', e)
-        })
-      // 初始化 cid 合约
-      sdk
-        .getContractFromAbi(cidAddress, coralCidAbi)
-        .then(contract => {
-          setCidContract(contract)
-          contract
-            .call('balanceOf', [address])
-            .then(balance => {
-              setUserCidLimit(parseInt(CONTRACT_CID_LIMIT) - parseInt((balance as any)._hex))
-            })
-            .catch(err => {
-              console.log('get balance error:', err)
-            })
-        })
-        .catch(e => {
-          console.log('init cid contract error', e)
-        })
-      // 初始化 depin 合约
-      sdk
-        .getContractFromAbi(depinAddress, coralDepinAbi)
-        .then(contract => {
-          setDepinContract(contract)
-          contract
-            .call('balanceOf', [address])
-            .then(balance => {
-              setUserDepinLimit(parseInt(CONTRACT_DEPIN_LIMIT) - parseInt((balance as any)._hex))
-            })
-            .catch(err => {
-              console.log('get balance error:', err)
-            })
-        })
-        .catch(e => {
-          console.log('init depin contract error', e)
-        })
-    }
-  }, [signer])
+  }, [provider])
 
   const handleInputChange = (value, setValue, type: ActionType) => {
     var mintNftLimit = type == ActionType.CID ? userCidLimit : userDepinLimit
@@ -196,12 +176,12 @@ export function IndexMainPage(invite_address: string | undefined) {
     var price = type == ActionType.CID ? cidPrice : depinPrice
     var contractAddress = type == ActionType.CID ? cidAddress : depinAddress
     var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
-    var totalPrice = BigNumber.from(value).mul(price)
+    
+    var totalPrice = ethers.parseUnits(value) * (price)
     // 检查余额
     // console.log("total price: ", parseInt(totalPrice._hex))
     // console.log("ussdt price: ", parseInt(usdtBalance._hex))
-
-    if (parseInt(totalPrice._hex) - parseInt(usdtBalance._hex) > 0) {
+    if ((parseInt(totalPrice.toString()) - parseInt(usdtBalance.toString())) > 0) {
       setText(usdtNotEnough)
       return
     }
@@ -209,8 +189,8 @@ export function IndexMainPage(invite_address: string | undefined) {
       return
     }
     // 检查 usdt 是否授权
-    var allowance = await usdtContract.erc20.allowance(contractAddress)
-    if (parseInt(allowance.value._hex) - parseInt(totalPrice._hex) > 0) {
+    var allowance = await usdtContract.allowance(contractAddress)
+    if (parseInt(allowance.value._hex) - parseInt(totalPrice.toString()) > 0) {
       setText(mintText)
     } else {
       setText(usdtApprove)
@@ -228,9 +208,9 @@ export function IndexMainPage(invite_address: string | undefined) {
       return
     }
     // 计算总价格
-    var totalPrice = BigNumber.from(mintAmount).mul(price)
+    var totalPrice = ethers.parseUnits(mintAmount, 1) * (price)
     // 检查余额
-    if (parseInt(totalPrice._hex) - parseInt(usdtBalance._hex) > 0) {
+    if (parseInt(totalPrice.toString()) - parseInt(usdtBalance.toString()) > 0) {
       setCidMintText(usdtNotEnough)
       return
     }
@@ -239,16 +219,16 @@ export function IndexMainPage(invite_address: string | undefined) {
     }
     try {
       // 检查 usdt 是否授权
-      var allowance = await usdtContract.erc20.allowance(contractAddress)
+      var allowance = await usdtContract.allowance(contractAddress)
       // 如果授权数量大于等于需要的 usdt 数量，直接 mint
-      if (parseInt(allowance.value._hex) >= parseInt(totalPrice._hex)) {
+      if (parseInt(allowance) >= parseInt(totalPrice.toString())) {
         if (contract) {
           setIsLoading(true)
           var res = await contract.call(
             'claim',
-            [address, parseInt(mintAmount), usdtAddress, price, [[], mintNftLimit, price, usdtAddress], []],
+            [account[0], parseInt(mintAmount), usdtAddress, price, [[], mintNftLimit, price, usdtAddress], []],
             {
-              value: ethers.utils.parseUnits('0', 18),
+              value: ethers.parseUnits('0', 18),
             }
           )
           // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
@@ -267,7 +247,7 @@ export function IndexMainPage(invite_address: string | undefined) {
         setIsLoading(true)
         var allowRes = await usdtContract.erc20.setAllowance(
           contractAddress,
-          ethers.utils.parseUnits(ethers.utils.formatUnits(maxValue, 18), 18).toString()
+          ethers.parseUnits(ethers.formatUnits(maxValue, 18), 18).toString()
         )
         // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
         var allowTxid = allowRes.receipt.transactionHash
