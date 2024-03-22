@@ -82,6 +82,7 @@ function Main() {
           <IncrementInput
             text={'Pledge'}
             value={cidNftValue}
+            onMint={() => {}}
             onInput={value => handleInputChange(value, setCidNftValue)}
             onIncrement={() => handleIncrementValue(cidNftValue, setCidNftValue)}
             onDecrement={() => handleDecrementValue(cidNftValue, setCidNftValue)}
@@ -125,6 +126,7 @@ function Main() {
           <IncrementInput
             text={'Pledge'}
             value={depinNftValue}
+            onMint={() => {}}
             onInput={value => handleInputChange(value, setDepinNftValue)}
             onIncrement={() => handleIncrementValue(depinNftValue, setDepinNftValue)}
             onDecrement={() => handleDecrementValue(depinNftValue, setDepinNftValue)}
