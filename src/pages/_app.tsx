@@ -26,7 +26,7 @@ import { IS_RELEASE } from 'constants/setting'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider
-      activeChain={ IS_RELEASE ? Binance : BinanceTestnet }
+      activeChain={IS_RELEASE ? Binance : BinanceTestnet}
       supportedChains={[IS_RELEASE ? Binance : BinanceTestnet]}
       clientId="d89bd7e02c56119887c603be6eaf6df0"
       supportedWallets={[

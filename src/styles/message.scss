@@ -43,7 +43,7 @@
     .loading {
       @apply flex items-center justify-center;
       span {
-        animation: loadingPulse 1s ease-in-out infinite; 
+        animation: loadingPulse 1s ease-in-out infinite;
       }
     }
   }

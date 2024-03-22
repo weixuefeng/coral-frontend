@@ -1,7 +1,7 @@
 /*
- * @Author:  
+ * @Author:
  * @Date: 2024-03-18 10:55:51
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-18 13:57:30
  * @FilePath: /coral-frontend/src/pages/invite.tsx
  */

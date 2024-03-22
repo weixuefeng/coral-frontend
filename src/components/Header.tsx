@@ -7,7 +7,7 @@ const navList = [
   {
     src: '/',
     nav: 'Mint',
-    page: 'Mint',
+    page: 'MINT',
   },
   // {
   //   src: '/',

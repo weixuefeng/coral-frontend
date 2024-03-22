@@ -1,9 +1,7 @@
-
 import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 const Message = ({ title, txid, isMessage, imgMessage, closePop }) => {
-
   const closeModal = () => {
     closePop()
   }
