@@ -10,10 +10,13 @@ import React, { useState, useEffect,useRef } from 'react'
 import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import InvitationId from 'components/InvitationId'
-import { useAddress, useConnectedWallet } from '@thirdweb-dev/react'
+import { BaseContract } from 'ethers'
+import { SmartContract, useAddress, useConnectedWallet, ThirdwebSDK} from '@thirdweb-dev/react'
 import http from 'services/http'
 import Message from 'components/message'
-import { INVITE_PREFIX } from 'constants/setting'
+import { CONTRACT_CID, CONTRACT_DEPIN, INVITE_PREFIX } from 'constants/setting'
+import coralCidAbi from 'abi/coral-cid-abi'
+import coralDepinAbi from 'abi/coral-depin-abi'
 
 export default Me
 
@@ -42,6 +45,17 @@ function Main() {
     "cid_stake": 0,
     "depin_stake": 0
 })
+
+const cidAddress = CONTRACT_CID
+const depinAddress = CONTRACT_DEPIN
+
+const [cidContract, setCidContract] = useState<SmartContract<BaseContract>>()
+const [usdtContract, setUsdtContract] = useState<SmartContract<BaseContract>>()
+const [depinContract, setDepinContract] = useState<SmartContract<BaseContract>>()
+
+const [cidBalance, setCidBalance] = useState(0)
+const [depinBalance, setDepinBalance] = useState(0)
+
 
   // loading
   const [title, setTitle] = useState('')
@@ -121,6 +135,39 @@ function Main() {
         console.log("err:", err)
       })
     }
+    const sdk = ThirdwebSDK.fromSigner(signer)
+    // 初始化 cid 合约
+    sdk
+    .getContractFromAbi(cidAddress, coralCidAbi)
+    .then(contract => {
+      setCidContract(contract)
+      contract.call('balanceOf', [address])
+      .then( balance => {
+          setCidBalance(parseInt((balance as any)._hex))
+      })
+      .catch(err => {
+        console.log("get balance error:", err)
+      })
+    })
+    .catch(e => {
+      console.log('init cid contract error', e)
+    })
+  // 初始化 depin 合约
+  sdk
+    .getContractFromAbi(depinAddress, coralDepinAbi)
+    .then(contract => {
+      setDepinContract(contract)
+      contract.call('balanceOf', [address])
+      .then( balance => {
+          setDepinBalance(parseInt((balance as any)._hex))
+        })
+      .catch(err => {
+        console.log("get balance error:", err)
+      })
+    })
+    .catch(e => {
+      console.log('init depin contract error', e)
+    })
   }, [signer])
 
   return (
@@ -142,7 +189,7 @@ function Main() {
               <div>
                 <h3 className="block md:hidden">CID NFTs</h3>
                 <h5>Available</h5>
-                <p>{power.cid_available}</p>
+                <p>{cidBalance}</p>
                 <h5 className="block md:hidden">Staked</h5>
                 <p className="block md:hidden">{power.cid_stake}</p>
               </div>
@@ -159,7 +206,7 @@ function Main() {
               <div>
                 <h3 className="block md:hidden">DePIN NFTs</h3>
                 <h5>Available</h5>
-                <p>{power.depin_available}</p>
+                <p>{depinBalance}</p>
                 <h5 className="block md:hidden">Staked</h5>
                 <p className="block md:hidden">{power.depin_stake}</p>
               </div>
