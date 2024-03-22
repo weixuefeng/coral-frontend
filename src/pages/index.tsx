@@ -419,7 +419,7 @@ export function IndexMainPage(invite_address: string | undefined) {
               the equipment provider and supporting Coral's ecosystem and maintenance.
             </p>
           </div>
-          <div className="home-footer">© 2024 Coral App.</div>
+          <div className="home-footer"></div>
         </div>
       </div>
       <Message
