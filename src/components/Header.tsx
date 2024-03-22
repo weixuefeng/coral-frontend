@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
-import { useWeb3Context } from 'web3-react'
 import { hooks, metaMask } from '../connectors/metamask'
 
 const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks
@@ -30,6 +29,7 @@ export default function Header({ pageName }) {
   const [isInvitation, setIsInvitation] = useState(false)
 
   const chainId = useChainId()
+  console.log("chainid:", chainId)
   const accounts = useAccounts()
   const isActivating = useIsActivating()
   const isActive = useIsActive()

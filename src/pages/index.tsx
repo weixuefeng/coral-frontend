@@ -9,11 +9,9 @@ import React, { useState, useEffect } from 'react'
 import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import IncrementInput from 'components/IncrementInput'
-import { SmartContract, ThirdwebSDK, useAddress, useConnectedWallet } from '@thirdweb-dev/react'
 import coralCidAbi from 'abi/coral-cid-abi'
 import coralDepinAbi from 'abi/coral-depin-abi'
-import usedAbi from 'abi/usdt-abi'
-import { BaseContract, BigNumberish as BigNumber, JsonRpcSigner, ethers } from 'ethers'
+import { BigNumberish, ethers } from 'ethers'
 import Message from 'components/message'
 import Loading from 'components/Loading'
 import http from 'services/http'
@@ -28,12 +26,10 @@ import {
 } from 'constants/setting'
 import { Contract } from '@ethersproject/contracts'
 
-import { useWeb3Context } from 'web3-react'
-import { hooks, metaMask } from '../connectors/metamask'
-import { sign } from 'crypto'
+import { hooks } from '../connectors/metamask'
 import usdtAbi from 'abi/usdt-abi'
 
-const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks
+const { useAccounts, useProvider } = hooks
 
 export default Home
 
@@ -51,9 +47,6 @@ export function IndexMainPage(invite_address: string | undefined) {
 
   const account = useAccounts();
   const provider = useProvider();
-
-  const [signer,setSigner] = useState<JsonRpcSigner>()
-
 
   // 合约地址配置
   const usdtAddress = CONTRACT_USDT
@@ -80,7 +73,6 @@ export function IndexMainPage(invite_address: string | undefined) {
   // 文案常量
   const usdtNotEnough = 'Insufficient USDT balance'
   const usdtApprove = 'Approve USDT For Mint'
-  const accessReach = 'You Reach the Limit'
   const mintText = 'Mint'
 
   // mint 文案配置
@@ -93,7 +85,7 @@ export function IndexMainPage(invite_address: string | undefined) {
   const [depinContract, setDepinContract] = useState<Contract>()
 
   // usdt 余额
-  const [usdtBalance, setUsdtBalance] = useState<BigNumber>()
+  const [usdtBalance, setUsdtBalance] = useState<BigNumberish>()
 
   // user limit
   const [userCidLimit, setUserCidLimit] = useState(parseInt(CONTRACT_CID_LIMIT))
@@ -102,12 +94,8 @@ export function IndexMainPage(invite_address: string | undefined) {
 
   // 初始化 sdk
   useEffect(() =>  {
-
-    // login
-   
     if (account) {
       var address = account[0]; 
-      console.log("Account", address);
       const signer = provider?.getSigner(account[0]); 
       console.log(signer);
       http
@@ -119,14 +107,13 @@ export function IndexMainPage(invite_address: string | undefined) {
           console.log('login error:', err)
         })
 
-      const cidContract = new Contract(cidAddress, coralCidAbi, provider);
-      const depinContract = new Contract(depinAddress, coralDepinAbi, provider);
-      const usdtContract = new Contract(usdtAddress, usdtAbi, provider)
+      const cidContract = new Contract(cidAddress, coralCidAbi, signer);
+      const depinContract = new Contract(depinAddress, coralDepinAbi, signer);
+      const usdtContract = new Contract(usdtAddress, usdtAbi, signer)
       setCidContract(cidContract)
       setDepinContract(depinContract)
       setUsdtContract(usdtContract)
       usdtContract.balanceOf(address).then(balance => {
-        console.log("usdtbalance:", balance)
         setUsdtBalance(balance)
       })
       cidContract.balanceOf(account[0]).then(balance => {
@@ -148,7 +135,6 @@ export function IndexMainPage(invite_address: string | undefined) {
 
   const handleIncrementValue = (value, setValue, type: ActionType) => {
     var mintNftLimit = type == ActionType.CID ? userCidLimit : userDepinLimit
-    var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
     const newValue = parseInt(value) + 1
     if (newValue <= mintNftLimit) {
       setValue(newValue.toString())
@@ -177,10 +163,9 @@ export function IndexMainPage(invite_address: string | undefined) {
     var contractAddress = type == ActionType.CID ? cidAddress : depinAddress
     var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
     
-    var totalPrice = ethers.parseUnits(value) * (price)
+  
+    var totalPrice = BigInt(value) * price
     // 检查余额
-    // console.log("total price: ", parseInt(totalPrice._hex))
-    // console.log("ussdt price: ", parseInt(usdtBalance._hex))
     if ((parseInt(totalPrice.toString()) - parseInt(usdtBalance.toString())) > 0) {
       setText(usdtNotEnough)
       return
@@ -189,8 +174,8 @@ export function IndexMainPage(invite_address: string | undefined) {
       return
     }
     // 检查 usdt 是否授权
-    var allowance = await usdtContract.allowance(contractAddress)
-    if (parseInt(allowance.value._hex) - parseInt(totalPrice.toString()) > 0) {
+    var allowance = await usdtContract.allowance(account[0],contractAddress)
+    if (parseInt(allowance._hex) - parseInt(totalPrice.toString()) > 0) {
       setText(mintText)
     } else {
       setText(usdtApprove)
@@ -219,20 +204,15 @@ export function IndexMainPage(invite_address: string | undefined) {
     }
     try {
       // 检查 usdt 是否授权
-      var allowance = await usdtContract.allowance(contractAddress)
+      var allowance = await usdtContract.allowance(account[0], contractAddress)
       // 如果授权数量大于等于需要的 usdt 数量，直接 mint
       if (parseInt(allowance) >= parseInt(totalPrice.toString())) {
         if (contract) {
           setIsLoading(true)
-          var res = await contract.call(
-            'claim',
-            [account[0], parseInt(mintAmount), usdtAddress, price, [[], mintNftLimit, price, usdtAddress], []],
-            {
-              value: ethers.parseUnits('0', 18),
-            }
-          )
+          var res = await contract.claim(
+            account[0], parseInt(mintAmount), usdtAddress, price, [[], mintNftLimit, price, usdtAddress], []);
           // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
-          var mintTxid = res.receipt.transactionHash
+          var mintTxid = res['hash']
           setIsLoading(false)
           showSuccessMessage('Success!', 'Mint txid: ' + mintTxid)
         } else {
@@ -245,12 +225,12 @@ export function IndexMainPage(invite_address: string | undefined) {
           maxValue = approveAmount
         }
         setIsLoading(true)
-        var allowRes = await usdtContract.erc20.setAllowance(
+        var allowRes = await usdtContract.approve(
           contractAddress,
           ethers.parseUnits(ethers.formatUnits(maxValue, 18), 18).toString()
         )
         // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
-        var allowTxid = allowRes.receipt.transactionHash
+        var allowTxid = allowRes['hash']
         setIsLoading(false)
         showSuccessMessage('Success!', 'Approved txid: ' + allowTxid)
         checkAccountInfo(type, mintAmount)

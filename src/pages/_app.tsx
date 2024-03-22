@@ -10,7 +10,7 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import 'i18n'
 import type { MetaMask } from '@web3-react/metamask'
-import { useWeb3React, Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
+import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
 
 import { hooks as metaMaskHooks, metaMask } from '../connectors/metamask'
 

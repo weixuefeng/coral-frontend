@@ -45,6 +45,10 @@ export const MAINNET_CHAINS: ChainConfig = {
     urls: ["https://bsc-dataseed2.binance.org/"],
     name: 'Mainnet',
   },
+  97: {
+	  urls: ["https://data-seed-prebsc-2-s2.bnbchain.org:8545"],
+    name: 'testnet',
+  }
 }
 
 
