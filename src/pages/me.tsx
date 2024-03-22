@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-19 11:02:02
+ * @LastEditTime: 2024-03-22 19:53:00
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -87,19 +87,23 @@ function Main() {
   const addressRef = useRef(null)
   const [isCopy, setIsCopy] = useState(false)
   const copyToAddress = () => {
-    const addressVal = addressRef.current.textContent
-    if(navigator) {
-      navigator.clipboard
-      .writeText(addressVal)
-      .then(() => {
-        setIsCopy(true)
-        setTimeout(() => setIsCopy(false), 2000)
-      })
-      .catch(err => {
-        setIsCopy(false)
-      })
+    const addressVal = addressRef.current.textContent;
+    const textArea = document.createElement('textarea');
+    textArea.value = addressVal;
+    document.body.appendChild(textArea);
+    const range = document.createRange();
+    range.selectNode(textArea);
+    window.getSelection().addRange(range);
+    try {
+      document.execCommand('copy');
+      setIsCopy(true);
+      setTimeout(() => setIsCopy(false), 2000);
+    } catch (err) {
+      setIsCopy(false);
     }
-  }
+    document.body.removeChild(textArea);
+  };
+  
 
   useEffect(() => {
     if(signer) {
