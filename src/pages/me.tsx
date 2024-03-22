@@ -1,17 +1,17 @@
 /*
  * @Author:
  * @Date: 2024-03-14 21:36:55
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-22 19:53:00
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
-import React, { useState, useEffect,useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import NormalLayout from 'components/Layout/normalLayout'
 import { PageModel } from 'model/navModel'
 import InvitationId from 'components/InvitationId'
 import { BaseContract } from 'ethers'
-import { SmartContract, useAddress, useConnectedWallet, ThirdwebSDK} from '@thirdweb-dev/react'
+import { SmartContract, useAddress, useConnectedWallet, ThirdwebSDK } from '@thirdweb-dev/react'
 import http from 'services/http'
 import Message from 'components/message'
 import { CONTRACT_CID, CONTRACT_DEPIN, INVITE_PREFIX } from 'constants/setting'
@@ -22,9 +22,9 @@ export default Me
 
 interface PowerInfo {
   power: number
-  cid_available: number,
-  depin_available: number,
-  cid_stake: number,
+  cid_available: number
+  depin_available: number
+  cid_stake: number
   depin_stake: number
 }
 
@@ -39,23 +39,22 @@ function Main() {
   const [inviteTitle, setInviteTitle] = useState('')
   const [inviteCode, setInviteCode] = useState('')
   const [power, setPower] = useState<PowerInfo>({
-    "power": 0,
-    "cid_available": 0,
-    "depin_available": 0,
-    "cid_stake": 0,
-    "depin_stake": 0
-})
+    power: 0,
+    cid_available: 0,
+    depin_available: 0,
+    cid_stake: 0,
+    depin_stake: 0,
+  })
 
-const cidAddress = CONTRACT_CID
-const depinAddress = CONTRACT_DEPIN
+  const cidAddress = CONTRACT_CID
+  const depinAddress = CONTRACT_DEPIN
 
-const [cidContract, setCidContract] = useState<SmartContract<BaseContract>>()
-const [usdtContract, setUsdtContract] = useState<SmartContract<BaseContract>>()
-const [depinContract, setDepinContract] = useState<SmartContract<BaseContract>>()
+  const [cidContract, setCidContract] = useState<SmartContract<BaseContract>>()
+  const [usdtContract, setUsdtContract] = useState<SmartContract<BaseContract>>()
+  const [depinContract, setDepinContract] = useState<SmartContract<BaseContract>>()
 
-const [cidBalance, setCidBalance] = useState(0)
-const [depinBalance, setDepinBalance] = useState(0)
-
+  const [cidBalance, setCidBalance] = useState(0)
+  const [depinBalance, setDepinBalance] = useState(0)
 
   // loading
   const [title, setTitle] = useState('')
@@ -63,19 +62,18 @@ const [depinBalance, setDepinBalance] = useState(0)
   const [imgMessage, setImgMessage] = useState('')
   const [isMessage, setIsMessage] = useState(false)
 
-  const showFailMessage = (msg) => {
+  const showFailMessage = msg => {
     setTitle(msg)
     setTxid('')
     setIsMessage(true)
     setImgMessage('assets/image/failed.png')
   }
   const showSuccessMessage = (msg, txid) => {
-    setTitle(msg);
+    setTitle(msg)
     setTxid(txid)
     setIsMessage(true)
     setImgMessage('assets/image/success.png')
   }
-
 
   const handleInvitationChange = newValue => {
     setIsInvitation(newValue)
@@ -85,89 +83,94 @@ const [depinBalance, setDepinBalance] = useState(0)
       http
         .requestSubmitInviteCode(address, inviteCode)
         .then((res: any) => {
-            setIsInvitation(false)
-            showSuccessMessage("Submit success.", '')
+          setIsInvitation(false)
+          showSuccessMessage('Submit success.', '')
         })
         .catch(err => {
           showFailMessage(err)
         })
-    } 
+    }
   }
 
   // 钱包 signer
   const signer = useConnectedWallet()
   const address = useAddress()
-  
+
   const addressRef = useRef(null)
   const [isCopy, setIsCopy] = useState(false)
   const copyToAddress = (addressVal: string) => {
-    const textArea = document.createElement('textarea');
-    textArea.value = addressVal;
-    document.body.appendChild(textArea);
-    const range = document.createRange();
-    range.selectNode(textArea);
-    window.getSelection().addRange(range);
+    const textArea = document.createElement('textarea')
+    textArea.value = addressVal
+    document.body.appendChild(textArea)
+    const range = document.createRange()
+    range.selectNode(textArea)
+    window.getSelection().addRange(range)
     try {
-      document.execCommand('copy');
-      setIsCopy(true);
-      setTimeout(() => setIsCopy(false), 2000);
+      document.execCommand('copy')
+      setIsCopy(true)
+      setTimeout(() => setIsCopy(false), 2000)
     } catch (err) {
-      setIsCopy(false);
+      setIsCopy(false)
     }
-    document.body.removeChild(textArea);
-  };
-  
+    document.body.removeChild(textArea)
+  }
 
   useEffect(() => {
-    if(signer) {
-      http.requestPowerInfo(address)
-      .then(res => {
-        setPower(res as PowerInfo)
-      })
-      .catch(err => {
-        console.log("err:", err)
-      })
-      http.requestLogin(address, null)
-      .then(res => {
-         setIsInvitation(!res['have_parent'])
-         setInviteCode(res['parent_address'])
-      }).catch(err=> {
-        console.log("err:", err)
-      })
-    }
-    const sdk = ThirdwebSDK.fromSigner(signer)
-    // 初始化 cid 合约
-    sdk
-    .getContractFromAbi(cidAddress, coralCidAbi)
-    .then(contract => {
-      setCidContract(contract)
-      contract.call('balanceOf', [address])
-      .then( balance => {
-          setCidBalance(parseInt((balance as any)._hex))
-      })
-      .catch(err => {
-        console.log("get balance error:", err)
-      })
-    })
-    .catch(e => {
-      console.log('init cid contract error', e)
-    })
-  // 初始化 depin 合约
-  sdk
-    .getContractFromAbi(depinAddress, coralDepinAbi)
-    .then(contract => {
-      setDepinContract(contract)
-      contract.call('balanceOf', [address])
-      .then( balance => {
-          setDepinBalance(parseInt((balance as any)._hex))
+    if (signer) {
+      http
+        .requestPowerInfo(address)
+        .then(res => {
+          setPower(res as PowerInfo)
         })
-      .catch(err => {
-        console.log("get balance error:", err)
-      })
-    })
-    .catch(e => {
-      console.log('init depin contract error', e)
-    })
+        .catch(err => {
+          console.log('err:', err)
+        })
+      http
+        .requestLogin(address, null)
+        .then(res => {
+          setIsInvitation(!res['have_parent'])
+          setInviteCode(res['parent_address'])
+        })
+        .catch(err => {
+          console.log('err:', err)
+        })
+
+      const sdk = ThirdwebSDK.fromSigner(signer)
+      // 初始化 cid 合约
+      sdk
+        .getContractFromAbi(cidAddress, coralCidAbi)
+        .then(contract => {
+          setCidContract(contract)
+          contract
+            .call('balanceOf', [address])
+            .then(balance => {
+              setCidBalance(parseInt((balance as any)._hex))
+            })
+            .catch(err => {
+              console.log('get balance error:', err)
+            })
+        })
+        .catch(e => {
+          console.log('init cid contract error', e)
+        })
+      // 初始化 depin 合约
+      sdk
+        .getContractFromAbi(depinAddress, coralDepinAbi)
+        .then(contract => {
+          setDepinContract(contract)
+          contract
+            .call('balanceOf', [address])
+            .then(balance => {
+              setDepinBalance(parseInt((balance as any)._hex))
+            })
+            .catch(err => {
+              console.log('get balance error:', err)
+            })
+        })
+        .catch(e => {
+          console.log('init depin contract error', e)
+        })
+    }
   }, [signer])
 
   return (
@@ -229,10 +232,14 @@ const [depinBalance, setDepinBalance] = useState(0)
           <div className="invite">
             <h5>Invite Friends to join Coralverse now </h5>
             <div className="share">
-              <div className='use' ref={addressRef}>{currentDomain}/invite?{address}</div>
-              <img onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)} className="share-copy" src="assets/image/copy.png" alt="copy" />
+              <div className="use">
+                <span>
+                  {currentDomain}/invite?<br/>{address}
+                </span>
+              </div>
+              {/* <img onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)} className="share-copy" src="assets/image/copy.png" alt="copy" /> */}
               {/* <img src="assets/image/share.png" alt="share" /> */}
-              {isCopy && <p>Copy Success</p>}
+              {/* {isCopy && <p>Copy Success</p>} */}
             </div>
           </div>
           <div className="address">

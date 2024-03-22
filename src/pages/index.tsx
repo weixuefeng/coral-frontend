@@ -1,7 +1,7 @@
 /*
  * @Author:
  * @Date: 2024-03-13 21:36:45
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-18 19:57:09
  * @FilePath: /coral-frontend/src/pages/index.tsx
  */
@@ -17,7 +17,15 @@ import { BaseContract, BigNumber, ethers } from 'ethers'
 import Message from 'components/message'
 import Loading from 'components/Loading'
 import http from 'services/http'
-import { CONTRACT_CID, CONTRACT_CID_LIMIT, CONTRACT_CID_PRICE, CONTRACT_DEPIN, CONTRACT_DEPIN_LIMIT, CONTRACT_DEPIN_PRICE, CONTRACT_USDT } from 'constants/setting'
+import {
+  CONTRACT_CID,
+  CONTRACT_CID_LIMIT,
+  CONTRACT_CID_PRICE,
+  CONTRACT_DEPIN,
+  CONTRACT_DEPIN_LIMIT,
+  CONTRACT_DEPIN_PRICE,
+  CONTRACT_USDT,
+} from 'constants/setting'
 
 export default Home
 
@@ -44,7 +52,7 @@ export function IndexMainPage(invite_address: string | undefined) {
   // cid 价格配置
   const cidDisplayPrice = CONTRACT_CID_PRICE
   const depinDisplayPrice = CONTRACT_DEPIN_PRICE
-  const approveDisplayAmount = "10000000000"
+  const approveDisplayAmount = '10000000000'
 
   const cidPrice = ethers.utils.parseUnits(cidDisplayPrice, 18)
   const depinPrice = ethers.utils.parseUnits(depinDisplayPrice, 18)
@@ -61,7 +69,7 @@ export function IndexMainPage(invite_address: string | undefined) {
   // 文案常量
   const usdtNotEnough = 'Insufficient USDT balance'
   const usdtApprove = 'Approve USDT For Mint'
-  const accessReach = "You Reach the Limit"
+  const accessReach = 'You Reach the Limit'
   const mintText = 'Mint'
 
   // mint 文案配置
@@ -83,13 +91,15 @@ export function IndexMainPage(invite_address: string | undefined) {
   // 初始化 sdk
   useEffect(() => {
     // login
-    if(signer) {
-      http.requestLogin(address, invite_address).then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log("login error:", err)
-      })
+    if (signer) {
+      http
+        .requestLogin(address, invite_address)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log('login error:', err)
+        })
     }
     if (signer) {
       const sdk = ThirdwebSDK.fromSigner(signer)
@@ -116,13 +126,14 @@ export function IndexMainPage(invite_address: string | undefined) {
         .getContractFromAbi(cidAddress, coralCidAbi)
         .then(contract => {
           setCidContract(contract)
-          contract.call('balanceOf', [address])
-          .then( balance => {
+          contract
+            .call('balanceOf', [address])
+            .then(balance => {
               setUserCidLimit(parseInt(CONTRACT_CID_LIMIT) - parseInt((balance as any)._hex))
-          })
-          .catch(err => {
-            console.log("get balance error:", err)
-          })
+            })
+            .catch(err => {
+              console.log('get balance error:', err)
+            })
         })
         .catch(e => {
           console.log('init cid contract error', e)
@@ -132,13 +143,14 @@ export function IndexMainPage(invite_address: string | undefined) {
         .getContractFromAbi(depinAddress, coralDepinAbi)
         .then(contract => {
           setDepinContract(contract)
-          contract.call('balanceOf', [address])
-          .then( balance => {
+          contract
+            .call('balanceOf', [address])
+            .then(balance => {
               setUserDepinLimit(parseInt(CONTRACT_DEPIN_LIMIT) - parseInt((balance as any)._hex))
-          })
-          .catch(err => {
-            console.log("get balance error:", err)
-          })
+            })
+            .catch(err => {
+              console.log('get balance error:', err)
+            })
         })
         .catch(e => {
           console.log('init depin contract error', e)
@@ -158,11 +170,11 @@ export function IndexMainPage(invite_address: string | undefined) {
     var mintNftLimit = type == ActionType.CID ? userCidLimit : userDepinLimit
     var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
     const newValue = parseInt(value) + 1
-    if(newValue <= mintNftLimit) {
+    if (newValue <= mintNftLimit) {
       setValue(newValue.toString())
       checkAccountInfo(type, newValue.toString())
     } else {
-      showSuccessMessage("You reach the limit", "")
+      showSuccessMessage('You reach the limit', '')
     }
   }
 
@@ -175,10 +187,10 @@ export function IndexMainPage(invite_address: string | undefined) {
   }
 
   const checkAccountInfo = async (type: ActionType, value: string) => {
-    if(!usdtBalance) {
+    if (!usdtBalance) {
       return
     }
-    if(value == "0") {
+    if (value == '0') {
       return
     }
     var price = type == ActionType.CID ? cidPrice : depinPrice
@@ -212,7 +224,7 @@ export function IndexMainPage(invite_address: string | undefined) {
     var mintNftLimit = type == ActionType.CID ? perAddressCidLimit : perAddressDepinLimit
     var contract = type == ActionType.CID ? cidContract : depinContract
 
-    if(mintAmount == "0") {
+    if (mintAmount == '0') {
       return
     }
     // 计算总价格
@@ -222,7 +234,7 @@ export function IndexMainPage(invite_address: string | undefined) {
       setCidMintText(usdtNotEnough)
       return
     }
-    if(!usdtContract) {
+    if (!usdtContract) {
       return
     }
     try {
@@ -242,7 +254,7 @@ export function IndexMainPage(invite_address: string | undefined) {
           // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
           var mintTxid = res.receipt.transactionHash
           setIsLoading(false)
-          showSuccessMessage('Success!', 'Mint txid: ' + mintTxid);
+          showSuccessMessage('Success!', 'Mint txid: ' + mintTxid)
         } else {
           showFailMessage('please init contract')
         }
@@ -260,8 +272,8 @@ export function IndexMainPage(invite_address: string | undefined) {
         // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
         var allowTxid = allowRes.receipt.transactionHash
         setIsLoading(false)
-        showSuccessMessage('Success!', 'Approved txid: ' + allowTxid);
-        checkAccountInfo(type, mintAmount);
+        showSuccessMessage('Success!', 'Approved txid: ' + allowTxid)
+        checkAccountInfo(type, mintAmount)
       }
     } catch (e) {
       // 弹框提示错误信息
@@ -276,14 +288,14 @@ export function IndexMainPage(invite_address: string | undefined) {
   const [txid, setTxid] = useState('')
   const [imgMessage, setImgMessage] = useState('')
   const [isMessage, setIsMessage] = useState(false)
-  const showFailMessage = (msg) => {
+  const showFailMessage = msg => {
     setTitle(msg)
     setTxid('')
     setIsMessage(true)
     setImgMessage('assets/image/failed.png')
   }
   const showSuccessMessage = (msg, txid) => {
-    setTitle(msg);
+    setTitle(msg)
     setTxid(txid)
     setIsMessage(true)
     setImgMessage('assets/image/success.png')

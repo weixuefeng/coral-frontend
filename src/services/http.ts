@@ -68,16 +68,15 @@ class Http {
   requestLogin(address: string, parent_address: string | undefined) {
     var params = {
       address: address,
-      parent_address: parent_address
+      parent_address: parent_address,
     }
     return _post(`user/login/`, params)
   }
 
-
   requestSubmitInviteCode(address: string, parent_address: string) {
     var params = {
       address: address,
-      parent_address: parent_address
+      parent_address: parent_address,
     }
     return _post(`user/submit/invite/code/`, params)
   }
@@ -88,7 +87,6 @@ class Http {
     }
     return _post(`user/get/power/`, params)
   }
-
 }
 const http = new Http()
 export default http
