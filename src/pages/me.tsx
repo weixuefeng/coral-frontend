@@ -13,6 +13,7 @@ import InvitationId from 'components/InvitationId'
 import { useAddress, useConnectedWallet } from '@thirdweb-dev/react'
 import http from 'services/http'
 import Message from 'components/message'
+import { INVITE_PREFIX } from 'constants/setting'
 
 export default Me
 
@@ -30,10 +31,7 @@ function Me() {
 }
 
 function Main() {
-  var currentDomain = ''
-  if (typeof window !== 'undefined') {
-    currentDomain = window.location.hostname;
- }
+  var currentDomain = INVITE_PREFIX
   const [isInvitation, setIsInvitation] = useState(false)
   const [inviteTitle, setInviteTitle] = useState('')
   const [power, setPower] = useState<PowerInfo>({
@@ -179,7 +177,7 @@ function Main() {
           <div className="invite">
             <h5>Invite Friends to join Coralverse now </h5>
             <div className="share">
-              <div className='use' ref={addressRef}>https://{currentDomain}/invite?{address}</div>
+              <div className='use' ref={addressRef}>{currentDomain}/invite?{address}</div>
               <img onClick={copyToAddress} className="share-copy" src="assets/image/copy.png" alt="copy" />
               {/* <img src="assets/image/share.png" alt="share" /> */}
               {isCopy && <p>Copy Success</p>}
