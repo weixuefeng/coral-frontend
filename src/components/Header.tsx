@@ -1,10 +1,11 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
 import { hooks, metaMask } from '../connectors/metamask'
+import { CHAIN_ID } from 'constants/setting'
+import { getAddChainParameters } from 'connectors/chains'
 
 const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks
-
 
 const navList = [
   {
@@ -28,23 +29,47 @@ export default function Header({ pageName }) {
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
   const [isInvitation, setIsInvitation] = useState(false)
 
-  const chainId = useChainId()
-  console.log("chainid:", chainId)
+  const activeChainId = useChainId()
+  console.log('chainid:', activeChainId)
   const accounts = useAccounts()
   const isActivating = useIsActivating()
   const isActive = useIsActive()
   const provider = useProvider()
-  
+
   const [isWalletOpen, setWalletOpen] = useState(false)
 
   const connect = () => {
     metaMask
-        .activate()
-        .then(() => console.log("ok"))
-        .catch(e => {
-          console.log(e)
-        })
+      .activate(desiredChainId)
+      .then(() => console.log('ok'))
+      .catch(e => {
+        console.log(e)
+      })
   }
+
+  console.log('Setxx:', CHAIN_ID)
+  const [desiredChainId, setDesiredChainId] = useState<number>(CHAIN_ID)
+
+  const switchChain = useCallback(
+    async (desiredChainId: number) => {
+      setDesiredChainId(desiredChainId)
+      try {
+        if (
+          // If we're already connected to the desired chain, return
+          desiredChainId === activeChainId ||
+          // If they want to connect to the default chain and we're already connected, return
+          (desiredChainId === -1 && activeChainId !== undefined)
+        ) {
+          return
+        }
+        console.log('des', desiredChainId)
+        await metaMask.activate(getAddChainParameters(desiredChainId))
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [metaMask, activeChainId]
+  )
 
   const handleInvitationChange = newValue => {
     setIsInvitation(newValue)
@@ -84,10 +109,30 @@ export default function Header({ pageName }) {
           </div>
           <div className="wallet-wrap">
             <div className="wallet">
-              <div className='wallet'>
-                 {accounts == null ? <div onClick={() => {
-                  connect()
-                 }}>Connect</div> : <>{newAddress(accounts[0] )}</>}
+              <div className="wallet">
+                {accounts == null ? (
+                  <div
+                    onClick={() => {
+                      connect()
+                    }}
+                  >
+                    Connect
+                  </div>
+                ) : (
+                  <>
+                    {activeChainId == desiredChainId ? (
+                      newAddress(accounts[0])
+                    ) : (
+                      <p
+                        onClick={() => {
+                          switchChain(desiredChainId)
+                        }}
+                      >
+                        Switch Network
+                      </p>
+                    )}
+                  </>
+                )}
               </div>
             </div>
             <div className="me-nav">
@@ -188,11 +233,32 @@ export default function Header({ pageName }) {
                             })}
                           </ul>
                           <div className="wallet-h5">
-                          <div className='wallet'>
-                 {accounts == null ? <div onClick={() => {
-                  connect()
-                 }}>Connect</div> : <>{newAddress(accounts[0] )}</>}
-              </div>                          </div>
+                            <div className="wallet">
+                              {accounts == null ? (
+                                <div
+                                  onClick={() => {
+                                    connect()
+                                  }}
+                                >
+                                  Connect
+                                </div>
+                              ) : (
+                                <>
+                                  {activeChainId == desiredChainId ? (
+                                    newAddress(accounts[0])
+                                  ) : (
+                                    <p
+                                      onClick={() => {
+                                        switchChain(desiredChainId)
+                                      }}
+                                    >
+                                      Switch Network
+                                    </p>
+                                  )}
+                                </>
+                              )}
+                            </div>{' '}
+                          </div>
                         </div>
                       </div>
                     </div>

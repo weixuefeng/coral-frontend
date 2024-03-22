@@ -44,9 +44,8 @@ enum ActionType {
 }
 
 export function IndexMainPage(invite_address: string | undefined) {
-
-  const account = useAccounts();
-  const provider = useProvider();
+  const account = useAccounts()
+  const provider = useProvider()
 
   // 合约地址配置
   const usdtAddress = CONTRACT_USDT
@@ -61,7 +60,7 @@ export function IndexMainPage(invite_address: string | undefined) {
   const cidDisplayPrice = CONTRACT_CID_PRICE
   const depinDisplayPrice = CONTRACT_DEPIN_PRICE
   const approveDisplayAmount = '10000000000'
-  
+
   const cidPrice = ethers.parseUnits(cidDisplayPrice, 18)
   const depinPrice = ethers.parseUnits(depinDisplayPrice, 18)
   const approveAmount = ethers.parseUnits(approveDisplayAmount, 18)
@@ -91,13 +90,12 @@ export function IndexMainPage(invite_address: string | undefined) {
   const [userCidLimit, setUserCidLimit] = useState(parseInt(CONTRACT_CID_LIMIT))
   const [userDepinLimit, setUserDepinLimit] = useState(parseInt(CONTRACT_DEPIN_LIMIT))
 
-
   // 初始化 sdk
-  useEffect(() =>  {
+  useEffect(() => {
     if (account) {
-      var address = account[0]; 
-      const signer = provider?.getSigner(account[0]); 
-      console.log(signer);
+      var address = account[0]
+      const signer = provider?.getSigner(account[0])
+      console.log(signer)
       http
         .requestLogin(account[0], invite_address)
         .then(res => {
@@ -107,8 +105,8 @@ export function IndexMainPage(invite_address: string | undefined) {
           console.log('login error:', err)
         })
 
-      const cidContract = new Contract(cidAddress, coralCidAbi, signer);
-      const depinContract = new Contract(depinAddress, coralDepinAbi, signer);
+      const cidContract = new Contract(cidAddress, coralCidAbi, signer)
+      const depinContract = new Contract(depinAddress, coralDepinAbi, signer)
       const usdtContract = new Contract(usdtAddress, usdtAbi, signer)
       setCidContract(cidContract)
       setDepinContract(depinContract)
@@ -162,11 +160,10 @@ export function IndexMainPage(invite_address: string | undefined) {
     var price = type == ActionType.CID ? cidPrice : depinPrice
     var contractAddress = type == ActionType.CID ? cidAddress : depinAddress
     var setText = type == ActionType.CID ? setCidMintText : setDepinMintText
-    
-  
+
     var totalPrice = BigInt(value) * price
     // 检查余额
-    if ((parseInt(totalPrice.toString()) - parseInt(usdtBalance.toString())) > 0) {
+    if (parseInt(totalPrice.toString()) - parseInt(usdtBalance.toString()) > 0) {
       setText(usdtNotEnough)
       return
     }
@@ -174,7 +171,7 @@ export function IndexMainPage(invite_address: string | undefined) {
       return
     }
     // 检查 usdt 是否授权
-    var allowance = await usdtContract.allowance(account[0],contractAddress)
+    var allowance = await usdtContract.allowance(account[0], contractAddress)
     if (parseInt(allowance._hex) - parseInt(totalPrice.toString()) > 0) {
       setText(mintText)
     } else {
@@ -193,7 +190,7 @@ export function IndexMainPage(invite_address: string | undefined) {
       return
     }
     // 计算总价格
-    var totalPrice = ethers.parseUnits(mintAmount, 1) * (price)
+    var totalPrice = ethers.parseUnits(mintAmount, 1) * price
     // 检查余额
     if (parseInt(totalPrice.toString()) - parseInt(usdtBalance.toString()) > 0) {
       setCidMintText(usdtNotEnough)
@@ -210,7 +207,13 @@ export function IndexMainPage(invite_address: string | undefined) {
         if (contract) {
           setIsLoading(true)
           var res = await contract.claim(
-            account[0], parseInt(mintAmount), usdtAddress, price, [[], mintNftLimit, price, usdtAddress], []);
+            account[0],
+            parseInt(mintAmount),
+            usdtAddress,
+            price,
+            [[], mintNftLimit, price, usdtAddress],
+            []
+          )
           // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
           var mintTxid = res['hash']
           setIsLoading(false)

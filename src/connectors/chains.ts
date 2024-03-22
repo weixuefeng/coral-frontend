@@ -23,7 +23,9 @@ function isExtendedChainInformation(
 }
 
 export function getAddChainParameters(chainId: number): AddEthereumChainParameter | number {
+  console.log('chainid', chainId)
   const chainInformation = CHAINS[chainId]
+  console.log('info', chainInformation)
   if (isExtendedChainInformation(chainInformation)) {
     return {
       chainId,
@@ -37,20 +39,18 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
   }
 }
 
-
 type ChainConfig = { [chainId: number]: BasicChainInformation | ExtendedChainInformation }
 
 export const MAINNET_CHAINS: ChainConfig = {
   56: {
-    urls: ["https://bsc-dataseed2.binance.org/"],
+    urls: ['https://bsc-dataseed2.binance.org/'],
     name: 'Mainnet',
   },
   97: {
-	  urls: ["https://data-seed-prebsc-2-s2.bnbchain.org:8545"],
+    urls: ['https://data-seed-prebsc-2-s2.bnbchain.org:8545'],
     name: 'testnet',
-  }
+  },
 }
-
 
 export const CHAINS: ChainConfig = {
   ...MAINNET_CHAINS,

@@ -1,7 +1,7 @@
 /*
  * @Author:
  * @Date: 2024-03-14 21:36:55
- * @LastEditors:  
+ * @LastEditors:
  * @LastEditTime: 2024-03-22 23:46:59
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
@@ -49,8 +49,8 @@ function Main() {
     depin_stake: 0,
   })
 
-  const account = useAccounts();
-  const provider = useProvider();
+  const account = useAccounts()
+  const provider = useProvider()
 
   const cidAddress = CONTRACT_CID
   const depinAddress = CONTRACT_DEPIN
@@ -99,10 +99,9 @@ function Main() {
     }
   }
 
-  const [clipboard, setClipboard] = useClippy();
+  const [clipboard, setClipboard] = useClippy()
 
   // 钱包 signer
-
 
   const [isCopy, setIsCopy] = useState(false)
   // const copyToAddress = (addressVal: string) => {
@@ -128,10 +127,10 @@ function Main() {
     setTimeout(() => setIsCopy(false), 2000)
   }
 
-  useEffect(() =>  {
+  useEffect(() => {
     if (account) {
-	  setAddress(account[0])
-	  http
+      setAddress(account[0])
+      http
         .requestPowerInfo(account[0])
         .then(res => {
           setPower(res as PowerInfo)
@@ -147,12 +146,12 @@ function Main() {
         .catch(err => {
           console.log('login error:', err)
         })
-      const cidContract = new Contract(cidAddress, coralCidAbi, provider);
-      const depinContract = new Contract(depinAddress, coralDepinAbi, provider);
+      const cidContract = new Contract(cidAddress, coralCidAbi, provider)
+      const depinContract = new Contract(depinAddress, coralDepinAbi, provider)
 
-	  setCidContract(cidContract)
+      setCidContract(cidContract)
       setDepinContract(depinContract)
- 
+
       cidContract.balanceOf(account[0]).then(balance => {
         setCidBalance(parseInt((balance as any)._hex))
       })
@@ -227,9 +226,12 @@ function Main() {
                 </span>
               </div>
               <img
-                // onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)} 
+                // onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)}
                 onClick={copyToAddress}
-                className="share-copy" src="assets/image/copy.png" alt="copy" />
+                className="share-copy"
+                src="assets/image/copy.png"
+                alt="copy"
+              />
               {isCopy && <p>Copy Success</p>}
             </div>
           </div>

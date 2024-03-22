@@ -14,9 +14,7 @@ import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
 
 import { hooks as metaMaskHooks, metaMask } from '../connectors/metamask'
 
-const connectors: [MetaMask , Web3ReactHooks][] = [
-  [metaMask, metaMaskHooks],
-]
+const connectors: [MetaMask, Web3ReactHooks][] = [[metaMask, metaMaskHooks]]
 
 import { IS_RELEASE } from 'constants/setting'
 

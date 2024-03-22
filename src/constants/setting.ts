@@ -16,3 +16,4 @@ export const CONTRACT_DEPIN_LIMIT = process.env.NEXT_PUBLIC_CONTRACT_DEPIN_LIMIT
 export const CONTRACT_DEPIN_PRICE = process.env.NEXT_PUBLIC_CONTRACT_DEPIN_PRICE
 export const INVITE_PREFIX = process.env.NEXT_PUBLIC_INVITE_PREFIX
 export const IS_RELEASE = process.env.NEXT_PUBLIC_IS_RELEASE == 'true'
+export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID)
