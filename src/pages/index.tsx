@@ -216,6 +216,7 @@ export function IndexMainPage(invite_address: string | undefined) {
           )
           // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
           var mintTxid = res['hash']
+          var receipt = await provider.waitForTransaction(mintTxid)
           setIsLoading(false)
           showSuccessMessage('Success!', 'Mint txid: ' + mintTxid)
         } else {
@@ -236,6 +237,7 @@ export function IndexMainPage(invite_address: string | undefined) {
           )
           // 授权成功，提示 "授权成功，前往浏览器查看 txid, 或者 3s 后刷新页面继续 mint"
           var allowTxid = allowRes['hash']
+          var receipt = await provider.waitForTransaction(allowRes['hash'])
           setIsLoading(false)
           showSuccessMessage('Success!', 'Approved txid: ' + allowTxid)
           checkAccountInfo(type, mintAmount)
