@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2024-03-14 21:36:55
  * @LastEditors:  
- * @LastEditTime: 2024-03-22 21:43:17
+ * @LastEditTime: 2024-03-22 23:46:59
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -17,6 +17,7 @@ import Message from 'components/message'
 import { CONTRACT_CID, CONTRACT_DEPIN, INVITE_PREFIX } from 'constants/setting'
 import coralCidAbi from 'abi/coral-cid-abi'
 import coralDepinAbi from 'abi/coral-depin-abi'
+import useClippy from 'use-clippy'
 
 export default Me
 
@@ -92,27 +93,35 @@ function Main() {
     }
   }
 
+  const [clipboard, setClipboard] = useClippy();
+
   // 钱包 signer
   const signer = useConnectedWallet()
   const address = useAddress()
 
   const addressRef = useRef(null)
   const [isCopy, setIsCopy] = useState(false)
-  const copyToAddress = (addressVal: string) => {
-    const textArea = document.createElement('textarea')
-    textArea.value = addressVal
-    document.body.appendChild(textArea)
-    const range = document.createRange()
-    range.selectNode(textArea)
-    window.getSelection().addRange(range)
-    try {
-      document.execCommand('copy')
-      setIsCopy(true)
-      setTimeout(() => setIsCopy(false), 2000)
-    } catch (err) {
-      setIsCopy(false)
-    }
-    document.body.removeChild(textArea)
+  // const copyToAddress = (addressVal: string) => {
+  //   const textArea = document.createElement('textarea')
+  //   textArea.value = addressVal
+  //   document.body.appendChild(textArea)
+  //   const range = document.createRange()
+  //   range.selectNode(textArea)
+  //   window.getSelection().addRange(range)
+  //   try {
+  //     document.execCommand('copy')
+  //     setIsCopy(true)
+  //     setTimeout(() => setIsCopy(false), 2000)
+  //   } catch (err) {
+  //     setIsCopy(false)
+  //   }
+  //   document.body.removeChild(textArea)
+  // }
+
+  const copyToAddress = () => {
+    setClipboard(`${currentDomain}/invite?${address}`)
+    setIsCopy(true)
+    setTimeout(() => setIsCopy(false), 2000)
   }
 
   useEffect(() => {
@@ -237,7 +246,10 @@ function Main() {
                   {currentDomain}/invite?{address}
                 </span>
               </div>
-              <img onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)} className="share-copy" src="assets/image/copy.png" alt="copy" />
+              <img
+                // onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)} 
+                onClick={copyToAddress}
+                className="share-copy" src="assets/image/copy.png" alt="copy" />
               {isCopy && <p>Copy Success</p>}
             </div>
           </div>
