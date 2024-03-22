@@ -30,7 +30,7 @@ import {
 export default Home
 
 function Home() {
-  let pageModel = new PageModel('Overview', 'Coral', 'HOME')
+  let pageModel = new PageModel('Mint', 'Coral', 'MINT')
   return <>{NormalLayout(IndexMainPage(null), pageModel)}</>
 }
 

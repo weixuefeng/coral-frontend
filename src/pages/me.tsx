@@ -1,8 +1,8 @@
 /*
  * @Author:
  * @Date: 2024-03-14 21:36:55
- * @LastEditors:
- * @LastEditTime: 2024-03-22 19:53:00
+ * @LastEditors:  
+ * @LastEditTime: 2024-03-22 21:36:32
  * @FilePath: /coral-frontend/src/pages/me.tsx
  */
 
@@ -232,7 +232,7 @@ function Main() {
           <div className="invite">
             <h5>Invite Friends to join Coralverse now </h5>
             <div className="share">
-              <div className="use">
+              <div className="use truncate">
                 <span>
                   {currentDomain}/invite?{address}
                 </span>
@@ -243,7 +243,7 @@ function Main() {
           </div>
           <div className="address">
             <p className="tit">Your Web3 Referrer :</p>
-            <p className="text">{newAddress(inviteCode)}</p>
+            <p className="text">{newAddress(address)}</p>
           </div>
         </div>
       </div>
