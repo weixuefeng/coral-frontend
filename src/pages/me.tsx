@@ -234,12 +234,11 @@ function Main() {
             <div className="share">
               <div className="use">
                 <span>
-                  {currentDomain}/invite?<br/>{address}
+                  {currentDomain}/invite?{address}
                 </span>
               </div>
-              {/* <img onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)} className="share-copy" src="assets/image/copy.png" alt="copy" /> */}
-              {/* <img src="assets/image/share.png" alt="share" /> */}
-              {/* {isCopy && <p>Copy Success</p>} */}
+              <img onClick={() => copyToAddress(`${currentDomain}/invite?${address}`)} className="share-copy" src="assets/image/copy.png" alt="copy" />
+              {isCopy && <p>Copy Success</p>}
             </div>
           </div>
           <div className="address">
