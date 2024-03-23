@@ -32,7 +32,6 @@ export default function Header({ pageName }) {
   const [isInvitation, setIsInvitation] = useState(false)
 
   const activeChainId = useChainId()
-  console.log('chainid:', activeChainId)
   const accounts = useAccounts()
   const isActivating = useIsActivating()
   const isActive = useIsActive()
@@ -40,7 +39,6 @@ export default function Header({ pageName }) {
 
   const [showDisConnect, setIsShowDisconnect] = useState(false)
   const [isWalletOpen, setWalletOpen] = useState(false)
-  console.log(metaMask)
   const connect = () => {
     metaMask
       .activate(desiredChainId)
@@ -64,7 +62,6 @@ export default function Header({ pageName }) {
         ) {
           return
         }
-        console.log('des', desiredChainId)
         await metaMask.activate(getAddChainParameters(desiredChainId))
       } catch (error) {
         console.log(error)

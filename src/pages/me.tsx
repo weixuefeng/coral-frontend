@@ -141,7 +141,7 @@ function Main() {
       http
         .requestLogin(account[0], null)
         .then(res => {
-          console.log(res)
+          // console.log(res)
         })
         .catch(err => {
           console.log('login error:', err)

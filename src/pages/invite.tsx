@@ -35,7 +35,6 @@ function InvitePage() {
         address = params.split("=")[1]
       }
     }
-    console.log("Ad", address)
     return <>{NormalLayout(IndexMainPage(address), pageModel)}</>
   } else {
     return <>{NormalLayout(IndexMainPage(null), pageModel)}</>
