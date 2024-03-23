@@ -65,6 +65,10 @@ export function IndexMainPage(invite_address: string | undefined) {
   const depinPrice = ethers.parseUnits(depinDisplayPrice, 18)
   const approveAmount = ethers.parseUnits(approveDisplayAmount, 18)
 
+  // nft number
+  const [cidNumber, setCidNumber] = useState(20000)
+  const [depinNumber, setDepinNumber] = useState(1000)
+
   // 购买数量配置
   const [cidNftValue, setCidNftValue] = useState('0')
   const [depinNftValue, setDepinNftValue] = useState('0')
@@ -90,12 +94,8 @@ export function IndexMainPage(invite_address: string | undefined) {
   const [userCidLimit, setUserCidLimit] = useState(parseInt(CONTRACT_CID_LIMIT))
   const [userDepinLimit, setUserDepinLimit] = useState(parseInt(CONTRACT_DEPIN_LIMIT))
 
-  // 初始化 sdk
   useEffect(() => {
-    if (account) {
-      var address = account[0]
-      const signer = provider?.getSigner(account[0])
-      console.log(signer)
+    if(account) {
       http
         .requestLogin(account[0], invite_address)
         .then(res => {
@@ -104,7 +104,14 @@ export function IndexMainPage(invite_address: string | undefined) {
         .catch(err => {
           console.log('login error:', err)
         })
+    }
+  }, [provider])
 
+  // 初始化 sdk
+  useEffect(() => {
+    if (account) {
+      var address = account[0]
+      const signer = provider?.getSigner(account[0])
       const cidContract = new Contract(cidAddress, coralCidAbi, signer)
       const depinContract = new Contract(depinAddress, coralDepinAbi, signer)
       const usdtContract = new Contract(usdtAddress, usdtAbi, signer)
@@ -113,15 +120,29 @@ export function IndexMainPage(invite_address: string | undefined) {
       setUsdtContract(usdtContract)
       usdtContract.balanceOf(address).then(balance => {
         setUsdtBalance(balance)
-      })
+      }).catch(e => {console.log(e)})
       cidContract.balanceOf(account[0]).then(balance => {
         setUserCidLimit(parseInt(CONTRACT_CID_LIMIT) - parseInt((balance as any)._hex))
-      })
+      }).catch(e => {console.log(e)})
       depinContract.balanceOf(account[0]).then(balance => {
         setUserDepinLimit(parseInt(CONTRACT_DEPIN_LIMIT) - parseInt((balance as any)._hex))
-      })
+      }).catch(e => {console.log(e)})
+      cidContract.totalSupply().then(total => {
+        setCidNumber(20000 - parseInt((total as any)._hex))
+      }).catch(e => {console.log(e)})
+      depinContract.totalSupply().then(total => {
+        setDepinNumber(1000 - parseInt((total as any)._hex))
+      }).catch(e => {console.log(e)})
     }
-  }, [provider])
+  }, [provider, usdtBalance])
+
+  const updateBalance = () => {
+    if(usdtContract && account) {
+      usdtContract.balanceOf(account[0]).then(balance => {
+        setUsdtBalance(balance)
+      }).catch(e => {console.log(e)})
+    }
+  }
 
   const handleInputChange = (value, setValue, type: ActionType) => {
     var mintNftLimit = type == ActionType.CID ? userCidLimit : userDepinLimit
@@ -304,7 +325,7 @@ export function IndexMainPage(invite_address: string | undefined) {
                 </li>
                 <li>
                   <p>Quantity</p>
-                  <p>20,000</p>
+                  <p>{cidNumber}</p>
                 </li>
                 <li>
                   <p>Price per NFT</p>
@@ -383,7 +404,7 @@ export function IndexMainPage(invite_address: string | undefined) {
                 </li>
                 <li>
                   <p>Quantity</p>
-                  <p>1,000</p>
+                  <p>{depinNumber}</p>
                 </li>
                 <li>
                   <p>Price per NFT</p>
