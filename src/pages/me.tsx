@@ -122,7 +122,7 @@ function Main() {
   // }
 
   const copyToAddress = () => {
-    setClipboard(`${currentDomain}/invite?${address}`)
+    setClipboard(`${currentDomain}/invite?address=${address}`)
     setIsCopy(true)
     setTimeout(() => setIsCopy(false), 2000)
   }
@@ -222,7 +222,7 @@ function Main() {
             <div className="share">
               <div className="use">
                 <span>
-                  {currentDomain}/invite?{address}
+                  {currentDomain}/invite?address={address}
                 </span>
               </div>
               <img

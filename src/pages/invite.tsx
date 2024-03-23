@@ -17,5 +17,28 @@ function InvitePage() {
   let pageModel = new PageModel('Invite', 'Coral', 'HOME')
   const router = useRouter()
   const params = router.asPath.split('?')[1] || undefined
-  return <>{NormalLayout(IndexMainPage(params), pageModel)}</>
+  var address = ""
+  // check
+  if (params) {
+    if(params.toString().startsWith("0x")) {
+      if(params.indexOf("&") > 0) {
+        // had third params
+        address = params.split("&")[0]
+      } else {
+        //todo: add length check
+        address = params
+      }
+    } else {
+      if(params.indexOf("&")) {
+        address = params.split("&")[0].split("=")[1]
+      } else {
+        address = params.split("=")[1]
+      }
+    }
+    console.log("Ad", address)
+    return <>{NormalLayout(IndexMainPage(address), pageModel)}</>
+  } else {
+    return <>{NormalLayout(IndexMainPage(null), pageModel)}</>
+  }
+  
 }
