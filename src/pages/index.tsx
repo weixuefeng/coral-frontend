@@ -267,7 +267,7 @@ export function IndexMainPage(invite_address: string | undefined) {
         } catch(e) {
           console.log(e)
           setIsLoading(false)
-          showFailMessage(`Error: ${e.toString()}`)
+          showFailMessage(`Error: ${JSON.stringify(e)}`)
         }
         
       }
@@ -275,7 +275,7 @@ export function IndexMainPage(invite_address: string | undefined) {
       // 弹框提示错误信息
       console.log(e)
       setIsLoading(false)
-      showFailMessage(`Error: ${e.toString()}`)
+      showFailMessage(`Error: ${JSON.stringify(e)}`)
     }
   }
 
