@@ -251,7 +251,6 @@ export function IndexMainPage(invite_address: string | undefined) {
         if (totalPrice < approveAmount) {
           maxValue = approveAmount
         }
-        console.log("max:", maxValue)
         setIsLoading(true)
         try {
           var allowRes = await usdtContract.approve(
@@ -267,6 +266,8 @@ export function IndexMainPage(invite_address: string | undefined) {
           checkAccountInfo(type, mintAmount)
         } catch(e) {
           console.log(e)
+          setIsLoading(false)
+          showFailMessage(`Error: ${e.toString()}`)
         }
         
       }
@@ -274,7 +275,7 @@ export function IndexMainPage(invite_address: string | undefined) {
       // 弹框提示错误信息
       console.log(e)
       setIsLoading(false)
-      showFailMessage('user rejected transaction')
+      showFailMessage(`Error: ${e.toString()}`)
     }
   }
 
