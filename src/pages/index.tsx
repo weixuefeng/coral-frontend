@@ -66,8 +66,8 @@ export function IndexMainPage(invite_address: string | undefined) {
   const approveAmount = ethers.parseUnits(approveDisplayAmount, 18)
 
   // nft number
-  const [cidNumber, setCidNumber] = useState(20000)
-  const [depinNumber, setDepinNumber] = useState(1000)
+  const [cidNumber, setCidNumber] = useState(-1)
+  const [depinNumber, setDepinNumber] = useState(-1)
 
   // 购买数量配置
   const [cidNftValue, setCidNftValue] = useState('0')
@@ -329,7 +329,7 @@ export function IndexMainPage(invite_address: string | undefined) {
                 </li>
                 <li>
                   <p>Quantity</p>
-                  <p>{cidNumber}</p>
+                  <p>{cidNumber == -1 ? "loading..." : cidNumber}</p>
                 </li>
                 <li>
                   <p>Price per NFT</p>
@@ -408,7 +408,7 @@ export function IndexMainPage(invite_address: string | undefined) {
                 </li>
                 <li>
                   <p>Quantity</p>
-                  <p>{depinNumber}</p>
+                  <p>{depinNumber == -1 ? "loading..." : depinNumber}</p>
                 </li>
                 <li>
                   <p>Price per NFT</p>
