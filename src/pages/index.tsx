@@ -238,7 +238,9 @@ export function IndexMainPage(invite_address: string | undefined) {
           // todo: 弹框提示成功，显示出 txid，点击 txid 可以跳转到浏览器
           var mintTxid = res['hash']
           var receipt = await provider.waitForTransaction(mintTxid)
+          updateBalance()
           setIsLoading(false)
+          updateBalance()
           showSuccessMessage('Success!', 'Mint txid: ' + mintTxid)
         } else {
           showFailMessage('please init contract')
@@ -260,6 +262,7 @@ export function IndexMainPage(invite_address: string | undefined) {
           var allowTxid = allowRes['hash']
           var receipt = await provider.waitForTransaction(allowRes['hash'])
           setIsLoading(false)
+          updateBalance()
           showSuccessMessage('Success!', 'Approved txid: ' + allowTxid)
           checkAccountInfo(type, mintAmount)
         } catch(e) {
